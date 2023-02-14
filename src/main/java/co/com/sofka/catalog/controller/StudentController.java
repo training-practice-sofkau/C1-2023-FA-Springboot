@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -28,7 +29,22 @@ public class StudentController {
         response.restart();
         try {
             response.data = studentService.getAllStudents();
-            response.message = "Students found successfully";
+            response.message = "Students found successfully.";
+            httpStatus = HttpStatus.OK;
+        }catch (Exception e){
+            getErrorMessage(e);
+        }
+        return new ResponseEntity<>(response, httpStatus);
+    }
+
+    @GetMapping("/id_num/{idNum}")
+    private ResponseEntity<Response> getStudentByIdNum(
+            @PathVariable(value = "idNum") String idNum
+    ){
+        response.restart();
+        try {
+            response.data = studentService.getByIdentificationNumber(idNum);
+            response.message = "Student with identification number " + idNum + " found successfully.";
             httpStatus = HttpStatus.OK;
         }catch (Exception e){
             getErrorMessage(e);

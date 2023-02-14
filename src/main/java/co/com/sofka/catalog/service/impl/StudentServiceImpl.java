@@ -24,7 +24,8 @@ public class StudentServiceImpl implements IStudentService {
 
     @Override
     public StudentDTO getByIdentificationNumber(String idNum) {
-        return null;
+        System.out.println(studentRepository.findByIdNum(idNum));
+        return CustomMapper.studentDTO(studentRepository.findByIdNum(idNum));
     }
 
     @Override
