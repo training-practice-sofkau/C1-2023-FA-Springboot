@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/sofka_catalog/student")
@@ -94,7 +94,22 @@ public class StudentController {
         try {
             response.data = studentService.editStudent(studentDTO);
             response.message = "Student updated successfully.";
-            httpStatus = HttpStatus.CREATED;
+            httpStatus = HttpStatus.OK;
+        }catch (Exception e){
+            getErrorMessage(e);
+        }
+        return new ResponseEntity<>(response, httpStatus);
+    }
+
+    @DeleteMapping ("/delete/{idNum}")
+    private ResponseEntity<Response> deleteStudent(
+            @PathVariable(value = "idNum") String idNum
+    ){
+        response.restart();
+        try {
+            response.data = studentService.deleteStudent(idNum);
+            response.message = "Student with identification number " + idNum + " deleted successfully.";
+            httpStatus = HttpStatus.OK;
         }catch (Exception e){
             getErrorMessage(e);
         }

@@ -54,7 +54,8 @@ public class StudentServiceImpl implements IStudentService {
 
     @Override
     public String deleteStudent(String idNum) {
-        return null;
+        Student student = studentRepository.findByIdNum(idNum);
+        studentRepository.delete(student);
+        return idNum;
     }
-
 }
