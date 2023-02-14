@@ -1,16 +1,25 @@
 package co.com.sofka.catalog.service.impl;
 
 import co.com.sofka.catalog.dto.StudentDTO;
+import co.com.sofka.catalog.repository.StudentRepository;
 import co.com.sofka.catalog.service.IStudentService;
+import co.com.sofka.catalog.utils.CustomMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
-
+@Service
 public class StudentServiceImpl implements IStudentService {
 
+    @Autowired
+    private StudentRepository studentRepository;
 
     @Override
     public List<StudentDTO> getAllStudents() {
-       return null;
+       return studentRepository.findAll().stream()
+               .map(CustomMapper::studentDTO)
+               .toList();
     }
 
     @Override
