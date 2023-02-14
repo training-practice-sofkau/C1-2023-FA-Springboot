@@ -34,7 +34,8 @@ public class StudentServiceImpl implements IStudentService {
 
     @Override
     public StudentDTO saveStudent(StudentDTO studentDTO) {
-        return null;
+        System.out.println(studentDTO);
+        return CustomMapper.studentDTO(studentRepository.save(CustomMapper.student(studentDTO)));
     }
 
     @Override

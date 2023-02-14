@@ -1,5 +1,6 @@
 package co.com.sofka.catalog.controller;
 
+import co.com.sofka.catalog.dto.StudentDTO;
 import co.com.sofka.catalog.service.impl.StudentServiceImpl;
 import co.com.sofka.catalog.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -61,6 +64,21 @@ public class StudentController {
             response.data = studentService.getByName(name);
             response.message = "Student " + name + " found successfully.";
             httpStatus = HttpStatus.OK;
+        }catch (Exception e){
+            getErrorMessage(e);
+        }
+        return new ResponseEntity<>(response, httpStatus);
+    }
+
+    @PostMapping("/")
+    private ResponseEntity<Response> saveStudent(
+            @RequestBody StudentDTO studentDTO
+    ){
+        response.restart();
+        try {
+            response.data = studentService.saveStudent(studentDTO);
+            response.message = "Student saved successfully.";
+            httpStatus = HttpStatus.CREATED;
         }catch (Exception e){
             getErrorMessage(e);
         }
