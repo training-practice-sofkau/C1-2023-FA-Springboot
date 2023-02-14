@@ -51,7 +51,7 @@ public class CourseController {
     }
 
     @GetMapping("/courses/coach/{coach}")
-    public ResponseEntity<Response> getArtistsByCoach(@PathVariable String coach){
+    public ResponseEntity<Response> getCourseByCoach(@PathVariable String coach){
         response.restart();
         try {
             response.data = service.getByCoach(coach);
@@ -65,7 +65,7 @@ public class CourseController {
     }
 
     @GetMapping("/courses/level/{level}")
-    public ResponseEntity<Response> getArtistsByLevel(@PathVariable String level){
+    public ResponseEntity<Response> getCoursesByLevel(@PathVariable String level){
         response.restart();
         try {
             response.data = service.getByLevel(level);
@@ -92,7 +92,7 @@ public class CourseController {
     }
 
     @PutMapping("/courses/{courseID}")
-    public ResponseEntity<Response> updateArtist(@RequestBody CourseDTO courseDTO, @PathVariable String courseID){
+    public ResponseEntity<Response> updateCourse(@RequestBody CourseDTO courseDTO, @PathVariable String courseID){
         response.restart();
         try {
             response.data = service.editCourse(courseDTO, courseID);
