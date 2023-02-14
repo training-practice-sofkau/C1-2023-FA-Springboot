@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -78,6 +79,21 @@ public class StudentController {
         try {
             response.data = studentService.saveStudent(studentDTO);
             response.message = "Student saved successfully.";
+            httpStatus = HttpStatus.CREATED;
+        }catch (Exception e){
+            getErrorMessage(e);
+        }
+        return new ResponseEntity<>(response, httpStatus);
+    }
+
+    @PutMapping("/edit")
+    private ResponseEntity<Response> editStudent(
+            @RequestBody StudentDTO studentDTO
+    ){
+        response.restart();
+        try {
+            response.data = studentService.editStudent(studentDTO);
+            response.message = "Student updated successfully.";
             httpStatus = HttpStatus.CREATED;
         }catch (Exception e){
             getErrorMessage(e);
