@@ -6,10 +6,17 @@ import co.com.sofka.catalog.entity.Course;
 import java.util.List;
 
 public interface ICourseService {
+
+    //Mapping operations
+    Course dtoToEntity(CourseDTO courseDTO);
+    CourseDTO entityToDTO(Course course);
+
+    //Basic operations
     List<CourseDTO> getAllCourses();
     CourseDTO getByName(String name);
     List<CourseDTO> getByCoach(String c);
     List<CourseDTO> getByLevel(String level);
+    CourseDTO saveCourse(CourseDTO courseDTO);
     CourseDTO editCourse(CourseDTO courseDTO);
     String deleteCourse(CourseDTO courseDTO);
 
