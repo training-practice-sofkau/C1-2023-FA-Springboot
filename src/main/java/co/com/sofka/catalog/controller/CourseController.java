@@ -66,6 +66,21 @@ public class CourseController {
         return new ResponseEntity<>(response, httpStatus);
     }
 
+    @GetMapping("/level/{level}")
+    private ResponseEntity<Response> getCourseByLevel(
+            @PathVariable(value = "level") String level
+    ){
+        response.restart();
+        try {
+            response.data = courseService.getByLevel(level);
+            response.message = "Courses of level " + level + " found successfully.";
+            httpStatus = HttpStatus.OK;
+        }catch (Exception e){
+            getErrorMessage(e);
+        }
+        return new ResponseEntity<>(response, httpStatus);
+    }
+
     private void getErrorMessage(Exception e) {
         response.error = true;
         response.message = e.getMessage();
