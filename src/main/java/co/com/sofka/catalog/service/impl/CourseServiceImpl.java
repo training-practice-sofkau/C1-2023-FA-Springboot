@@ -2,16 +2,25 @@ package co.com.sofka.catalog.service.impl;
 
 
 import co.com.sofka.catalog.dto.CourseDTO;
+import co.com.sofka.catalog.repository.CourseRepository;
 import co.com.sofka.catalog.service.ICourseService;
+import co.com.sofka.catalog.utils.CustomMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CourseServiceImpl implements ICourseService {
 
+    @Autowired
+    private CourseRepository courseRepository;
 
     @Override
     public List<CourseDTO> getAllCourses() {
-        return null;
+        return courseRepository.findAll().stream()
+                .map(CustomMapper::courseDTO)
+                .toList();
     }
 
     @Override
