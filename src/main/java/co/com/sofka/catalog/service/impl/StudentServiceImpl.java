@@ -1,6 +1,7 @@
 package co.com.sofka.catalog.service.impl;
 
 import co.com.sofka.catalog.dto.StudentDTO;
+import co.com.sofka.catalog.entity.Student;
 import co.com.sofka.catalog.service.IStudentService;
 import java.util.List;
 
@@ -10,7 +11,7 @@ public class StudentServiceImpl implements IStudentService {
 
     @Override
     public List<StudentDTO> getAllStudents() {
-       return null;
+        return null;
     }
 
     @Override
@@ -24,12 +25,12 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public StudentDTO saveStudent(StudentDTO studentDTO) {
+    public StudentDTO saveStudent(Student student) {
         return null;
     }
 
     @Override
-    public StudentDTO editStudent(StudentDTO studentDTO) {
+    public StudentDTO editStudent(Student student) {
         return null;
     }
 
@@ -37,5 +38,4 @@ public class StudentServiceImpl implements IStudentService {
     public String deleteStudent(String idNum) {
         return null;
     }
-
 }
