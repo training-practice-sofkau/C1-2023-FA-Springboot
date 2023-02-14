@@ -17,7 +17,7 @@ public class CustomMapper{
         c.setCoach(courseDTO.getCoach());
         c.setLevel(courseDTO.getLevel());
         c.setLastUpdated(courseDTO.getLastUpdated());
-        c.setStudentList(courseDTO.getStudentListDTO().stream().map(CustomMapper::student).collect(Collectors.toList()));
+        c.setStudentList(courseDTO.getStudentList().stream().map(CustomMapper::student).toList());
 
         return c;
 
@@ -45,7 +45,7 @@ public class CustomMapper{
         c.setCoach(course.getCoach());
         c.setLevel(course.getLevel());
         c.setLastUpdated(course.getLastUpdated());
-        c.setStudentListDTO(course.getStudentList().stream().map(CustomMapper::studentDTO).collect(Collectors.toList()));
+        c.setStudentList(course.getStudentList().stream().map(CustomMapper::studentDTO).toList());
 
         return c;
 

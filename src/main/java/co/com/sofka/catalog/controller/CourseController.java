@@ -1,6 +1,8 @@
 package co.com.sofka.catalog.controller;
 
 import co.com.sofka.catalog.dto.CourseDTO;
+import co.com.sofka.catalog.dto.StudentDTO;
+import co.com.sofka.catalog.repository.CourseRepository;
 import co.com.sofka.catalog.service.impl.CourseServiceImpl;
 import co.com.sofka.catalog.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ public class CourseController {
 
     @Autowired
     private CourseServiceImpl courseService;
+
 
     @GetMapping("/")
     private ResponseEntity<Response> getAll(){
@@ -86,6 +89,36 @@ public class CourseController {
             response.data = courseService.saveCourse(courseDTO);
             response.message = "Course saved successfully.";
             httpStatus = HttpStatus.CREATED;
+        }catch (Exception e){
+            getErrorMessage(e);
+        }
+        return new ResponseEntity<>(response, httpStatus);
+    }
+
+    @PutMapping("/edit")
+    private ResponseEntity<Response> editCourse(
+            @RequestBody CourseDTO courseDTO
+    ){
+        response.restart();
+        try {
+            response.data = courseService.editCourse(courseDTO);
+            response.message = "Course updated successfully.";
+            httpStatus = HttpStatus.OK;
+        }catch (Exception e){
+            getErrorMessage(e);
+        }
+        return new ResponseEntity<>(response, httpStatus);
+    }
+
+    @DeleteMapping ("/delete")
+    private ResponseEntity<Response> deleteStudent(
+            @RequestBody CourseDTO courseDTO
+    ){
+        response.restart();
+        try {
+            response.data = courseService.deleteCourse(courseDTO);
+            response.message = "Course " + response.data + " deleted successfully.";
+            httpStatus = HttpStatus.OK;
         }catch (Exception e){
             getErrorMessage(e);
         }
