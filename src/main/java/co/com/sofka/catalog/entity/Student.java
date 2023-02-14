@@ -3,10 +3,13 @@ package co.com.sofka.catalog.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -17,7 +20,7 @@ public class Student {
             strategy = "co.com.sofka.catalog.utils.UUIDGeneratorTruncated")
     @GeneratedValue(generator = "UUID")
     @Id
-    private String id;
+    private String studentId;
 
     private String name;
 
@@ -27,9 +30,7 @@ public class Student {
 
     private String mail;
 
-    private Integer numCourses;
-
-    //ManyToOne
-    private Course course;
+    @OneToMany(mappedBy = "student")
+    private List<StudentCourseE> courses;
 
 }
