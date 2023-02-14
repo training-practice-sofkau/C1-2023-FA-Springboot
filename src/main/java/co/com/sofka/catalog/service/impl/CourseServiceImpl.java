@@ -25,7 +25,7 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     public CourseDTO getByName(String name) {
-        return null;
+        return CustomMapper.courseDTO(courseRepository.findByName(name));
     }
 
     @Override
