@@ -11,15 +11,15 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CourseDTO {
-    private String id;
+    private String idDTO;
 
-    private String name;
+    private String nameDTO;
 
-    private String coach;
+    private String coachDTO;
+
+    private Integer levelDTO;
+
+    private LocalDate lastUpdatedDTO;
 
     private List<StudentDTO> studentListDTO;
-
-    private Integer level;
-
-    private LocalDate lastUpdated;
 }
