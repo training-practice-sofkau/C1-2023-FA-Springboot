@@ -16,5 +16,5 @@ public class CourseDTO {
     private String coach;
     private Integer level;
     private Instant lastUpdated = Instant.now();
-    private List<StudentDTO> studentListDTO = new ArrayList<>();
+    private List<StudentDTO> studentList = new ArrayList<>();
 }

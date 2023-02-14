@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -47,5 +48,5 @@ public class Course {
             targetEntity = Student.class
     )
     @JsonManagedReference
-    private List<Student> studentList;
+    private List<Student> studentList = new ArrayList<>();
 }
