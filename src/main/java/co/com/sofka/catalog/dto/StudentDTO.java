@@ -13,5 +13,5 @@ public class StudentDTO {
     private String idNum;
     private Integer age;
     private String mail;
-    private Integer numCourses;
+    private Integer numCourses = 0;
 }
