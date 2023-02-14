@@ -12,14 +12,9 @@ import java.util.List;
 @NoArgsConstructor
 public class CourseDTO {
     private String id;
-
     private String name;
-
     private String coach;
-
-    private List<StudentDTO> studentListDTO;
-
     private Integer level;
-
     private LocalDate lastUpdated;
+    private List<StudentDTO> studentListDTO;
 }
