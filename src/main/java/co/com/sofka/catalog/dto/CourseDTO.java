@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 @Data
 @AllArgsConstructor
@@ -15,5 +16,5 @@ public class CourseDTO {
     private String coach;
     private Integer level;
     private Instant lastUpdated = Instant.now();
-    private List<StudentDTO> studentListDTO;
+    private List<StudentDTO> studentListDTO = new ArrayList<>();
 }
