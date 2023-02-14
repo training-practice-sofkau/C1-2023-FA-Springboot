@@ -52,6 +52,21 @@ public class StudentController {
         return new ResponseEntity<>(response, httpStatus);
     }
 
+    @GetMapping("/name/{name}")
+    private ResponseEntity<Response> getStudentByIdName(
+            @PathVariable(value = "name") String name
+    ){
+        response.restart();
+        try {
+            response.data = studentService.getByName(name);
+            response.message = "Student " + name + " found successfully.";
+            httpStatus = HttpStatus.OK;
+        }catch (Exception e){
+            getErrorMessage(e);
+        }
+        return new ResponseEntity<>(response, httpStatus);
+    }
+
     private void getErrorMessage(Exception e) {
         response.error = true;
         response.message = e.getMessage();

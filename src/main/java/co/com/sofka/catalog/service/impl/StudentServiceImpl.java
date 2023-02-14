@@ -24,13 +24,12 @@ public class StudentServiceImpl implements IStudentService {
 
     @Override
     public StudentDTO getByIdentificationNumber(String idNum) {
-        System.out.println(studentRepository.findByIdNum(idNum));
         return CustomMapper.studentDTO(studentRepository.findByIdNum(idNum));
     }
 
     @Override
-    public StudentDTO getByName(String s) {
-        return null;
+    public StudentDTO getByName(String name) {
+        return CustomMapper.studentDTO(studentRepository.findByName(name));
     }
 
     @Override
