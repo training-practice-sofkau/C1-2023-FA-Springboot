@@ -13,7 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.List;
 
 @Data
@@ -39,7 +39,7 @@ public class Course {
     private Integer level;
 
     @Column
-    private LocalDate lastUpdated;
+    private Instant lastUpdated;
 
     @OneToMany(
             mappedBy = "course",
