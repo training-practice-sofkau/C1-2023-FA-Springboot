@@ -1,16 +1,12 @@
 package co.com.sofka.catalog.controller;
 
+import co.com.sofka.catalog.dto.CourseDTO;
 import co.com.sofka.catalog.service.impl.CourseServiceImpl;
 import co.com.sofka.catalog.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/sofka_catalog/course")
@@ -75,6 +71,21 @@ public class CourseController {
             response.data = courseService.getByLevel(level);
             response.message = "Courses of level " + level + " found successfully.";
             httpStatus = HttpStatus.OK;
+        }catch (Exception e){
+            getErrorMessage(e);
+        }
+        return new ResponseEntity<>(response, httpStatus);
+    }
+
+    @PostMapping("/")
+    private ResponseEntity<Response> saveCourse(
+            @RequestBody CourseDTO courseDTO
+    ){
+        response.restart();
+        try {
+            response.data = courseService.saveCourse(courseDTO);
+            response.message = "Course saved successfully.";
+            httpStatus = HttpStatus.CREATED;
         }catch (Exception e){
             getErrorMessage(e);
         }

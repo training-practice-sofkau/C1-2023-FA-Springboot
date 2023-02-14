@@ -44,7 +44,7 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     public CourseDTO saveCourse(CourseDTO courseDTO) {
-        return null;
+        return CustomMapper.courseDTO(courseRepository.save(CustomMapper.course(courseDTO)));
     }
 
     @Override
