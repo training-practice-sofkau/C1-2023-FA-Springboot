@@ -39,7 +39,7 @@ public class Course {
     private Integer level;
 
     @Column
-    private Instant lastUpdated;
+    private Instant lastUpdated = Instant.now();
 
     @OneToMany(
             mappedBy = "course",

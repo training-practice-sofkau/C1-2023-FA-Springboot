@@ -40,7 +40,7 @@ public class Student {
     private String mail;
 
     @Column
-    private Integer numCourses;
+    private Integer numCourses = 0;
 
     @ManyToOne(
             fetch = FetchType.LAZY,
