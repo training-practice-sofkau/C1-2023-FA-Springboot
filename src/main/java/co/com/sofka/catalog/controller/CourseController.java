@@ -5,7 +5,12 @@ import co.com.sofka.catalog.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/api/v1/sofka_catalog/course")
@@ -39,6 +44,21 @@ public class CourseController {
         try {
             response.data = courseService.getByName(name);
             response.message = "Course " + name + " found successfully.";
+            httpStatus = HttpStatus.OK;
+        }catch (Exception e){
+            getErrorMessage(e);
+        }
+        return new ResponseEntity<>(response, httpStatus);
+    }
+
+    @GetMapping("/coach/{coach}")
+    private ResponseEntity<Response> getCourseByIdCoach(
+            @PathVariable(value = "coach") String coach
+    ){
+        response.restart();
+        try {
+            response.data = courseService.getByCoach(coach);
+            response.message = "Courses of coach " + coach + " found successfully.";
             httpStatus = HttpStatus.OK;
         }catch (Exception e){
             getErrorMessage(e);

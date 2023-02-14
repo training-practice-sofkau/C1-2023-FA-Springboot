@@ -29,8 +29,10 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public List<CourseDTO> getByCoach(String c) {
-        return null;
+    public List<CourseDTO> getByCoach(String coach) {
+        return courseRepository.findByCoach(coach).stream()
+                .map(CustomMapper::courseDTO)
+                .toList();
     }
 
     @Override
