@@ -17,9 +17,9 @@ public class CourseDTO {
 
     private String coach;
 
-    private List<StudentDTO> studentListDTO;
-
     private Integer level;
 
     private LocalDate lastUpdated;
+
+    private List<StudentDTO> studentListDTO;
 }
