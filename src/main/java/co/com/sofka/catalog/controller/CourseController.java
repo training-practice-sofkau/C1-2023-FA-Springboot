@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 
-@RestController("/api")
+@RestController
+@RequestMapping("/api")
 public class CourseController {
 
 

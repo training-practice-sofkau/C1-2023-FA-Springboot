@@ -1,8 +1,6 @@
 package co.com.sofka.catalog.controller;
 
-import co.com.sofka.catalog.dto.CourseDTO;
 import co.com.sofka.catalog.dto.StudentDTO;
-import co.com.sofka.catalog.service.impl.CourseServiceImpl;
 import co.com.sofka.catalog.service.impl.StudentServiceImpl;
 import co.com.sofka.catalog.utils.Response;
 import org.springframework.dao.DataAccessException;
@@ -12,7 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 
-@RestController("/api")
+@RestController
+@RequestMapping("/api")
 public class StudentController {
 
     private StudentServiceImpl service;
@@ -98,7 +97,7 @@ public class StudentController {
         response.restart();
         try {
             response.data = service.deleteStudent(studentID);
-            httpStatus = HttpStatus.NO_CONTENT;
+            httpStatus = HttpStatus.CREATED;
         } catch (DataAccessException exception) {
             getErrorMessageForResponse(exception);
         } catch (Exception exception) {
