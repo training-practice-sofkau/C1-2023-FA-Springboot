@@ -35,7 +35,4 @@ public class Course {
     @JsonManagedReference
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, targetEntity = Student.class)
     private List<Student> studentList = new ArrayList<>();
-
-
-
 }
