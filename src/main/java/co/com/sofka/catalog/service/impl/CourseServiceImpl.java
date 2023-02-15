@@ -52,7 +52,8 @@ public class CourseServiceImpl implements ICourseService {
                 .map(CustomMapper::courseDTO)
                 .collect(Collectors.toList())
                 .stream().forEach(i->{
-                    if (i.getNameDTO().startsWith(name) | i.getNameDTO().contains(name)) courseDTO.add(i);
+                    if (i.getNameDTO().toLowerCase().startsWith(name.toLowerCase())
+                            | i.getNameDTO().toLowerCase().contains(name.toLowerCase())) courseDTO.add(i);
                 });
         return courseDTO;
     }
@@ -66,7 +67,8 @@ public class CourseServiceImpl implements ICourseService {
                 .map(CustomMapper::courseDTO)
                 .collect(Collectors.toList())
                 .stream().forEach(i->{
-                    if (i.getCoachDTO().startsWith(c) | i.getCoachDTO().contains(c)) courseDTO.add(i);
+                    if (i.getCoachDTO().toLowerCase().startsWith(c.toLowerCase())
+                            | i.getCoachDTO().toLowerCase().contains(c.toLowerCase())) courseDTO.add(i);
                 });
         return courseDTO;
     }

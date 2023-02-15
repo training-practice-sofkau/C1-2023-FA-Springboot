@@ -2,6 +2,7 @@ package co.com.sofka.catalog.controller;
 
 import co.com.sofka.catalog.dto.CourseDTO;
 import co.com.sofka.catalog.service.impl.CourseServiceImpl;
+import lombok.ToString;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

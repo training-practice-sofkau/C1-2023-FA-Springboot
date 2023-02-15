@@ -4,11 +4,13 @@ import co.com.sofka.catalog.entity.Student;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 @Data
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class CourseDTO {
@@ -22,5 +24,5 @@ public class CourseDTO {
 
     private LocalDate lastUpdatedDTO;
 
-    private List<StudentDTO> studentListDTO = new ArrayList<>();;
+    private List<StudentDTO> studentListDTO=new ArrayList<>();
 }

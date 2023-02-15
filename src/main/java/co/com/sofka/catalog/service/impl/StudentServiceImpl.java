@@ -16,28 +16,27 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static co.com.sofka.catalog.utils.CustomMapper.*;
+
 @Service
 public class StudentServiceImpl implements IStudentService {
 
     private StudentRepository studentRepository;
     private CourseRepository courseRepository;
 
+    private CourseServiceImpl courseService;
+
+
     public StudentServiceImpl(StudentRepository studentRepository,
                              CourseRepository courseRepository,
-                              ICourseService iCourseService){
+                              CourseServiceImpl courseService
+                              ){
         this.studentRepository = studentRepository;
         this.courseRepository = courseRepository;
+        this.courseService = courseService;
+
     }
 
-    @Override
-    public Student student(StudentDTO studentDTO) {
-        return student(studentDTO);
-    }
-
-    @Override
-    public StudentDTO studentDTO(Student student) {
-        return studentDTO(student);
-    }
 
     @Override
     public List<StudentDTO> getAllStudents() {
@@ -45,7 +44,7 @@ public class StudentServiceImpl implements IStudentService {
         return studentRepository
                 .findAll()
                 .stream()
-                .map(this::studentDTO)
+                .map(CustomMapper::studentDTO)
                 .collect(Collectors.toList());
     }
 
@@ -55,10 +54,10 @@ public class StudentServiceImpl implements IStudentService {
          studentRepository
                 .findAll()
                 .stream()
-                .map(this::studentDTO)
+                .map(CustomMapper::studentDTO)
                 .collect(Collectors.toList())
                  .stream().forEach(i-> {
-                    if (i.getIdNumDTO().equals(idNum)) studentDTOS.add(i);
+                    if (i.getIdNumDTO().toLowerCase().equals(idNum.toLowerCase())) studentDTOS.add(i);
                  });
         return studentDTOS.isEmpty()? null:
                 studentDTOS.get(0);
@@ -66,7 +65,7 @@ public class StudentServiceImpl implements IStudentService {
 
     @Override
     public Optional<StudentDTO> findById(String studentId) {
-        return studentRepository.findById(studentId).map(this::studentDTO);
+        return studentRepository.findById(studentId).map(CustomMapper::studentDTO);
     }
 
     @Override
@@ -75,23 +74,42 @@ public class StudentServiceImpl implements IStudentService {
         studentRepository
                 .findAll()
                 .stream()
-                .map(this::studentDTO)
+                .map(CustomMapper::studentDTO)
                 .collect(Collectors.toList())
                 .stream().forEach(i->{
-                    if (i.getNameDTO().startsWith(s) | i.getNameDTO().contains(s)) studentDTOS.add(i);
+                    if (i.getNameDTO().toLowerCase().startsWith(s.toLowerCase())
+                            | i.getNameDTO().toLowerCase().contains(s.toLowerCase())) studentDTOS.add(i);
                 });
         return studentDTOS;
     }
 
     @Override
+    public List<StudentDTO> getByCourseId(String courseId) {
+        List<StudentDTO> studentDTOS = new ArrayList<>();
+        studentRepository.findAll().stream().map(CustomMapper::studentDTO).collect(Collectors.toList()).stream().forEach(i->{
+            if(i.getCourseDTO().getIdDTO().equals(courseId)) studentDTOS.add(i);
+        });
+        return studentDTOS;
+    }
+
+    @Override
     public StudentDTO saveStudent(StudentDTO studentDTO) {
+        StudentDTO saveStudentDTo = new StudentDTO();
         System.out.println(studentDTO.getCourseDTO());
-        Optional<CourseDTO> courseDTO = courseRepository
+        Optional<CourseDTO> courseDTO1 = courseRepository
                 .findById(studentDTO.getCourseDTO().getIdDTO())
                 .map(CustomMapper::courseDTO);
-        System.out.println(courseDTO);
-        return (studentDTO.getCourseDTO() == null || courseDTO==null)? null:
-                studentDTO(studentRepository.save(student(studentDTO)));
+
+        if (studentDTO.getCourseDTO() == null || courseDTO1==null) return null;
+        if (courseDTO1 != null) {
+            studentDTO.setCourseDTO(courseDTO1.get());
+            saveStudentDTo = studentDTO(studentRepository.save(student(studentDTO)));
+            courseDTO1.get().setStudentListDTO(this.getByCourseId(courseDTO1.get().getIdDTO()));
+            //this.courseService.editCourse(courseDTO1.get());
+
+        }
+        System.out.println(courseDTO1);
+        return saveStudentDTo;
     }
 
     @Override

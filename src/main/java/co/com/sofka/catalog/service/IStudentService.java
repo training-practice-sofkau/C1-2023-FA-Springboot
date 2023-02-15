@@ -9,15 +9,14 @@ import java.util.Optional;
 
 public interface IStudentService {
 
-    Student student (StudentDTO studentDTO);
-
-    StudentDTO studentDTO(Student student);
     List<StudentDTO> getAllStudents();
     StudentDTO getByIdentificationNumber(String idNum);
 
     Optional<StudentDTO> findById(String studentId);
 
     List<StudentDTO> getByName(String s);
+
+    List<StudentDTO> getByCourseId(String courseId);
     StudentDTO saveStudent(StudentDTO studentDTO);
     StudentDTO editStudent(StudentDTO studentDTO);
     String deleteStudent(String studentId);
