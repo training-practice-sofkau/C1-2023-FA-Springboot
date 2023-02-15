@@ -9,7 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,8 +76,8 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     public CourseDTO saveCourse(CourseDTO courseDTO) {
-        courseDTO.setLastUpdated(LocalDate.now());
-        courseDTO.setStudentListDTO(null);
+        courseDTO.setLastUpdated(LocalDateTime.now());
+        courseDTO.setStudents(null);
         courseRepository.save(dtoToEntity(courseDTO));
         return courseDTO;
     }
@@ -88,7 +89,7 @@ public class CourseServiceImpl implements ICourseService {
         if (response.isEmpty()) {
             throw new ToDoExceptions("Course not found", HttpStatus.NOT_FOUND);
         }
-        courseDTO.setLastUpdated(LocalDate.now());
+        courseDTO.setLastUpdated(LocalDateTime.now());
         courseRepository.save(dtoToEntity(courseDTO));
         return courseDTO;
     }
