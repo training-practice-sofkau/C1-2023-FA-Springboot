@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface CourseRepository extends JpaRepository<Course, String> {
     Course findByName(String name);
+    List<Course> findByCoach(String coach);
 }
