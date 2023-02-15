@@ -2,6 +2,7 @@ package co.com.sofka.catalog.service.impl;
 
 
 import co.com.sofka.catalog.dto.CourseDTO;
+import co.com.sofka.catalog.dto.StudentDTO;
 import co.com.sofka.catalog.entity.Course;
 import co.com.sofka.catalog.repository.CourseRepository;
 import co.com.sofka.catalog.repository.StudentRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class CourseServiceImpl implements ICourseService {
@@ -87,12 +89,31 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
+    public CourseDTO saveCourse(CourseDTO courseDTO) {
+       /* List<StudentDTO> studentDTOS = courseDTO.getStudentListDTO();
+        if (!studentDTOS.isEmpty()){
+            List<Integer> studentDTONotFound = new ArrayList<>();
+            studentDTOS.stream().forEach(i->{
+                Optional<StudentDTO> studentDTO = studentRepository
+            });
+        }*/
+        //I need to do the other service first.
+        return null;
+    }
+
+    @Override
     public CourseDTO editCourse(CourseDTO courseDTO) {
         return null;
     }
 
     @Override
     public String deleteCourse(CourseDTO courseDTO) {
-        return null;
+        //String courseIdDTO = courseDTO.getIdDTO();
+        if (courseDTO.getIdDTO().isEmpty()) return null;
+        else {
+            courseRepository.deleteById(courseDTO.getIdDTO());
+            return "Artist with id: " + courseDTO.getIdDTO() + " was deleted successfully";
+        }
+
     }
 }
