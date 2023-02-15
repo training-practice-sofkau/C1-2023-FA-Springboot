@@ -88,6 +88,7 @@ public class CourseServiceImpl implements ICourseService {
         oldCourseDTO.setCoach(courseDTO.getCoach());
         oldCourseDTO.setLevel(courseDTO.getLevel());
         oldCourseDTO.setLastUpdated(LocalDate.now());
+        oldCourseDTO.setStudentList(courseDTO.getStudentList());
 
         return entityToDTO(courseRepository.save(dtoToEntity(oldCourseDTO)));
     }

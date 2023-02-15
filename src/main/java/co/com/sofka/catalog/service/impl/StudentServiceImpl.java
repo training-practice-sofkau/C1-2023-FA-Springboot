@@ -84,6 +84,7 @@ public class StudentServiceImpl implements IStudentService {
         oldStudentDTO.setIdNum(studentDTO.getIdNum());
         oldStudentDTO.setMail(studentDTO.getMail());
         oldStudentDTO.setNumCourses(studentDTO.getNumCourses());
+        oldStudentDTO.setCourse(studentDTO.getCourse());
 
         return entityToDTO(studentRepository.save(dtoToEntity(oldStudentDTO)));
     }

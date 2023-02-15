@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -32,7 +33,7 @@ public class Course {
 
     @OneToMany(mappedBy = "course", targetEntity = Student.class, cascade = CascadeType.ALL)
     @JsonManagedReference
-    private List<Student> studentList;
+    private List<Student> studentList= new ArrayList<>();
 
 
 

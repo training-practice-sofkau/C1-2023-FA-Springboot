@@ -29,9 +29,10 @@ public class Student {
 
     private Integer numCourses;
 
-    @JsonBackReference
+
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Course.class)
     @JoinColumn(name="course_id", foreignKey = @ForeignKey(name = "FK_course_id"))
+    @JsonBackReference
     private Course course;
 
 
