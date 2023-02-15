@@ -1,6 +1,7 @@
 package co.com.sofka.catalog.dto;
 
 import co.com.sofka.catalog.entity.Student;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ public class CourseDTO {
 
     private String coach;
 
-    private List<StudentDTO> studentListDTO = new ArrayList<>();;
+    private List<StudentDTO> studentListDTO = new ArrayList<>();
 
     private int level;
 

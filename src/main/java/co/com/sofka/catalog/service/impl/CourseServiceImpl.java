@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,11 +52,16 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public String deleteCourse(String courseId) {
+    public String deleteCourse(String courseId) throws DataIntegrityViolationException  {
         Optional <Course> delCourse = courseRepository.findById(courseId);
         if(delCourse.isEmpty()) return null;
-        courseRepository.delete(delCourse.get());
-        return "Course deleted";
+        try{
+            courseRepository.delete(delCourse.get());
+            return "Course deleted";
+        }catch (DataIntegrityViolationException e){
+            return "This course has students registered";
+        }
+
     }
 
     @Override

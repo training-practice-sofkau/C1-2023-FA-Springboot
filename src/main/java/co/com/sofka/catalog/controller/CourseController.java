@@ -3,6 +3,7 @@ package co.com.sofka.catalog.controller;
 import co.com.sofka.catalog.dto.CourseDTO;
 import co.com.sofka.catalog.service.impl.CourseServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,7 @@ public class CourseController {
     }
 
     @DeleteMapping(value = "/delete")
-    public ResponseEntity deleteCourse(@RequestParam String courseId){
+    public ResponseEntity deleteCourse(@RequestParam String courseId) throws DataIntegrityViolationException {
         String c = courseService.deleteCourse(courseId);
         return c == null ? ResponseEntity.status(400).body("Course is not in our system") : ResponseEntity.ok().body(c);
     }
