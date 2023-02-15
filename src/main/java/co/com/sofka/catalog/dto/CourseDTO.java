@@ -7,11 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class CourseDTO {
+
     private String courseId;
 
     private String name;
@@ -23,5 +25,5 @@ public class CourseDTO {
 
     private LocalDate lastUpdated;
 
-    private List<StudentDTO> studentListDTO;
+    private List<StudentDTO> studentListDTO = new ArrayList<>();
 }

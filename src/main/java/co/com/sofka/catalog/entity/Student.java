@@ -2,14 +2,18 @@ package co.com.sofka.catalog.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -35,6 +39,8 @@ public class Student {
     @OneToMany(mappedBy = "student",
             targetEntity = CourseStudent.class)
     @JsonIgnoreProperties("courseList")
-    private List<CourseStudent> courseList;
+    @ToString.Exclude
+    private List<CourseStudent> courseList = new ArrayList<>();
+
 
 }

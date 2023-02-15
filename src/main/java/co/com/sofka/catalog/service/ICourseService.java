@@ -8,9 +8,9 @@ public interface ICourseService {
     List<CourseDTO> getAll();
     List<CourseDTO> getByName(String name);
     List<CourseDTO> getByCoach(String coach);
-    List<CourseDTO> getByLevel(String level);
+    List<CourseDTO> getByLevel(Integer level);
     CourseDTO save(CourseDTO courseDTO);
     CourseDTO update(CourseDTO courseDTO);
-    String delete(CourseDTO courseDTO);
+    Boolean delete(String courseId);
 
 }

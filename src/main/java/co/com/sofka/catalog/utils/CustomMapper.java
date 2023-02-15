@@ -6,7 +6,9 @@ import co.com.sofka.catalog.entity.Course;
 import co.com.sofka.catalog.entity.CourseStudent;
 import co.com.sofka.catalog.entity.Student;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -18,9 +20,7 @@ public class CustomMapper{
         c.setName(courseDTO.getName());
         c.setCoach(courseDTO.getCoach());
         c.setLevel(courseDTO.getLevel());
-        c.setLastUpdated(courseDTO.getLastUpdated());
-        //c.setStudentList(courseDTO.getStudentListDTO().stream().map(CustomMapper::student).collect(Collectors.toList()));
-
+        c.setLastUpdated(LocalDate.now());
         return c;
 
     }
