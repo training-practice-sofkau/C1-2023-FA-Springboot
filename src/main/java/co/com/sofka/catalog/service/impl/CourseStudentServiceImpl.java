@@ -13,6 +13,8 @@ import co.com.sofka.catalog.utils.CustomMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CourseStudentServiceImpl implements ICourseStudentService {
     @Autowired
@@ -41,8 +43,9 @@ public class CourseStudentServiceImpl implements ICourseStudentService {
     @Override
     public Boolean removeRelation(CourseStudent courseStudent) {
         if(courseRepository.existsById(courseStudent.getCourse().getCourseId())&&studentRepository.existsById(courseStudent.getStudent().getStudentId())){
-            if (courseStudentRepository.findByCourseAndStudent(courseStudent.getCourse(), courseStudent.getStudent()).isPresent()) {
-                courseStudentRepository.delete(courseStudent);
+            Optional<CourseStudent> relation = courseStudentRepository.findByCourseAndStudent(courseStudent.getCourse(), courseStudent.getStudent());
+            if (relation.isPresent()) {
+                courseStudentRepository.delete(relation.get());
                 return true;
             } else {
                 return false;
