@@ -38,7 +38,6 @@ public class Course {
     )
     private Set<Student> enrolledStudents = new HashSet<>();
 
-
     public void enrolledStudent(Student student) {
         enrolledStudents.add(student);
     }

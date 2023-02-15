@@ -54,7 +54,7 @@ public class CourseController {
     private ResponseEntity<?> deleteCourse(@PathVariable("id") String idCourse){
         try{
             courseService.deleteCourse(idCourse);
-            return ResponseEntity.ok("Student deleted");
+            return ResponseEntity.ok("Course deleted");
         }
         catch (EmptyResultDataAccessException e){
             return ResponseEntity.notFound().build();

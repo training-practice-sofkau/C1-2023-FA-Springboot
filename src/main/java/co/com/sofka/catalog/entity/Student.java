@@ -25,9 +25,7 @@ public class Student {
     private Integer age;
     private String idNum;
     private String mail;
-
-    @JsonIgnore
+    //    @JsonIgnore
     @ManyToMany(mappedBy = "enrolledStudents")
     private Set<Course> courses = new HashSet<>();
-
 }
