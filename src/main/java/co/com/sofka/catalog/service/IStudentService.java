@@ -1,9 +1,11 @@
 package co.com.sofka.catalog.service;
 
+import co.com.sofka.catalog.dto.CourseDTO;
 import co.com.sofka.catalog.dto.StudentDTO;
 import co.com.sofka.catalog.entity.Student;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IStudentService {
 
@@ -13,8 +15,10 @@ public interface IStudentService {
     List<StudentDTO> getAllStudents();
     StudentDTO getByIdentificationNumber(String idNum);
 
-    StudentDTO getByName(String s);
+    Optional<StudentDTO> findById(String studentId);
+
+    List<StudentDTO> getByName(String s);
     StudentDTO saveStudent(StudentDTO studentDTO);
     StudentDTO editStudent(StudentDTO studentDTO);
-    String deleteStudent(String idNum);
+    String deleteStudent(String studentId);
 }

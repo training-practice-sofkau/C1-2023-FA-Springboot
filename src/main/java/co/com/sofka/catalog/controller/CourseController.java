@@ -26,7 +26,7 @@ public class CourseController {
                 ResponseEntity.ok(result);
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/byName/{name}")
     private ResponseEntity<List<CourseDTO>> obtenerPorNombre(
             @PathVariable("name") String courseName){
         var result = courseService.getByName(courseName);
@@ -35,7 +35,7 @@ public class CourseController {
                 ResponseEntity.ok(result);
     }
 
-    @GetMapping("/{coach}")
+    @GetMapping("/byCoach/{coach}")
     private ResponseEntity<List<CourseDTO>> obtenerPorCoach(
             @PathVariable("coach") String coach){
         var result = courseService.getByCoach(coach);
@@ -44,7 +44,7 @@ public class CourseController {
                 ResponseEntity.ok(result);
     }
 
-    @GetMapping("/{level}")
+    @GetMapping("/byLevel/{level}")
     private ResponseEntity<List<CourseDTO>> obtenerPorLevel(
             @PathVariable("level") Integer level){
         var result = courseService.getByLevel(level);
@@ -57,7 +57,7 @@ public class CourseController {
     private ResponseEntity<String> borrarCurso (@PathVariable("id") String courseId){
         String s = courseService.deleteCourse(courseId);
         return s == null ?
-                new ResponseEntity<>("There is not album with id: " + courseId, HttpStatus.CONFLICT):
+                new ResponseEntity<>("There is not course with id: " + courseId, HttpStatus.CONFLICT):
                 new ResponseEntity<>(s, HttpStatus.ACCEPTED);
     }
 }

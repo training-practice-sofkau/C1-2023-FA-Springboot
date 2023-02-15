@@ -31,7 +31,7 @@ public class CustomMapper{
         s.setIdNum(studentDTO.getIdNumDTO());
         s.setAge(studentDTO.getAgeDTO());
         s.setMail(studentDTO.getMailDTO());
-        s.setCourse(studentDTO.getCourseDTO());
+        s.setCourse(course(studentDTO.getCourseDTO()));
         return s;
 
     }
@@ -58,7 +58,7 @@ public class CustomMapper{
         s.setIdNumDTO(student.getIdNum());
         s.setAgeDTO(student.getAge());
         s.setMailDTO(student.getMail());
-        s.setCourseDTO(student.getCourse());
+        s.setCourseDTO(courseDTO(student.getCourse()));
 
         return s;
 

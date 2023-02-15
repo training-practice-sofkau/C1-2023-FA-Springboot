@@ -19,5 +19,5 @@ public class StudentDTO {
 
     private String mailDTO;
 
-    private Course courseDTO;
+    private CourseDTO courseDTO;
 }
