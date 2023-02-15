@@ -12,11 +12,11 @@ public class StudentDTO {
 
     private String name;
 
-    private String idNum;
+    private String dni;
 
     private Integer age;
 
-    private String mail;
+    private String email;
+    private CourseDTO courseDTO;
 
-    private Integer numCourses;
 }
