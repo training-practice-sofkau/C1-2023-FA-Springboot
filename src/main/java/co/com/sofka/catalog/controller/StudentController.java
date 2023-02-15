@@ -23,7 +23,7 @@ public class StudentController {
 
     @GetMapping
     private ResponseEntity<List<StudentDTO>> findAll(){
-        return studentService.getAllStudents().isEmpty() ?
+        return this.studentService.getAllStudents().isEmpty() ?
                 ResponseEntity.status(204).body(Collections.emptyList()) :
                 ResponseEntity.ok(studentService.getAllStudents());
     }
@@ -34,4 +34,10 @@ public class StudentController {
                 : ResponseEntity.ok(studentService.getByIdentificationNumber(idNum));
     }
 
+    @GetMapping("/byName/{name}")
+    private ResponseEntity<List<StudentDTO>> findByName(@PathVariable("name") String name){
+        return this.studentService.getByName(name).isEmpty() ?
+                ResponseEntity.status(204).body(Collections.emptyList()) :
+                ResponseEntity.ok(studentService.getByName(name));
+    }
 }

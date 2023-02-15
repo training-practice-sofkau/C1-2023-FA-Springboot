@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -42,8 +41,9 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public StudentDTO getByName(String s) {
-        return null;
+    public List<StudentDTO> getByName(String s) {
+        return this.studentRepository.findByName(s)
+                .stream().map(this::entityToDto).collect(Collectors.toList());
     }
 
     @Override
