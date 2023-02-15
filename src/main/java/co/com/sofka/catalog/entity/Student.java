@@ -1,5 +1,6 @@
 package co.com.sofka.catalog.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,6 +34,7 @@ public class Student {
 
     @OneToMany(mappedBy = "student",
             targetEntity = CourseStudent.class)
+    @JsonIgnoreProperties("courseList")
     private List<CourseStudent> courseList;
 
 }

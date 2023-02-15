@@ -17,12 +17,12 @@ public class CourseStudent {
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Student.class)
     @JoinColumn(name = "student_id", foreignKey = @ForeignKey(name = "FK_student_id"))
-    //@JsonIgnoreProperties("albums")
+    @JsonIgnoreProperties("courseList")
     private Student student;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Course.class)
     @JoinColumn(name = "course_id", foreignKey = @ForeignKey(name = "FK_course_id"))
-    //@JsonIgnoreProperties("albums")
+    @JsonIgnoreProperties("studentList")
     private Course course;
 
 }

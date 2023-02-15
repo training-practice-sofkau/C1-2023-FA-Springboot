@@ -1,5 +1,8 @@
 package co.com.sofka.catalog.controller;
 
+import co.com.sofka.catalog.dto.StudentDTO;
+import co.com.sofka.catalog.service.impl.StudentServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,9 +13,11 @@ import java.util.List;
 @RequestMapping("/sofkau/students/")
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PATCH, RequestMethod.OPTIONS, RequestMethod.DELETE}, maxAge = 3600)
 public class StudentController {
+    @Autowired
+    StudentServiceImpl service;
     @GetMapping
-    private ResponseEntity<String> getArtists() {
-        return ResponseEntity.status(200).body("Llego la mamba");
+    private ResponseEntity<List<StudentDTO>> getArtists() {
+        return ResponseEntity.status(200).body(service.getAll());
     }
 
 }
