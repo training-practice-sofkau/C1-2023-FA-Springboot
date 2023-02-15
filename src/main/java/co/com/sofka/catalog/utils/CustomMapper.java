@@ -5,6 +5,8 @@ import co.com.sofka.catalog.dto.StudentDTO;
 import co.com.sofka.catalog.entity.Course;
 import co.com.sofka.catalog.entity.Student;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 
@@ -12,11 +14,12 @@ public class CustomMapper{
 
     public static Course course(CourseDTO courseDTO){
         Course c = new Course();
+        LocalDate date = LocalDate.now();
         c.setId(courseDTO.getId());
         c.setName(courseDTO.getName());
         c.setCoach(courseDTO.getCoach());
         c.setLevel(courseDTO.getLevel());
-        c.setLastUpdated(courseDTO.getLastUpdated());
+        c.setLastUpdated(date);
 //        c.setStudentList(courseDTO.getStudentListDTO().stream().map(CustomMapper::student).collect(Collectors.toList()));
 
         return c;
@@ -45,7 +48,7 @@ public class CustomMapper{
         c.setName(course.getName());
         c.setCoach(course.getCoach());
         c.setLevel(course.getLevel());
-        c.setLastUpdated(course.getLastUpdated());
+//        c.setLastUpdated(course.getLastUpdated());
 //        c.setStudentListDTO(course.getStudentList().stream().map(CustomMapper::studentDTO).collect(Collectors.toList()));
 
         return c;
