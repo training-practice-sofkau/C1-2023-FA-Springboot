@@ -10,9 +10,9 @@ import java.util.List;
 public interface IStudentService {
 
     List<StudentDTO> getAll();
-    StudentDTO getByIdNum(String idNum);
-    StudentDTO getByName(String s);
+    List<StudentDTO> getByIdNum(String idNum);
+    List<StudentDTO> getByName(String s);
     StudentDTO save(StudentDTO studentDTO);
     StudentDTO update(StudentDTO studentDTO);
-    String delete(StudentDTO studentDTO);
+    Boolean delete(StudentDTO studentDTO);
 }

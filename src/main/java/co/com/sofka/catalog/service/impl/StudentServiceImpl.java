@@ -29,12 +29,12 @@ public class StudentServiceImpl implements IStudentService {
         }
     }
     @Override
-    public StudentDTO getByIdNum(String idNum) {
+    public List<StudentDTO> getByIdNum(String idNum) {
         return null;
     }
 
     @Override
-    public StudentDTO getByName(String s) {
+    public List<StudentDTO> getByName(String s) {
         return null;
     }
 
@@ -50,7 +50,7 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public String delete(StudentDTO studentDTO) {
+    public Boolean delete(StudentDTO studentDTO) {
         return null;
     }
 }
