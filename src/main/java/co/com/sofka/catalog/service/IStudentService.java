@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface IStudentService {
     List<StudentDTO> getAllStudents();
+    StudentDTO getById(String studentID);
     List<StudentDTO> getByDni(String dni);
 
     List<StudentDTO> getByName(String name);

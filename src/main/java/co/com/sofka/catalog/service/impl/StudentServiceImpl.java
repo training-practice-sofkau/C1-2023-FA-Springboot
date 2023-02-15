@@ -26,6 +26,11 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
+    public StudentDTO getById(String studentID){
+        return CustomMapper.studentDTO(studentRepository.findById(studentID).orElse(new Student()));
+    }
+
+    @Override
     public List<StudentDTO> getByDni(String dni){
         return studentRepository.findAll()
                 .stream()
