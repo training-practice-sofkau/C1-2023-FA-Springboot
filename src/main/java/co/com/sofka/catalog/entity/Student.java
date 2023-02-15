@@ -1,5 +1,6 @@
 package co.com.sofka.catalog.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,11 +8,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.List;
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "")
+@Table(name = "students")
 public class Student {
     @GenericGenerator(name="UUID",
             strategy = "co.com.sofka.catalog.utils.UUIDGeneratorTruncated")
@@ -35,9 +39,16 @@ public class Student {
     private Integer numCourses;
 
     //ManyToOne
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="categorie_id")
-    @JsonIgnore
-    private Course course;
+    @ManyToMany(mappedBy = "students",fetch = FetchType.EAGER)
+    @JsonBackReference
+    private List<Course> courses;
+
+    public void addNumCourses(){
+        numCourses++;
+    }
+
+    public void removeNumCourses(){
+        numCourses--;
+    }
 
 }

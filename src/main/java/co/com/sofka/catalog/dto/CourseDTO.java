@@ -4,6 +4,7 @@ import co.com.sofka.catalog.entity.Student;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,6 +20,7 @@ public class CourseDTO {
 
     private Integer level;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate lastUpdated;
 
     private List<StudentDTO> studentListDTO;

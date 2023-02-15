@@ -6,6 +6,7 @@ import co.com.sofka.catalog.entity.Course;
 import co.com.sofka.catalog.entity.Student;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -23,7 +24,7 @@ public class CustomMapper{
         c.setCoach(courseDTO.getCoach());
         c.setLevel(courseDTO.getLevel());
         c.setLastUpdated(courseDTO.getLastUpdated());
-        c.setStudentList(courseDTO.getStudentListDTO().stream().map(CustomMapper::student).collect(Collectors.toList()));
+        c.setStudents(courseDTO.getStudentListDTO().stream().map(CustomMapper::student).collect(Collectors.toList()));
 
         return c;
 
@@ -51,7 +52,7 @@ public class CustomMapper{
         c.setCoach(course.getCoach());
         c.setLevel(course.getLevel());
         c.setLastUpdated(course.getLastUpdated());
-        c.setStudentListDTO(course.getStudentList().stream().map(CustomMapper::studentDTO).collect(Collectors.toList()));
+        c.setStudentListDTO(course.getStudents().stream().map(CustomMapper::studentDTO).collect(Collectors.toList()));
 
         return c;
 
