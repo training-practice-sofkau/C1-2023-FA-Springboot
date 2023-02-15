@@ -11,5 +11,5 @@ public interface IStudentService {
 
     List<StudentDTO> getByName(String s);
     StudentDTO editStudent(StudentDTO studentDTO);
-    String deleteStudent(String idNum);
+    void deleteStudent(String idNum);
 }

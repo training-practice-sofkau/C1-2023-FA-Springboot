@@ -3,6 +3,7 @@ package co.com.sofka.catalog.controller;
 import co.com.sofka.catalog.dto.StudentDTO;
 import co.com.sofka.catalog.service.impl.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,5 +40,16 @@ public class StudentController {
         return this.studentService.getByName(name).isEmpty() ?
                 ResponseEntity.status(204).body(Collections.emptyList()) :
                 ResponseEntity.ok(studentService.getByName(name));
+    }
+
+    @DeleteMapping("{id}")
+    private ResponseEntity<?> deleteSong(@PathVariable("id") String idStudent){
+        try{
+            studentService.deleteStudent(idStudent);
+            return ResponseEntity.ok("Student deleted");
+        }
+        catch (EmptyResultDataAccessException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 }
