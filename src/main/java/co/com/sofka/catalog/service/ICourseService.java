@@ -10,7 +10,7 @@ public interface ICourseService {
 
     Course createCourse(CourseDTO courseDTO);
     List<CourseDTO> getAllCourses();
-    CourseDTO getByName(String name);
+    List<CourseDTO> getByName(String name);
     List<CourseDTO> getByCoach(String c);
     List<CourseDTO> getByLevel(String level);
     CourseDTO editCourse(CourseDTO courseDTO);
