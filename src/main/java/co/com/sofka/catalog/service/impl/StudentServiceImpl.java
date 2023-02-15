@@ -4,6 +4,7 @@ import co.com.sofka.catalog.dto.StudentDTO;
 import co.com.sofka.catalog.entity.Student;
 import co.com.sofka.catalog.repository.StudentRepository;
 import co.com.sofka.catalog.service.IStudentService;
+import co.com.sofka.catalog.utils.CourseMapper;
 import co.com.sofka.catalog.utils.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,12 @@ public class StudentServiceImpl implements IStudentService {
     public List<StudentDTO> getAllStudents() {
         return studentRepository.findAll()
                 .stream()
-                .map(StudentMapper::toDto)
+                .map(student -> {
+                    if (student.getCourse() != null){
+                        return StudentMapper.toDto(student);
+                    }
+                    return StudentMapper.toDtoNoCourse(student);
+                })
                 .collect(Collectors.toList());
     }
 
@@ -54,15 +60,14 @@ public class StudentServiceImpl implements IStudentService {
 
     @Override
     public StudentDTO editStudent(StudentDTO studentDTO) {
-        Student student = StudentMapper.toEntityNoCourse(studentDTO);
-        Student edited = studentRepository.findById(student.getStudentId()).orElse(null);
+        Student edited = studentRepository.findById(studentDTO.getId()).orElse(null);
         if(edited != null){
-            edited.setName(student.getName());
-            edited.setIdNum(student.getIdNum());
-            edited.setMail(student.getMail());
-            edited.setAge(student.getAge());
-            if(student.getCourse() != null){
-                edited.setCourse(student.getCourse());
+            edited.setName(studentDTO.getName());
+            edited.setIdNum(studentDTO.getIdNum());
+            edited.setMail(studentDTO.getMail());
+            edited.setAge(studentDTO.getAge());
+            if(studentDTO.getCourseDTO() != null){
+                edited.setCourse(CourseMapper.toEntityNoStudent(studentDTO.getCourseDTO()));
                 return StudentMapper.toDto(studentRepository.save(edited));
             }
             return StudentMapper.toDtoNoCourse(studentRepository.save(edited));
