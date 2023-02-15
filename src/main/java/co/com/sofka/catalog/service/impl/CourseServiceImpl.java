@@ -11,6 +11,7 @@ import co.com.sofka.catalog.utils.CustomMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -105,14 +106,14 @@ public class CourseServiceImpl implements ICourseService {
             });
             if (!studentDTONotFound.isEmpty()) return null;
         }
-        //I need to do the other service first.
+        courseDTO.setLastUpdatedDTO(LocalDate.now());
         return courseDTO(courseRepository.save(course(courseDTO)));
     }
 
     @Override
     public CourseDTO editCourse(CourseDTO courseDTO) {
-        System.out.println(courseDTO);
-        Optional<Course> courseUpdate = courseRepository.findById(courseDTO.getIdDTO());
+        System.out.println("Curso al principio edit course" + courseDTO);
+        Optional<CourseDTO> courseUpdate = courseRepository.findById(courseDTO.getIdDTO()).map(CustomMapper::courseDTO);
         List<StudentDTO> studentDTOS = courseDTO.getStudentListDTO();
         if (courseUpdate.isEmpty()) return null;
         if (!studentDTOS.isEmpty()){
@@ -125,15 +126,14 @@ public class CourseServiceImpl implements ICourseService {
             if (!studentDTONotFound.isEmpty()) return null;
         }
         else {
-            courseUpdate.get().setName(courseDTO.getNameDTO());
-            courseUpdate.get().setCoach(courseDTO.getCoachDTO());
-            courseUpdate.get().setLevel(courseDTO.getLevelDTO());
-            courseUpdate.get().setLastUpdated(courseDTO.getLastUpdatedDTO());
-            courseUpdate.get().setStudentList(courseDTO.getStudentListDTO().stream()
-                    .map(i->CustomMapper.student(i))
-                    .collect(Collectors.toList()));
+            courseUpdate.get().setNameDTO(courseDTO.getNameDTO());
+            courseUpdate.get().setCoachDTO(courseDTO.getCoachDTO());
+            courseUpdate.get().setLevelDTO(courseDTO.getLevelDTO());
+            courseUpdate.get().setLastUpdatedDTO(courseDTO.getLastUpdatedDTO());
+            courseUpdate.get().setStudentListDTO(courseDTO.getStudentListDTO());
         }
-        return courseDTO(courseRepository.save(courseUpdate.get()));
+        //System.out.println("Curso final saveStudentMethod " + courseUpdate);
+        return courseDTO(courseRepository.save(CustomMapper.course(courseUpdate.get())));
     }
 
     @Override

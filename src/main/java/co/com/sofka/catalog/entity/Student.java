@@ -9,7 +9,6 @@ import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 @Data
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
