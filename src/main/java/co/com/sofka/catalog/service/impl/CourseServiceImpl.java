@@ -1,6 +1,5 @@
 package co.com.sofka.catalog.service.impl;
 
-
 import co.com.sofka.catalog.dto.CourseDTO;
 import co.com.sofka.catalog.entity.Course;
 import co.com.sofka.catalog.exceptions.ToDoExceptions;
@@ -48,7 +47,7 @@ public class CourseServiceImpl implements ICourseService {
         Optional<Course> response = courseRepository
                 .findAll()
                 .stream()
-                .filter(x -> x.getName().equalsIgnoreCase(name))
+                .filter(x -> x.getName().toLowerCase().startsWith(name.toLowerCase()))
                 .findFirst();
         if(response.isEmpty()){
             throw new ToDoExceptions("Course not found", HttpStatus.NOT_FOUND);
@@ -84,11 +83,12 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     public CourseDTO editCourse(CourseDTO courseDTO) {
-        String courseID = courseDTO.getId();
-        Optional<Course> response = courseRepository.findById(courseID);
+        String courseId = courseDTO.getCourseId();
+        Optional<Course> response = courseRepository.findById(courseId);
         if (response.isEmpty()) {
             throw new ToDoExceptions("Course not found", HttpStatus.NOT_FOUND);
         }
+        courseDTO.setLastUpdated(LocalDate.now());
         courseRepository.save(dtoToEntity(courseDTO));
         return courseDTO;
     }
