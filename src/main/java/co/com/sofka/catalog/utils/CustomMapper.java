@@ -5,10 +5,16 @@ import co.com.sofka.catalog.dto.StudentDTO;
 import co.com.sofka.catalog.entity.Course;
 import co.com.sofka.catalog.entity.Student;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 
 public class CustomMapper{
+
+    public static List<Student> listStudent (List<StudentDTO> listStudentDto){
+        return listStudentDto.stream()
+                .map(CustomMapper::student).collect(Collectors.toList());
+    }
 
     public static Course course(CourseDTO courseDTO){
         Course c = new Course();

@@ -71,9 +71,9 @@ public class StudentServiceImpl implements IStudentService {
 
     @Override
     public StudentDTO deleteStudent(String idNum) {
-        var artist = studentRepository.findById(idNum).orElseThrow(() -> new ItemNotFoundException(idNum));
-        studentRepository.delete(artist);
-        return entityToDto(artist);
+        var student = studentRepository.findById(idNum).orElseThrow(() -> new ItemNotFoundException(idNum));
+        studentRepository.delete(student);
+        return entityToDto(student);
     }
 
 }
