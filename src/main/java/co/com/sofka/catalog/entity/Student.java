@@ -31,8 +31,6 @@ public class Student {
     @Column
     private String mail;
 
-    @Column
-    private Integer numCourses;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Course.class)
     @JoinColumn(name="course_id", foreignKey = @ForeignKey(name = "FK_course_id"))

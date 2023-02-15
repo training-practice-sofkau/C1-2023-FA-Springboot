@@ -19,7 +19,5 @@ public class StudentDTO {
 
     private String mailDTO;
 
-    private Integer numCoursesDTO;
-
     private Course courseDTO;
 }
