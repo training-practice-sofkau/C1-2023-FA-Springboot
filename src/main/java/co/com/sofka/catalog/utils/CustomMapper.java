@@ -17,7 +17,7 @@ public class CustomMapper{
         c.setCoach(courseDTO.getCoach());
         c.setLevel(courseDTO.getLevel());
         c.setLastUpdated(courseDTO.getLastUpdated());
-        c.setStudentList(courseDTO.getStudentListDTO().stream().map(CustomMapper::student).collect(Collectors.toList()));
+        //c.setStudentList(courseDTO.getStudentListDTO().stream().map(CustomMapper::student).collect(Collectors.toList()));
 
         return c;
 
@@ -28,7 +28,7 @@ public class CustomMapper{
         Student s = new Student();
         s.setId(studentDTO.getId());
         s.setName(studentDTO.getName());
-        s.setIdentificationNum(studentDTO.getIdentificationNum());
+        s.setIdNum(studentDTO.getIdNum());
         s.setAge(studentDTO.getAge());
         s.setMail(studentDTO.getMail());
         s.setNumCourses(studentDTO.getNumCourses());
@@ -56,7 +56,7 @@ public class CustomMapper{
         StudentDTO s = new StudentDTO();
         s.setId(student.getId());
         s.setName(student.getName());
-        s.setIdentificationNum(student.getIdentificationNum());
+        s.setIdNum(student.getIdNum());
         s.setAge(student.getAge());
         s.setMail(student.getMail());
         s.setNumCourses(student.getNumCourses());
