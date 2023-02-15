@@ -11,7 +11,7 @@ public interface IStudentService {
     StudentDTO entityToDto (Student student);
 
     List<StudentDTO> getAllStudents();
-    StudentDTO getByIdentificationNumber(String idNum);
+    List<StudentDTO> getByIdentificationNumber(String idNum);
 
     List<StudentDTO> getByName(String s);
     StudentDTO saveStudent(StudentDTO studentDTO);
