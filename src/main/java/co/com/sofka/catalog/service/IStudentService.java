@@ -9,7 +9,7 @@ public interface IStudentService {
     List<StudentDTO> getAllStudents();
     StudentDTO getByIdentificationNumber(String idNum);
     StudentDTO getByName(String name);
-    StudentDTO saveStudent(Student student);
-    StudentDTO editStudent(Student student);
-    String deleteStudent(String idNum);
+    StudentDTO saveStudent(StudentDTO studentDTO);
+    StudentDTO editStudent(StudentDTO studentDTO);
+    void deleteStudent(String id);
 }
