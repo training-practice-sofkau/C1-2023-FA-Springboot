@@ -27,6 +27,16 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
+    public StudentDTO getById(String id) {
+        Student student = studentRepository.findById(id).orElse(null);
+        assert student != null;
+        if(student.getCourse() != null){
+            return StudentMapper.toDto(student);
+        }
+        return StudentMapper.toDtoNoCourse(student);
+    }
+
+    @Override
     public StudentDTO getByIdentificationNumber(String idNum) {
         return StudentMapper.toDto(studentRepository.findByIdNum(idNum));
     }

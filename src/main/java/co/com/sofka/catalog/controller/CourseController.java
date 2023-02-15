@@ -20,6 +20,11 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getAllCourses());
     }
 
+    @GetMapping("/byname/{name}")
+    public ResponseEntity<CourseDTO> getByName(@PathVariable("name") String name){
+        return ResponseEntity.ok(courseService.getByName(name));
+    }
+
     @GetMapping("/bycoach/{coach}")
     public ResponseEntity<List<CourseDTO>> getByCoach(@PathVariable("coach") String coach){
         return ResponseEntity.ok(courseService.getByCoach(coach));

@@ -1,9 +1,12 @@
 package co.com.sofka.catalog.controller;
 
+import co.com.sofka.catalog.dto.StudentDTO;
 import co.com.sofka.catalog.service.impl.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/students")
@@ -12,40 +15,39 @@ public class StudentController {
 
     @Autowired
     StudentServiceImpl studentService;
-/*
+
     @GetMapping()
-    public ResponseEntity<List<CourseDTO>> getAll(){
-        return ResponseEntity.ok(courseService.getAllCourses());
+    public ResponseEntity<List<StudentDTO>> getAll(){
+        return ResponseEntity.ok(studentService.getAllStudents());
     }
 
-    @GetMapping("/bycoach/{coach}")
-    public ResponseEntity<List<CourseDTO>> getByCoach(@PathVariable("coach") String coach){
-        return ResponseEntity.ok(courseService.getByCoach(coach));
+    @GetMapping("/byidnum/{idnum}")
+    public ResponseEntity<StudentDTO> getByIdNum(@PathVariable("idnum") String idnum){
+        return ResponseEntity.ok(studentService.getByIdentificationNumber(idnum));
     }
 
-    @GetMapping("/bylevel/{level}")
-    public ResponseEntity<List<CourseDTO>> getByLevel(@PathVariable("level") Integer level){
-        return ResponseEntity.ok(courseService.getByLevel(level));
+    @GetMapping("/byname/{name}")
+    public ResponseEntity<StudentDTO> getByName(@PathVariable("name") String name){
+        return ResponseEntity.ok(studentService.getByName(name));
     }
 
     @PostMapping()
-    public ResponseEntity<CourseDTO> createCourse(@RequestBody CourseDTO courseDTO){
-        CourseDTO result = courseService.createCourse(courseDTO);
+    public ResponseEntity<StudentDTO> createStudent(@RequestBody StudentDTO studentDTO){
+        StudentDTO result = studentService.saveStudent(studentDTO);
         return result != null ? ResponseEntity.ok(result) : ResponseEntity.noContent().build();
     }
 
     @PutMapping()
-    public ResponseEntity<CourseDTO> editCourse(@RequestBody CourseDTO courseDTO){
-        CourseDTO result = courseService.getById(courseDTO.getId());
+    public ResponseEntity<StudentDTO> editStudent(@RequestBody StudentDTO studentDTO){
+        StudentDTO result = studentService.getById(studentDTO.getId());
         if(result.getName() != null){
-            return ResponseEntity.ok(courseService.editCourse(courseDTO));
+            return ResponseEntity.ok(studentService.editStudent(studentDTO));
         }
         return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("{id}")
-    public void deleteCourse(@PathVariable("id") String id){
-        courseService.deleteCourse(id);
+    public void deleteStudent(@PathVariable("id") String id){
+        studentService.deleteStudent(id);
     }
-    */
 }

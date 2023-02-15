@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface IStudentService {
     List<StudentDTO> getAllStudents();
+    StudentDTO getById(String id);
     StudentDTO getByIdentificationNumber(String idNum);
     StudentDTO getByName(String name);
     StudentDTO saveStudent(StudentDTO studentDTO);
