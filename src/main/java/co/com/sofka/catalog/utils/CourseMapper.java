@@ -2,12 +2,43 @@ package co.com.sofka.catalog.utils;
 
 import co.com.sofka.catalog.dto.CourseDTO;
 import co.com.sofka.catalog.entity.Course;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
+@Component
 public class CourseMapper {
 
-    public CourseDTO toDto(Course course){
+    public static CourseDTO toDto(Course course){
+        return new CourseDTO(
+                course.getCourseId(),
+                course.getName(),
+                course.getCoach(),
+                course.getStudentList()
+                        .stream()
+                        .map(StudentMapper::toDtoFromCourse)
+                        .collect(Collectors.toList()),
+                course.getLevel(),
+                course.getLastUpdated()
+        );
+    }
+
+    public static Course toEntity(CourseDTO courseDTO){
+        return new Course(
+                courseDTO.getId(),
+                courseDTO.getName(),
+                courseDTO.getCoach(),
+                courseDTO.getLevel(),
+                courseDTO.getLastUpdated(),
+                courseDTO.getStudentListDTO()
+                        .stream()
+                        .map(StudentMapper::toEntityFromCourse)
+                        .collect(Collectors.toList())
+                );
+    }
+
+    public static CourseDTO toDtoFromStudent(Course course){
         return new CourseDTO(
                 course.getCourseId(),
                 course.getName(),
@@ -18,7 +49,7 @@ public class CourseMapper {
         );
     }
 
-    public Course toEntity(CourseDTO courseDTO){
+    public static Course toEntityFromStudent(CourseDTO courseDTO){
         return new Course(
                 courseDTO.getId(),
                 courseDTO.getName(),
