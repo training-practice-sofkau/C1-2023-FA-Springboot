@@ -28,7 +28,8 @@ public class StudentServiceImpl implements IStudentService {
 
     @Override
     public StudentDTO getByIdentificationNumber(String idNum) {
-        return CustomMapper.studentDTO(studentRepository.findByIdNum(idNum));
+        Optional<Student> s = studentRepository.findByIdNum(idNum);
+        return s.map(CustomMapper::studentDTO).orElse(null);
     }
 
     @Override

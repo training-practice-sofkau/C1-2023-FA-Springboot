@@ -37,4 +37,16 @@ public class StudentController {
         return studentDTO1 == null ? ResponseEntity.badRequest().body("Wrong params sent for student o The course you are trying to register doesn't exist") : ResponseEntity.ok().body(studentDTO1);
     }
 
+    @GetMapping(value = "/nonpunctualn")
+    public ResponseEntity getStudentsByName(@RequestParam String name){
+        return ResponseEntity.ok(studentService.getByName(name));
+    }
+
+    @GetMapping(value = "/punctualn")
+    public ResponseEntity getStudentByIdNum(@RequestParam String idNum){
+        StudentDTO studentDTO = studentService.getByIdentificationNumber(idNum);
+        return studentDTO == null ? ResponseEntity.badRequest().body("There is not a student with this id") : ResponseEntity.ok().body(studentDTO);
+
+    }
+
 }
