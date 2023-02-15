@@ -27,7 +27,7 @@ public class Course {
 
     private String coach;
 
-    private Integer level;
+    private int level;
 
     @UpdateTimestamp
     private LocalDate lastUpdated;

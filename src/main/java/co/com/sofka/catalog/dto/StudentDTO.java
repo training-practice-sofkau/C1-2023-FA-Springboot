@@ -1,5 +1,6 @@
 package co.com.sofka.catalog.dto;
 
+import co.com.sofka.catalog.entity.Course;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,9 +15,11 @@ public class StudentDTO {
 
     private String idNum;
 
-    private Integer age;
+    private int age;
 
     private String mail;
 
-    private Integer numCourses;
+    private CourseDTO course;
+
+    //private int numCourses;
 }

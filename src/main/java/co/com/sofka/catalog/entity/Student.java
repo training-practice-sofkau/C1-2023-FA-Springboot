@@ -25,14 +25,14 @@ public class Student {
 
     private String idNum;
 
-    private Integer age;
+    private int age;
 
     private String mail;
 
-    private Integer numCourses;
+    //private int numCourses;
 
     //ManyToOne
-    @ManyToOne
+    @ManyToOne(optional = true)
     @JsonBackReference
     private Course course;
 

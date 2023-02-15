@@ -20,7 +20,7 @@ public class CourseDTO {
 
     private List<StudentDTO> studentListDTO = new ArrayList<>();;
 
-    private Integer level;
+    private int level;
 
     private LocalDate lastUpdated;
 }
