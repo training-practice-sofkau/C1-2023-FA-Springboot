@@ -78,13 +78,17 @@ public class StudentServiceImpl implements IStudentService {
     @Override
     public StudentDTO editStudent(StudentDTO studentDTO, String studentID) {
         Optional<Student> response = studentRepository.findById(studentID);
-        Optional<Course> responseC = courseRepository.findById(studentDTO.getCourse().getCourseId());
+
         if (response.isEmpty()) {
             throw new ExceptionsHandler("Student not found", HttpStatus.NOT_FOUND);
         }
-        if (responseC.isEmpty()) {
-            throw new ExceptionsHandler("Course not found", HttpStatus.NOT_FOUND);
+        if  (studentDTO.getCourse() != null){
+            Optional<Course> responseC = courseRepository.findById(studentDTO.getCourse().getCourseId());
+            if (responseC.isEmpty()){
+                throw new ExceptionsHandler("Course not found", HttpStatus.NOT_FOUND);
+            }
         }
+
         StudentDTO oldStudentDTO = entityToDTO(response.get());
         oldStudentDTO.setName(studentDTO.getName());
         oldStudentDTO.setAge(studentDTO.getAge());
