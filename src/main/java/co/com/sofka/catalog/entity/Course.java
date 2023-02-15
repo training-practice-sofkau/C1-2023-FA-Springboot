@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,10 +29,10 @@ public class Course {
     @Column
     private Integer level;
     @Column
-    private LocalDate lastUpdated;
+    private LocalDateTime lastUpdated;
 
     //OneToMany
     @JsonManagedReference
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, targetEntity = Student.class)
-    private List<Student> studentList = new ArrayList<>();
+    private List<Student> students = new ArrayList<>();
 }
