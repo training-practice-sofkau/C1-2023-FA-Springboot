@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -74,6 +75,7 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     public CourseDTO createCourse(CourseDTO courseDTO){
+        courseDTO.setLastUpdated(LocalDateTime.now());
         return entityToDTO(courseRepository.save(dtoToEntity(courseDTO)));
     }
 
@@ -87,7 +89,7 @@ public class CourseServiceImpl implements ICourseService {
         oldCourseDTO.setName(courseDTO.getName());
         oldCourseDTO.setCoach(courseDTO.getCoach());
         oldCourseDTO.setLevel(courseDTO.getLevel());
-        oldCourseDTO.setLastUpdated(LocalDate.now());
+        oldCourseDTO.setLastUpdated(LocalDateTime.now());
         oldCourseDTO.setStudentList(courseDTO.getStudentList());
 
         return entityToDTO(courseRepository.save(dtoToEntity(oldCourseDTO)));

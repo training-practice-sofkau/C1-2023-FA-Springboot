@@ -19,6 +19,5 @@ public class StudentDTO {
 
     private String mail;
 
-    private Integer numCourses;
     private Course course;
 }

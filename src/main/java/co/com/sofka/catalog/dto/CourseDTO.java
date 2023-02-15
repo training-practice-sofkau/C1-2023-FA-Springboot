@@ -5,7 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 @Data
@@ -18,10 +19,8 @@ public class CourseDTO {
 
     private String coach;
 
-    private List<StudentDTO> studentListDTO;
-
     private Integer level;
 
-    private LocalDate lastUpdated;
+    private LocalDateTime lastUpdated;
     private List<Student> studentList= new ArrayList<>();
 }

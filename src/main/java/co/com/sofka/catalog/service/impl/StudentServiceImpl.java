@@ -9,6 +9,7 @@ import co.com.sofka.catalog.repository.StudentRepository;
 import co.com.sofka.catalog.service.IStudentService;
 import co.com.sofka.catalog.utils.ExceptionsHandler;
 import org.modelmapper.ModelMapper;
+import org.springframework.boot.Banner;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +23,13 @@ import java.util.stream.Collectors;
 public class StudentServiceImpl implements IStudentService {
 
     private StudentRepository studentRepository;
+    private CourseRepository courseRepository;
     private ModelMapper modelMapper;
 
-    public StudentServiceImpl(StudentRepository studentRepository, ModelMapper modelMapper) {
+    public StudentServiceImpl(StudentRepository studentRepository, CourseRepository courseRepository, ModelMapper modelMapper) {
         this.studentRepository = studentRepository;
         this.modelMapper = modelMapper;
+        this.courseRepository=courseRepository;
     }
 
     @Override
@@ -75,15 +78,18 @@ public class StudentServiceImpl implements IStudentService {
     @Override
     public StudentDTO editStudent(StudentDTO studentDTO, String studentID) {
         Optional<Student> response = studentRepository.findById(studentID);
+        Optional<Course> responseC = courseRepository.findById(studentDTO.getCourse().getCourseId());
         if (response.isEmpty()) {
             throw new ExceptionsHandler("Student not found", HttpStatus.NOT_FOUND);
+        }
+        if (responseC.isEmpty()) {
+            throw new ExceptionsHandler("Course not found", HttpStatus.NOT_FOUND);
         }
         StudentDTO oldStudentDTO = entityToDTO(response.get());
         oldStudentDTO.setName(studentDTO.getName());
         oldStudentDTO.setAge(studentDTO.getAge());
         oldStudentDTO.setIdNum(studentDTO.getIdNum());
         oldStudentDTO.setMail(studentDTO.getMail());
-        oldStudentDTO.setNumCourses(studentDTO.getNumCourses());
         oldStudentDTO.setCourse(studentDTO.getCourse());
 
         return entityToDTO(studentRepository.save(dtoToEntity(oldStudentDTO)));
