@@ -5,6 +5,7 @@ import co.com.sofka.catalog.dto.StudentDTO;
 import co.com.sofka.catalog.entity.Course;
 import co.com.sofka.catalog.entity.Student;
 
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 
@@ -12,6 +13,7 @@ public class CustomMapper{
 
     public static Course course(CourseDTO courseDTO){
         Course c = new Course();
+        if (courseDTO==null) return null;
         c.setId(courseDTO.getId());
         c.setName(courseDTO.getName());
         c.setCoach(courseDTO.getCoach());
@@ -28,10 +30,11 @@ public class CustomMapper{
         Student s = new Student();
         s.setId(studentDTO.getId());
         s.setName(studentDTO.getName());
-        s.setIdentificationNum(studentDTO.getIdentificationNum());
+        s.setIdNum(studentDTO.getIdNum());
         s.setAge(studentDTO.getAge());
         s.setMail(studentDTO.getMail());
-        s.setNumCourses(studentDTO.getNumCourses());
+        //s.setCourse(course(studentDTO.getCourse()));
+        //s.setNumCourses(studentDTO.getNumCourses());
 
         return s;
 
@@ -40,6 +43,7 @@ public class CustomMapper{
 
     public static CourseDTO courseDTO(Course course){
         CourseDTO c = new CourseDTO();
+        if(course==null) return null;
         c.setId(course.getId());
         c.setName(course.getName());
         c.setCoach(course.getCoach());
@@ -56,10 +60,12 @@ public class CustomMapper{
         StudentDTO s = new StudentDTO();
         s.setId(student.getId());
         s.setName(student.getName());
-        s.setIdentificationNum(student.getIdentificationNum());
+        s.setIdNum(student.getIdNum());
         s.setAge(student.getAge());
         s.setMail(student.getMail());
-        s.setNumCourses(student.getNumCourses());
+        //student.getCourse().setStudentList(new ArrayList<>());
+        //s.setCourse(courseDTO(student.getCourse()));
+        //s.setNumCourses(student.getNumCourses());
 
         return s;
 

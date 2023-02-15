@@ -1,8 +1,12 @@
 package co.com.sofka.catalog.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +16,7 @@ import org.hibernate.annotations.GenericGenerator;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Student {
     @GenericGenerator(name="UUID",
             strategy = "co.com.sofka.catalog.utils.UUIDGeneratorTruncated")
@@ -23,13 +28,15 @@ public class Student {
 
     private String idNum;
 
-    private Integer age;
+    private int age;
 
     private String mail;
 
-    private Integer numCourses;
+    //private int numCourses;
 
     //ManyToOne
+    @ManyToOne(optional = true)
+    @JsonBackReference
     private Course course;
 
 }

@@ -1,14 +1,18 @@
 package co.com.sofka.catalog.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -26,12 +30,15 @@ public class Course {
 
     private String coach;
 
-    private Integer level;
+    private int level;
 
+    @UpdateTimestamp
     private LocalDate lastUpdated;
 
     //OneToMany
-    private List<Student> studentList;
+    @OneToMany(mappedBy = "course")
+    @JsonManagedReference
+    private List<Student> studentList = new ArrayList<>();
 
 
 
