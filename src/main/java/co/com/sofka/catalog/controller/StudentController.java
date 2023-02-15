@@ -28,4 +28,10 @@ public class StudentController {
                 ResponseEntity.ok(studentService.getAllStudents());
     }
 
+    @GetMapping("/byIdNum/{idNum}")
+    private ResponseEntity<StudentDTO> findByIdNum(@PathVariable("idNum") String idNum){
+        return this.studentService.getByIdentificationNumber(idNum) == null ? ResponseEntity.status(404).body(new StudentDTO())
+                : ResponseEntity.ok(studentService.getByIdentificationNumber(idNum));
+    }
+
 }
