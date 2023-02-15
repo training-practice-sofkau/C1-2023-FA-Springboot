@@ -3,15 +3,18 @@ package co.com.sofka.catalog.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
 public class CourseStudent {
-    @GeneratedValue()
+    @GenericGenerator(name = "UUID",
+            strategy = "co.com.sofka.catalog.utils.UUIDGeneratorTruncated")
+    @GeneratedValue(generator = "UUID")
     @Id
-    private Integer id;
+    private String id;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Student.class)
     @JoinColumn(name = "student_id", foreignKey = @ForeignKey(name = "FK_student_id"))
