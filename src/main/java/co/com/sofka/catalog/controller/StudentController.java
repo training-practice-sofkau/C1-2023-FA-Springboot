@@ -22,8 +22,8 @@ public class StudentController {
                 : ResponseEntity.ok(studentService.getAllStudents());
     }
 
-    @GetMapping("/students/{id}")
-    private ResponseEntity<StudentDTO> obtenerEstudiantePorId(@PathVariable("id") String id){
+    @GetMapping("/students/idNum/{id}")
+    private ResponseEntity<List<StudentDTO>> obtenerEstudiantePorId(@PathVariable("id") String id){
         return studentService.getByIdentificationNumber(id) == null
                 ? ResponseEntity.status(404).build()
                 : ResponseEntity.ok(studentService.getByIdentificationNumber(id));
@@ -37,7 +37,7 @@ public class StudentController {
     }
 
     @PostMapping("/students")
-    private ResponseEntity<StudentDTO> guardarArtista(@RequestBody StudentDTO studentDTO){
+    private ResponseEntity<StudentDTO> guardarEstudiante(@RequestBody StudentDTO studentDTO){
         StudentDTO studentSaved = studentService.saveStudent(studentDTO);
         return  studentSaved == null
                 ? ResponseEntity.status(400).body(studentDTO)
@@ -45,7 +45,7 @@ public class StudentController {
     }
 
     @PutMapping("/students/{id}")
-    private ResponseEntity<StudentDTO> actualizarArtista(@PathVariable("id") String id, @RequestBody StudentDTO studentDTO){
+    private ResponseEntity<StudentDTO> actualizarEstudiante(@PathVariable("id") String id, @RequestBody StudentDTO studentDTO){
         StudentDTO updatedArtist = studentService.editStudent(id, studentDTO);
         return studentDTO == null
                 ? ResponseEntity.status(404).body(updatedArtist)
@@ -53,7 +53,7 @@ public class StudentController {
     }
 
     @DeleteMapping("/students/{id}")
-    private ResponseEntity<StudentDTO> borrarArtista(@PathVariable("id") String id){
+    private ResponseEntity<StudentDTO> borrarEstudiante(@PathVariable("id") String id){
         StudentDTO studentDeleted = studentService.deleteStudent(id);
         return studentDeleted == null
                 ? ResponseEntity.status(404).build()
