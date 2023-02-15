@@ -4,6 +4,7 @@ import co.com.sofka.catalog.dto.CourseDTO;
 import co.com.sofka.catalog.entity.Course;
 import co.com.sofka.catalog.service.impl.CourseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,6 +50,16 @@ public class CourseController {
                 : ResponseEntity.ok(courseService.getByLevel(level));
     }
 
+    @DeleteMapping("{id}")
+    private ResponseEntity<?> deleteCourse(@PathVariable("id") String idCourse){
+        try{
+            courseService.deleteCourse(idCourse);
+            return ResponseEntity.ok("Student deleted");
+        }
+        catch (EmptyResultDataAccessException e){
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @PutMapping("{id}")
     private ResponseEntity<Course> updateCourse(@PathVariable("id") String idCourse, @RequestBody CourseDTO courseDetails ){
@@ -61,5 +72,6 @@ public class CourseController {
         courseService.createCourse(courseUp);
 
         return ResponseEntity.ok(this.courseService.editCourse(courseUp));
+
     }
 }

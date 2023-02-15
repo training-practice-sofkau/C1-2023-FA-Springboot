@@ -58,8 +58,8 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public String deleteCourse(CourseDTO courseDTO) {
-        return null;
+    public void deleteCourse(String id) {
+        courseRepository.deleteById(id);
     }
 
     public CourseDTO findCourseById(String id){

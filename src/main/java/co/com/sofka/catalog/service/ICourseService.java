@@ -14,6 +14,6 @@ public interface ICourseService {
     List<CourseDTO> getByCoach(String c);
     List<CourseDTO> getByLevel(Integer level);
     Course editCourse(CourseDTO courseDTO);
-    String deleteCourse(CourseDTO courseDTO);
+    void deleteCourse(String id);
 
 }
