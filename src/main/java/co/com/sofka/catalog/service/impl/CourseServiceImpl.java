@@ -8,12 +8,14 @@ import co.com.sofka.catalog.repository.CourseRepository;
 import co.com.sofka.catalog.repository.StudentRepository;
 import co.com.sofka.catalog.service.ICourseService;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 public class CourseServiceImpl implements ICourseService {
 
     private StudentRepository studentRepository;
@@ -89,6 +91,11 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
+    public Optional<CourseDTO> findById(String courseId) {
+        return courseRepository.findById(courseId).map(this::courseDTO);
+    }
+
+    @Override
     public CourseDTO saveCourse(CourseDTO courseDTO) {
        /* List<StudentDTO> studentDTOS = courseDTO.getStudentListDTO();
         if (!studentDTOS.isEmpty()){
@@ -107,13 +114,12 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public String deleteCourse(CourseDTO courseDTO) {
-        //String courseIdDTO = courseDTO.getIdDTO();
-        if (courseDTO.getIdDTO().isEmpty()) return null;
+    public String deleteCourse(String courseId) {
+        Optional<CourseDTO> courseDTO = this.findById(courseId);
+        if (courseDTO.isEmpty()) return null;
         else {
-            courseRepository.deleteById(courseDTO.getIdDTO());
-            return "Artist with id: " + courseDTO.getIdDTO() + " was deleted successfully";
+            courseRepository.deleteById(courseId);
+            return "Artist with id: " + courseId + " was deleted successfully";
         }
-
     }
 }
