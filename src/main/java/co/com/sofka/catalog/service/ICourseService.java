@@ -9,7 +9,7 @@ import java.util.List;
 public interface ICourseService {
 
     Course createCourse(CourseDTO courseDTO);
-    List<CourseDTO> getAllCourses();
+    List<Course> getAllCourses();
     CourseDTO getByName(String name);
     List<CourseDTO> getByCoach(String c);
     List<CourseDTO> getByLevel(Integer level);

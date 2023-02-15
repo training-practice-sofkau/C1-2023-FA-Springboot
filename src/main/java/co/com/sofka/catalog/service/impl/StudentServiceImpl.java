@@ -22,14 +22,12 @@ public class StudentServiceImpl implements IStudentService {
     }
     public StudentDTO entityToDto(Student student) { return CustomMapper.studentDTO(student);}
     @Override
-    public StudentDTO createStudent(StudentDTO studentDTO) {
-       return entityToDto(this.studentRepository.save(dtoToEntity(studentDTO)));
+    public Student createStudent(StudentDTO studentDTO) {
+       return this.studentRepository.save(dtoToEntity(studentDTO));
     }
     @Override
-    public List<StudentDTO> getAllStudents() {
-        return studentRepository.findAll()
-                .stream().map(this::entityToDto)
-                .collect(Collectors.toList());
+    public List<Student> getAllStudents() {
+        return studentRepository.findAll();
     }
 
     @Override

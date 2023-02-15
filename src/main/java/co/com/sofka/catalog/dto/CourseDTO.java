@@ -18,6 +18,4 @@ public class CourseDTO {
     private String coach;
 
     private Integer level;
-
-//    private List<StudentDTO> studentListDTO;
 }

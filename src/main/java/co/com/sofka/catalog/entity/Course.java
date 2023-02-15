@@ -1,15 +1,14 @@
 package co.com.sofka.catalog.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -31,9 +30,16 @@ public class Course {
 
     private LocalDate lastUpdated;
 
-    //OneToMany
-//    private List<Student> studentList;
+    @ManyToMany
+    @JoinTable(
+            name = "student_enrolled",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
+    private Set<Student> enrolledStudents = new HashSet<>();
 
 
-
+    public void enrolledStudent(Student student) {
+        enrolledStudents.add(student);
+    }
 }

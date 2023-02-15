@@ -6,6 +6,7 @@ import co.com.sofka.catalog.dto.StudentDTO;
 import co.com.sofka.catalog.entity.Course;
 import co.com.sofka.catalog.entity.Student;
 import co.com.sofka.catalog.repository.CourseRepository;
+import co.com.sofka.catalog.repository.StudentRepository;
 import co.com.sofka.catalog.service.ICourseService;
 import co.com.sofka.catalog.utils.CustomMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class CourseServiceImpl implements ICourseService {
 
     @Autowired
     CourseRepository courseRepository;
+    @Autowired
+    StudentRepository studentRepository;
 
     public Course dtoToEntity(CourseDTO courseDTO) { return CustomMapper.course(courseDTO); }
 
@@ -29,10 +32,8 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public List<CourseDTO> getAllCourses() {
-        return courseRepository.findAll()
-                .stream().map(this::entityToDto)
-                .collect(Collectors.toList());
+    public List<Course> getAllCourses() {
+        return courseRepository.findAll();
     }
 
     @Override
@@ -64,5 +65,12 @@ public class CourseServiceImpl implements ICourseService {
 
     public CourseDTO findCourseById(String id){
         return entityToDto(courseRepository.findById(id).orElse(new Course()));
+    }
+
+    public Course enrolledStudent(String idCourse, String idStudent){
+        Course course = courseRepository.findById(idCourse).get();
+        Student student = studentRepository.findById(idStudent).get();
+        course.enrolledStudent(student);
+        return courseRepository.save(course);
     }
 }

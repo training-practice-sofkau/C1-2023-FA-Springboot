@@ -24,7 +24,7 @@ public class CourseController {
     }
 
     @GetMapping
-    private ResponseEntity<List<CourseDTO>> findAll(){
+    private ResponseEntity<List<Course>> findAll(){
         return this.courseService.getAllCourses().isEmpty() ?
                 ResponseEntity.status(204).body(Collections.emptyList()) :
                 ResponseEntity.ok(courseService.getAllCourses());
@@ -73,5 +73,13 @@ public class CourseController {
 
         return ResponseEntity.ok(this.courseService.editCourse(courseUp));
 
+    }
+
+    @PutMapping("/{courseId}/students/{studentId}")
+    Course enrolleStudentToCourse(
+            @PathVariable("courseId") String idCourse,
+            @PathVariable("studentId") String idStudent
+    ){
+       return courseService.enrolledStudent(idCourse, idStudent);
     }
 }

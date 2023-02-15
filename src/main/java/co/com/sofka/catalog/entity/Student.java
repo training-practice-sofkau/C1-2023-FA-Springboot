@@ -1,13 +1,14 @@
 package co.com.sofka.catalog.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -24,5 +25,9 @@ public class Student {
     private Integer age;
     private String idNum;
     private String mail;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "enrolledStudents")
+    private Set<Course> courses = new HashSet<>();
 
 }
