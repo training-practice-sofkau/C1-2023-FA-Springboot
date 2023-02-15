@@ -8,11 +8,12 @@ import co.com.sofka.catalog.repository.StudentRepository;
 import co.com.sofka.catalog.service.IStudentService;
 import co.com.sofka.catalog.utils.CustomMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Service
 public class StudentServiceImpl implements IStudentService {
 
     @Autowired
