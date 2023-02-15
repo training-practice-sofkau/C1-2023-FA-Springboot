@@ -1,8 +1,10 @@
 package co.com.sofka.catalog.service.impl;
 
 import co.com.sofka.catalog.dto.StudentDTO;
+import co.com.sofka.catalog.entity.Course;
 import co.com.sofka.catalog.entity.Student;
 import co.com.sofka.catalog.exceptions.ToDoExceptions;
+import co.com.sofka.catalog.repository.CourseRepository;
 import co.com.sofka.catalog.repository.StudentRepository;
 import co.com.sofka.catalog.service.IStudentService;
 import org.modelmapper.ModelMapper;
@@ -16,11 +18,12 @@ import java.util.Optional;
 public class StudentServiceImpl implements IStudentService {
 
     private final ModelMapper modelMapper;
-
+    private final CourseRepository courseRepository;
     private final StudentRepository studentRepository;
 
-    public StudentServiceImpl(ModelMapper modelMapper, StudentRepository studentRepository) {
+    public StudentServiceImpl(ModelMapper modelMapper, StudentRepository studentRepository, CourseRepository courseRepository) {
         this.modelMapper = modelMapper;
+        this.courseRepository = courseRepository;
         this.studentRepository = studentRepository;
     }
 
@@ -76,10 +79,15 @@ public class StudentServiceImpl implements IStudentService {
 
     @Override
     public StudentDTO editStudent(StudentDTO studentDTO) {
-        String studentId = studentDTO.getStudentId();
-        Optional<Student> response = studentRepository.findById(studentId);
-        if (response.isEmpty()) {
+        Optional<Student> studentResponse = studentRepository.findById(studentDTO.getStudentId());
+        if (studentResponse.isEmpty()) {
             throw new ToDoExceptions("Student not found", HttpStatus.NOT_FOUND);
+        }
+        if (studentDTO.getCourse() != null){
+            Optional<Course> courseResponse = courseRepository.findById(studentDTO.getCourse().getCourseId());
+            if (courseResponse.isEmpty()) {
+                throw new ToDoExceptions("Course not found", HttpStatus.NOT_FOUND);
+            }
         }
         studentRepository.save(dtoToEntity(studentDTO));
         return studentDTO;
