@@ -52,15 +52,15 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     public CourseDTO editCourse(CourseDTO courseDTO) {
+        System.out.println(courseDTO);
         Course course = courseRepository.findById(courseDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Course not found"));
         course.setCoach(courseDTO.getCoach());
         course.setLevel(courseDTO.getLevel());
         course.setName(courseDTO.getName());
-        course.setStudentList(courseDTO.getStudentList().stream()
-                .map(CustomMapper::student)
-                .toList());
+        //course.setStudentList(courseDTO.getStudentList().stream().map(CustomMapper::student).toList());
         course.setLastUpdated(Instant.now());
+        System.out.println(course);
         return CustomMapper.courseDTO(courseRepository.save(course));
     }
 

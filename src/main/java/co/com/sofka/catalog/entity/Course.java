@@ -1,13 +1,7 @@
 package co.com.sofka.catalog.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,7 +38,7 @@ public class Course {
 
     @OneToMany(
             mappedBy = "course",
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.MERGE,
             targetEntity = Student.class
     )
     @JsonManagedReference

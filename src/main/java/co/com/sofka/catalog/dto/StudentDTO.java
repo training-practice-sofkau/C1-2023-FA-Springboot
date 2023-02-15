@@ -1,5 +1,8 @@
 package co.com.sofka.catalog.dto;
 
+import co.com.sofka.catalog.entity.Course;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,5 +16,5 @@ public class StudentDTO {
     private String idNum;
     private Integer age;
     private String mail;
-    private Integer numCourses = 0;
+    private Course course;
 }

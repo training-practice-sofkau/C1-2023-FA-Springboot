@@ -47,7 +47,7 @@ public class StudentServiceImpl implements IStudentService {
         student.setAge(studentDTO.getAge());
         student.setIdNum(studentDTO.getIdNum());
         student.setMail(studentDTO.getMail());
-        student.setNumCourses(studentDTO.getNumCourses());
+        student.setCourse(studentDTO.getCourse());
 
         return CustomMapper.studentDTO(studentRepository.save(student));
     }

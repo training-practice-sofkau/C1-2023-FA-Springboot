@@ -39,9 +39,6 @@ public class Student {
     @Column
     private String mail;
 
-    @Column
-    private Integer numCourses = 0;
-
     @ManyToOne(
             fetch = FetchType.LAZY,
             targetEntity = Course.class
