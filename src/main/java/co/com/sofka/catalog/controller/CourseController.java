@@ -1,7 +1,6 @@
 package co.com.sofka.catalog.controller;
 
 import co.com.sofka.catalog.dto.CourseDTO;
-import co.com.sofka.catalog.dto.StudentDTO;
 import co.com.sofka.catalog.entity.Course;
 import co.com.sofka.catalog.service.impl.CourseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +47,19 @@ public class CourseController {
         return this.courseService.getByLevel(level).isEmpty() ?
                 ResponseEntity.status(204).body(Collections.emptyList())
                 : ResponseEntity.ok(courseService.getByLevel(level));
+    }
+
+
+    @PutMapping("{id}")
+    private ResponseEntity<Course> updateCourse(@PathVariable("id") String idCourse, @RequestBody CourseDTO courseDetails ){
+        CourseDTO courseUp = courseService.findCourseById(idCourse);
+
+        courseUp.setName(courseDetails.getName());
+        courseUp.setCoach(courseDetails.getCoach());
+        courseUp.setLevel(courseDetails.getLevel());
+
+        courseService.createCourse(courseUp);
+
+        return ResponseEntity.ok(this.courseService.editCourse(courseUp));
     }
 }

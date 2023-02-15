@@ -13,7 +13,7 @@ public interface ICourseService {
     CourseDTO getByName(String name);
     List<CourseDTO> getByCoach(String c);
     List<CourseDTO> getByLevel(Integer level);
-    CourseDTO editCourse(CourseDTO courseDTO);
+    Course editCourse(CourseDTO courseDTO);
     String deleteCourse(CourseDTO courseDTO);
 
 }

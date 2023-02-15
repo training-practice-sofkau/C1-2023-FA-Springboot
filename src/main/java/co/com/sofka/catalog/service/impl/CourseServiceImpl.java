@@ -53,12 +53,16 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public CourseDTO editCourse(CourseDTO courseDTO) {
-        return null;
+    public Course editCourse(CourseDTO courseDTO) {
+        return courseRepository.save(dtoToEntity(courseDTO));
     }
 
     @Override
     public String deleteCourse(CourseDTO courseDTO) {
         return null;
+    }
+
+    public CourseDTO findCourseById(String id){
+        return entityToDto(courseRepository.findById(id).orElse(new Course()));
     }
 }
