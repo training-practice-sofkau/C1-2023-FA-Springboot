@@ -9,6 +9,7 @@ import co.com.sofka.catalog.utils.CourseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,9 +18,6 @@ public class CourseServiceImpl implements ICourseService {
 
     @Autowired
     CourseRepository courseRepository;
-
-    @Autowired
-    CourseMapper courseMapper;
 
 
     @Override
@@ -32,26 +30,41 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     public CourseDTO getByName(String name) {
-        return null;
+        return CourseMapper.toDto(courseRepository.findByName(name));
     }
 
     @Override
     public List<CourseDTO> getByCoach(String coach) {
-        return null;
+        return courseRepository.findAllByCoach(coach)
+                .stream()
+                .map(CourseMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<CourseDTO> getByLevel(String level) {
-        return null;
+        return courseRepository.findAllByLevel(level)
+                .stream()
+                .map(CourseMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public CourseDTO editCourse(Course course) {
+        Course edited = courseRepository.findById(course.getCourseId()).orElse(null);
+        if(edited != null){
+            edited.setName(course.getName());
+            edited.setCoach(course.getCoach());
+            edited.setLevel(course.getLevel());
+            edited.setLastUpdated(LocalDate.now());
+            edited.setStudentList(course.getStudentList());
+            return CourseMapper.toDto(courseRepository.save(edited));
+        }
         return null;
     }
 
     @Override
-    public String deleteCourse(Course course) {
-        return null;
+    public void deleteCourse(String id) {
+        courseRepository.deleteById(id);
     }
 }

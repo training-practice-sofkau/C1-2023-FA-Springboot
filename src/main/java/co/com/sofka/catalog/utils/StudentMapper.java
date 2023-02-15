@@ -2,9 +2,7 @@
 package co.com.sofka.catalog.utils;
 
 
-import co.com.sofka.catalog.dto.CourseDTO;
 import co.com.sofka.catalog.dto.StudentDTO;
-import co.com.sofka.catalog.entity.Course;
 import co.com.sofka.catalog.entity.Student;
 import org.springframework.stereotype.Component;
 
