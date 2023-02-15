@@ -1,6 +1,7 @@
 package co.com.sofka.catalog.dto;
 
 import co.com.sofka.catalog.entity.Course;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

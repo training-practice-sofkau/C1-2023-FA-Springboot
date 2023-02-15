@@ -5,6 +5,7 @@ import co.com.sofka.catalog.dto.StudentDTO;
 import co.com.sofka.catalog.entity.Course;
 import co.com.sofka.catalog.entity.Student;
 
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 
@@ -18,7 +19,7 @@ public class CustomMapper{
         c.setCoach(courseDTO.getCoach());
         c.setLevel(courseDTO.getLevel());
         c.setLastUpdated(courseDTO.getLastUpdated());
-        //c.setStudentList(courseDTO.getStudentListDTO().stream().map(CustomMapper::student).collect(Collectors.toList()));
+        c.setStudentList(courseDTO.getStudentListDTO().stream().map(CustomMapper::student).collect(Collectors.toList()));
 
         return c;
 
@@ -32,7 +33,7 @@ public class CustomMapper{
         s.setIdNum(studentDTO.getIdNum());
         s.setAge(studentDTO.getAge());
         s.setMail(studentDTO.getMail());
-        s.setCourse(course(studentDTO.getCourse()));
+        //s.setCourse(course(studentDTO.getCourse()));
         //s.setNumCourses(studentDTO.getNumCourses());
 
         return s;
@@ -62,7 +63,8 @@ public class CustomMapper{
         s.setIdNum(student.getIdNum());
         s.setAge(student.getAge());
         s.setMail(student.getMail());
-        s.setCourse(courseDTO(student.getCourse()));
+        //student.getCourse().setStudentList(new ArrayList<>());
+        //s.setCourse(courseDTO(student.getCourse()));
         //s.setNumCourses(student.getNumCourses());
 
         return s;
