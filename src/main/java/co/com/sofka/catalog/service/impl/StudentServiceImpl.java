@@ -2,6 +2,7 @@ package co.com.sofka.catalog.service.impl;
 
 import co.com.sofka.catalog.dto.CourseDTO;
 import co.com.sofka.catalog.dto.StudentDTO;
+import co.com.sofka.catalog.entity.Course;
 import co.com.sofka.catalog.entity.Student;
 import co.com.sofka.catalog.repository.CourseRepository;
 import co.com.sofka.catalog.repository.StudentRepository;
@@ -44,7 +45,11 @@ public class StudentServiceImpl implements IStudentService {
     @Override
     public List<StudentDTO> getAllStudents() {
 
-        return null;
+        return studentRepository
+                .findAll()
+                .stream()
+                .map(this::studentDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -87,17 +92,34 @@ public class StudentServiceImpl implements IStudentService {
         Optional<CourseDTO> courseDTO = courseRepository
                 .findById(studentDTO.getCourseDTO().getIdDTO())
                 .map(CustomMapper::courseDTO);
-        return null;
+        System.out.println(courseDTO);
+        return (studentDTO.getCourseDTO() == null || courseDTO==null)? null:
+                studentDTO(studentRepository.save(student(studentDTO)));
     }
 
     @Override
     public StudentDTO editStudent(StudentDTO studentDTO) {
-        return null;
+        Optional<Student> studentUpdate = studentRepository.findById(studentDTO.getIdDTO());
+        Optional<Course> couseUpdate= courseRepository.findById(studentDTO.getCourseDTO().getIdDTO());
+        if (studentUpdate.isEmpty()||couseUpdate.isEmpty()) return null;
+        else {
+            studentUpdate.get().setName(studentDTO.getNameDTO());
+            studentUpdate.get().setIdNum(studentDTO.getIdNumDTO());
+            studentUpdate.get().setAge(studentDTO.getAgeDTO());
+            studentUpdate.get().setMail(studentDTO.getMailDTO());
+            studentUpdate.get().setCourse(iCourseService.course(studentDTO.getCourseDTO()));
+        }
+        return studentDTO(studentRepository.save(studentUpdate.get()));
     }
 
     @Override
-    public String deleteStudent(String idNum) {
-        return null;
+    public String deleteStudent(String studentId) {
+        Optional<StudentDTO> studentDTO = this.findById(studentId);
+        if (studentDTO.isEmpty()) return null;
+        else {
+            studentRepository.deleteById(studentId);
+            return "Student with id: " + studentId + " was deleted successfully";
+        }
     }
 
 }
