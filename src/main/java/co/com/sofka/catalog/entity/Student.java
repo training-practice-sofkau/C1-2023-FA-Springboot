@@ -12,21 +12,19 @@ import org.hibernate.annotations.GenericGenerator;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Student {
+    @Id
     @GenericGenerator(name="UUID",
             strategy = "co.com.sofka.catalog.utils.UUIDGeneratorTruncated")
     @GeneratedValue(generator = "UUID")
-    @Id
-    private String studentID;
+    private String studentId;
     @Column
     private String name;
     @Column
-    private String idNum;
+    private String idNumber;
     @Column
     private Integer age;
     @Column
     private String mail;
-    @Column
-    private Integer numCourses;
 
     //ManyToOne
     @JsonBackReference

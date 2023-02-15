@@ -21,7 +21,7 @@ public class Course {
     @GenericGenerator(name="UUID",
             strategy = "co.com.sofka.catalog.utils.UUIDGeneratorTruncated")
     @GeneratedValue(generator = "UUID")
-    private String courseID;
+    private String courseId;
     @Column
     private String name;
     @Column
