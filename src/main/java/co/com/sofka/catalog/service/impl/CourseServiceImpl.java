@@ -47,8 +47,9 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public List<CourseDTO> getByLevel(String level) {
-        return null;
+    public List<CourseDTO> getByLevel(Integer level) {
+        return this.courseRepository.findByLevel(level)
+                .stream().map(this::entityToDto).collect(Collectors.toList());
     }
 
     @Override

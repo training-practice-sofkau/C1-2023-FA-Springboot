@@ -42,4 +42,11 @@ public class CourseController {
                 ResponseEntity.status(204).body(Collections.emptyList())
                 : ResponseEntity.ok(courseService.getByCoach(coach));
     }
+
+    @GetMapping("/byLevel/{level}")
+    private ResponseEntity<List<CourseDTO>> findByCoach(@PathVariable("level") Integer level){
+        return this.courseService.getByLevel(level).isEmpty() ?
+                ResponseEntity.status(204).body(Collections.emptyList())
+                : ResponseEntity.ok(courseService.getByLevel(level));
+    }
 }
