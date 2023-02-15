@@ -14,5 +14,5 @@ public interface IStudentService {
     List<StudentDTO> getByName(String s);
     StudentDTO save(StudentDTO studentDTO);
     StudentDTO update(StudentDTO studentDTO);
-    Boolean delete(StudentDTO studentDTO);
+    Boolean delete(String studentId);
 }

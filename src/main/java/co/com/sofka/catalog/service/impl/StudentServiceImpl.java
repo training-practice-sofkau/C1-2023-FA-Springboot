@@ -25,32 +25,65 @@ public class StudentServiceImpl implements IStudentService {
             List<Student> students= repository.findAll();
             return students.stream().map(CustomMapper::studentDTO).collect(Collectors.toList());
         } catch (Exception e) {
-            throw new RuntimeException("Failed course service");
+            throw new RuntimeException(e.getMessage() + "In Student service");
         }
     }
     @Override
     public List<StudentDTO> getByIdNum(String idNum) {
-        return null;
+        try {
+            List<Student> students= repository.findByIdNum(idNum);
+            return students.stream().map(CustomMapper::studentDTO).collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage() + "In Student service");
+        }
     }
 
     @Override
-    public List<StudentDTO> getByName(String s) {
-        return null;
+    public List<StudentDTO> getByName(String name) {
+        try {
+            List<Student> students= repository.findByNameContaining(name);
+            return students.stream().map(CustomMapper::studentDTO).collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage() + "In Student service");
+        }
     }
 
 
     @Override
     public StudentDTO save(StudentDTO studentDTO) {
-        return null;
+        try {
+            studentDTO.setStudentId(null);
+            return CustomMapper.studentDTO(repository.save(CustomMapper.student(studentDTO)));
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage() + "In Student service");
+        }
     }
 
     @Override
     public StudentDTO update(StudentDTO studentDTO) {
-        return null;
+        try {
+            Student student = CustomMapper.student(studentDTO);
+            if (repository.existsById(student.getStudentId())) {
+                return CustomMapper.studentDTO(repository.save(student));
+            } else {
+                throw new RuntimeException("Student not found");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage() + "In Student service");
+        }
     }
 
     @Override
-    public Boolean delete(StudentDTO studentDTO) {
-        return null;
+    public Boolean delete(String studentId) {
+        try {
+            if (repository.existsById(studentId)) {
+                repository.deleteById(studentId);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage() + "In Course service");
+        }
     }
 }
