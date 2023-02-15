@@ -1,13 +1,11 @@
 package co.com.sofka.catalog.controller;
 
-import co.com.sofka.catalog.dto.CourseDTO;
 import co.com.sofka.catalog.dto.StudentDTO;
 import co.com.sofka.catalog.service.impl.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController
