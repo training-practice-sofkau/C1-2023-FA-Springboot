@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static co.com.sofka.catalog.utils.CustomMapper.course;
+import static co.com.sofka.catalog.utils.CustomMapper.courseDTO;
+
 @Service
 public class CourseServiceImpl implements ICourseService {
 
@@ -30,24 +33,13 @@ public class CourseServiceImpl implements ICourseService {
         this.courseRepository = courseRepository;
     }
 
-
-    @Override
-    public Course course(CourseDTO courseDTO) {
-        return course(courseDTO);
-    }
-
-    @Override
-    public CourseDTO courseDTO(Course course) {
-        return courseDTO(course);
-    }
-
     @Override
     public List<CourseDTO> getAllCourses() {
 
         return courseRepository
                 .findAll()
                 .stream()
-                .map(this::courseDTO)
+                .map(CustomMapper::courseDTO)
                 .collect(Collectors.toList());
     }
 
@@ -57,7 +49,7 @@ public class CourseServiceImpl implements ICourseService {
          courseRepository
                 .findAll()
                 .stream()
-                .map(this::courseDTO)
+                .map(CustomMapper::courseDTO)
                 .collect(Collectors.toList())
                 .stream().forEach(i->{
                     if (i.getNameDTO().startsWith(name) | i.getNameDTO().contains(name)) courseDTO.add(i);
@@ -71,7 +63,7 @@ public class CourseServiceImpl implements ICourseService {
         courseRepository
                 .findAll()
                 .stream()
-                .map(this::courseDTO)
+                .map(CustomMapper::courseDTO)
                 .collect(Collectors.toList())
                 .stream().forEach(i->{
                     if (i.getCoachDTO().startsWith(c) | i.getCoachDTO().contains(c)) courseDTO.add(i);
@@ -85,7 +77,7 @@ public class CourseServiceImpl implements ICourseService {
         courseRepository
                 .findAll()
                 .stream()
-                .map(this::courseDTO)
+                .map(CustomMapper::courseDTO)
                 .collect(Collectors.toList())
                 .stream().forEach(i->{
                     if (i.getLevelDTO().equals(level)) courseDTO.add(i);
@@ -95,7 +87,7 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     public Optional<CourseDTO> findById(String courseId) {
-        return courseRepository.findById(courseId).map(this::courseDTO);
+        return courseRepository.findById(courseId).map(CustomMapper::courseDTO);
     }
 
     @Override
@@ -117,6 +109,7 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     public CourseDTO editCourse(CourseDTO courseDTO) {
+        System.out.println(courseDTO);
         Optional<Course> courseUpdate = courseRepository.findById(courseDTO.getIdDTO());
         List<StudentDTO> studentDTOS = courseDTO.getStudentListDTO();
         if (courseUpdate.isEmpty()) return null;

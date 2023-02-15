@@ -8,9 +8,7 @@ import java.util.Optional;
 
 public interface ICourseService {
 
-    Course course(CourseDTO courseDTO);
 
-    CourseDTO courseDTO(Course course);
     List<CourseDTO> getAllCourses();
     List<CourseDTO> getByName(String name);
     List<CourseDTO> getByCoach(String c);

@@ -44,6 +44,8 @@ public class CourseController {
                 ResponseEntity.ok(result);
     }
 
+
+
     @GetMapping("/byLevel/{level}")
     private ResponseEntity<List<CourseDTO>> obtenerPorLevel(
             @PathVariable("level") Integer level){
@@ -52,6 +54,23 @@ public class CourseController {
                 ResponseEntity.status(404).build() :
                 ResponseEntity.ok(result);
     }
+
+    @PostMapping("")
+    private ResponseEntity<CourseDTO> crearCurso(@RequestBody CourseDTO courseDTO){
+        CourseDTO courseDTO1 = courseService.saveCourse(courseDTO);
+        return courseDTO1 == null?
+                ResponseEntity.status(400).body(null) :
+                ResponseEntity.status(201).body(courseDTO1);
+    }
+
+    @PutMapping("")
+    private ResponseEntity<CourseDTO> actualizarCurso(@RequestBody CourseDTO courseDTO){
+        CourseDTO courseDTO1 = courseService.editCourse(courseDTO);
+        return courseDTO1 == null?
+                ResponseEntity.status(400).body(null) :
+                ResponseEntity.status(201).body(courseDTO1);
+    }
+
 
     @DeleteMapping("/{id}")
     private ResponseEntity<String> borrarCurso (@PathVariable("id") String courseId){
