@@ -24,7 +24,7 @@ public class StudentServiceImpl implements IStudentService {
         return studentRepository.findAll()
                 .stream()
                 .map(student -> {
-                    if (student.getCourse() != null){
+                    if (student.getCourse() != null) {
                         return StudentMapper.toDto(student);
                     }
                     return StudentMapper.toDtoNoCourse(student);
@@ -36,7 +36,7 @@ public class StudentServiceImpl implements IStudentService {
     public StudentDTO getById(String id) {
         Student student = studentRepository.findById(id).orElse(null);
         assert student != null;
-        if(student.getCourse() != null){
+        if (student.getCourse() != null) {
             return StudentMapper.toDto(student);
         }
         return StudentMapper.toDtoNoCourse(student);
@@ -44,12 +44,18 @@ public class StudentServiceImpl implements IStudentService {
 
     @Override
     public StudentDTO getByIdentificationNumber(String idNum) {
-        return StudentMapper.toDto(studentRepository.findByIdNum(idNum));
+        Student student = studentRepository.findByIdNum(idNum);
+        return student.getCourse() != null ?
+                StudentMapper.toDto(studentRepository.findByIdNum(idNum)) :
+                StudentMapper.toDtoNoCourse(studentRepository.findByName(idNum));
     }
 
     @Override
     public StudentDTO getByName(String name) {
-        return StudentMapper.toDto(studentRepository.findByName(name));
+        Student student = studentRepository.findByName(name);
+        return student.getCourse() != null ?
+                StudentMapper.toDto(studentRepository.findByName(name)) :
+                StudentMapper.toDtoNoCourse(studentRepository.findByName(name));
     }
 
     @Override
@@ -61,12 +67,12 @@ public class StudentServiceImpl implements IStudentService {
     @Override
     public StudentDTO editStudent(StudentDTO studentDTO) {
         Student edited = studentRepository.findById(studentDTO.getId()).orElse(null);
-        if(edited != null){
+        if (edited != null) {
             edited.setName(studentDTO.getName());
             edited.setIdNum(studentDTO.getIdNum());
             edited.setMail(studentDTO.getMail());
             edited.setAge(studentDTO.getAge());
-            if(studentDTO.getCourseDTO() != null){
+            if (studentDTO.getCourseDTO() != null) {
                 edited.setCourse(CourseMapper.toEntityNoStudent(studentDTO.getCourseDTO()));
                 return StudentMapper.toDto(studentRepository.save(edited));
             }
