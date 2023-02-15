@@ -35,7 +35,7 @@ public class CourseServiceImpl implements ICourseService {
     public List<CourseDTO> getByName(String name) {
         return courseRepository.findAll()
                 .stream()
-                .filter(course -> course.getName().equals(name))
+                .filter(course -> course.getName().contains(name))
                 .map(CustomMapper::courseDTO)
                 .collect(Collectors.toList());
     }
@@ -45,7 +45,7 @@ public class CourseServiceImpl implements ICourseService {
 
         return courseRepository.findAll()
                 .stream()
-                .filter(course -> course.getCoach().equals(coach))
+                .filter(course -> course.getCoach().contains(coach))
                 .map(CustomMapper::courseDTO)
                 .collect(Collectors.toList());
     }
