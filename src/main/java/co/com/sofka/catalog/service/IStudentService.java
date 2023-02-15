@@ -8,7 +8,7 @@ import java.util.List;
 public interface IStudentService {
     List<StudentDTO> getAllStudents();
     StudentDTO getByIdentificationNumber(String idNum);
-    StudentDTO getByName(String s);
+    StudentDTO getByName(String name);
     StudentDTO saveStudent(Student student);
     StudentDTO editStudent(Student student);
     String deleteStudent(String idNum);

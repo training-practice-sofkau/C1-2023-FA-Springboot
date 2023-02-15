@@ -14,7 +14,18 @@ public class StudentMapper {
                 student.getIdNum(),
                 student.getAge(),
                 student.getMail(),
-                student.getCourses().size()
+                null
+        );
+    }
+
+    public Student toEntity(StudentDTO studentDTO){
+        return new Student(
+                studentDTO.getId(),
+                studentDTO.getName(),
+                studentDTO.getIdNum(),
+                studentDTO.getAge(),
+                studentDTO.getMail(),
+                null
         );
     }
 

@@ -1,5 +1,6 @@
 package co.com.sofka.catalog.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -32,8 +33,9 @@ public class Course {
     private LocalDate lastUpdated;
 
     //OneToMany
-    @OneToMany(mappedBy = "course")
-    private List<StudentCourseE> studentList;
+    @OneToMany(mappedBy = "course", targetEntity = Student.class)
+    @JsonManagedReference
+    private List<Student> studentList;
 
 
 

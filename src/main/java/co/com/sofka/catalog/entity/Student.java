@@ -1,15 +1,12 @@
 package co.com.sofka.catalog.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -22,15 +19,21 @@ public class Student {
     @Id
     private String studentId;
 
+    @Column
     private String name;
 
+    @Column
     private String idNum;
 
+    @Column
     private Integer age;
 
+    @Column
     private String mail;
 
-    @OneToMany(mappedBy = "student")
-    private List<StudentCourseE> courses;
+    @JoinColumn(name = "courseId", foreignKey =@ForeignKey(name = "FK_courseId"))
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Course.class)
+    @JsonBackReference
+    private Course course;
 
 }

@@ -6,7 +6,7 @@ import co.com.sofka.catalog.entity.Course;
 import java.util.List;
 
 public interface ICourseService {
-    List<Course> getAllCourses();
+    List<CourseDTO> getAllCourses();
     CourseDTO getByName(String name);
     List<CourseDTO> getByCoach(String coach);
     List<CourseDTO> getByLevel(String level);

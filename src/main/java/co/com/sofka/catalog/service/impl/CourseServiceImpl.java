@@ -10,7 +10,7 @@ import java.util.List;
 public class CourseServiceImpl implements ICourseService {
 
     @Override
-    public List<Course> getAllCourses() {
+    public List<CourseDTO> getAllCourses() {
         return null;
     }
 
