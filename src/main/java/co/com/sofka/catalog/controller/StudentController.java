@@ -18,8 +18,8 @@ public class StudentController {
 
     @PostMapping
     private ResponseEntity<StudentDTO> saveStudent(@RequestBody StudentDTO studentDTO){
-        StudentDTO song = studentService.createStudent(studentDTO);
-        return song == null ? ResponseEntity.status(400).body(studentDTO) : ResponseEntity.status(201).body(song);
+        StudentDTO student = studentService.createStudent(studentDTO);
+        return student == null ? ResponseEntity.status(400).body(studentDTO) : ResponseEntity.status(201).body(student);
     }
 
     @GetMapping

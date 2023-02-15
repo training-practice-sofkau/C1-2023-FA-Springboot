@@ -20,10 +20,7 @@ public class StudentServiceImpl implements IStudentService {
     public Student dtoToEntity(StudentDTO studentDTO) {
         return CustomMapper.student(studentDTO);
     }
-
-    public StudentDTO entityToDto(Student student) {
-        return CustomMapper.studentDTO(student);
-    }
+    public StudentDTO entityToDto(Student student) { return CustomMapper.studentDTO(student);}
     @Override
     public StudentDTO createStudent(StudentDTO studentDTO) {
        return entityToDto(this.studentRepository.save(dtoToEntity(studentDTO)));
