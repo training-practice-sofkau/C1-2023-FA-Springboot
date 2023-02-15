@@ -1,15 +1,16 @@
 package co.com.sofka.catalog.service;
 
 import co.com.sofka.catalog.dto.StudentDTO;
+import co.com.sofka.catalog.entity.Student;
 
 import java.util.List;
 
 public interface IStudentService {
     List<StudentDTO> getAllStudents();
+    StudentDTO getById(String id);
     StudentDTO getByIdentificationNumber(String idNum);
-
-    StudentDTO getByName(String s);
+    StudentDTO getByName(String name);
     StudentDTO saveStudent(StudentDTO studentDTO);
     StudentDTO editStudent(StudentDTO studentDTO);
-    String deleteStudent(String idNum);
+    void deleteStudent(String id);
 }

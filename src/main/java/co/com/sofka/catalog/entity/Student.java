@@ -1,12 +1,12 @@
 package co.com.sofka.catalog.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+
 
 @Data
 @AllArgsConstructor
@@ -17,19 +17,23 @@ public class Student {
             strategy = "co.com.sofka.catalog.utils.UUIDGeneratorTruncated")
     @GeneratedValue(generator = "UUID")
     @Id
-    private String id;
+    private String studentId;
 
+    @Column
     private String name;
 
+    @Column
     private String idNum;
 
+    @Column
     private Integer age;
 
+    @Column
     private String mail;
 
-    private Integer numCourses;
-
-    //ManyToOne
+    @JoinColumn(name = "courseId", foreignKey =@ForeignKey(name = "FK_courseId"))
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Course.class)
+    @JsonBackReference
     private Course course;
 
 }

@@ -18,5 +18,5 @@ public class StudentDTO {
 
     private String mail;
 
-    private Integer numCourses;
+    private CourseDTO courseDTO;
 }
