@@ -36,9 +36,8 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public List<CourseDTO> getByName(String name) {
-        return this.courseRepository.findByName(name)
-                .stream().map(this::entityToDto).collect(Collectors.toList());
+    public CourseDTO getByName(String name) {
+        return entityToDto(this.courseRepository.findByName(name));
     }
 
     @Override

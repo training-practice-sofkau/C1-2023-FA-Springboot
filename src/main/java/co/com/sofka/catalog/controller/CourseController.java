@@ -31,9 +31,8 @@ public class CourseController {
     }
 
     @GetMapping("/byName/{name}")
-    private ResponseEntity<List<CourseDTO>> findByName(@PathVariable("name") String name){
-        return this.courseService.getByName(name).isEmpty() ?
-                ResponseEntity.status(204).body(Collections.emptyList()) :
-                ResponseEntity.ok(courseService.getByName(name));
+    private ResponseEntity<CourseDTO> findByName(@PathVariable("name") String name){
+        return this.courseService.getByName(name) == null ? ResponseEntity.status(404).body(new CourseDTO())
+                : ResponseEntity.ok(courseService.getByName(name));
     }
 }
