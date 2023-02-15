@@ -27,13 +27,13 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public CourseDTO getByName(String name) {
-        return CustomMapper.courseDTO(courseRepository.findByName(name));
+    public List<CourseDTO> getByName(String name) {
+        return courseRepository.findByNameContainingIgnoreCase(name).stream().map(CustomMapper::courseDTO).toList();
     }
 
     @Override
     public List<CourseDTO> getByCoach(String c) {
-        return courseRepository.findAllByCoach(c).stream().map(CustomMapper::courseDTO).toList();
+        return courseRepository.findAllByCoachContainingIgnoreCase(c).stream().map(CustomMapper::courseDTO).toList();
     }
 
     @Override

@@ -32,8 +32,8 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public StudentDTO getByName(String s) {
-        return CustomMapper.studentDTO(studentRepository.findByName(s));
+    public List<StudentDTO> getByName(String s) {
+        return studentRepository.findByNameContainingIgnoreCase(s).stream().map(CustomMapper::studentDTO).toList();
     }
 
     @Override

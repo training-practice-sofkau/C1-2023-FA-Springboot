@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ICourseService {
     List<CourseDTO> getAllCourses();
-    CourseDTO getByName(String name);
+    List<CourseDTO> getByName(String name);
     List<CourseDTO> getByCoach(String c);
     List<CourseDTO> getByLevel(int level);
     CourseDTO editCourse(CourseDTO courseDTO);

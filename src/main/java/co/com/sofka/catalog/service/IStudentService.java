@@ -8,7 +8,7 @@ public interface IStudentService {
     List<StudentDTO> getAllStudents();
     StudentDTO getByIdentificationNumber(String idNum);
 
-    StudentDTO getByName(String s);
+    List<StudentDTO> getByName(String s);
     StudentDTO saveStudent(StudentDTO studentDTO);
     StudentDTO editStudent(StudentDTO studentDTO);
     String deleteStudent(String idNum);
