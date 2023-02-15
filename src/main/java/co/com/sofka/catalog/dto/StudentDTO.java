@@ -9,14 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StudentDTO {
     private String id;
-
     private String name;
-
-    private String idNum;
-
     private Integer age;
-
+    private String idNum;
     private String mail;
-
-    private Integer numCourses;
 }

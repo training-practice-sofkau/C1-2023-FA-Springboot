@@ -3,6 +3,7 @@ package co.com.sofka.catalog.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "courses")
 public class Course {
     @GenericGenerator(name="UUID",
             strategy = "co.com.sofka.catalog.utils.UUIDGeneratorTruncated")
@@ -31,7 +33,7 @@ public class Course {
     private LocalDate lastUpdated;
 
     //OneToMany
-    private List<Student> studentList;
+//    private List<Student> studentList;
 
 
 
