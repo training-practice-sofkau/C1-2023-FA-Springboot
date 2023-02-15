@@ -48,12 +48,16 @@ public class StudentServiceImpl implements IStudentService {
 
     @Override
     public StudentDTO editStudent(StudentDTO studentDTO) {
-        return null;
+       return entityToDto(studentRepository.save(dtoToEntity(studentDTO)));
     }
 
     @Override
     public void deleteStudent(String id) {
         studentRepository.deleteById(id);
+    }
+
+    public StudentDTO findStudentById(String id){
+        return entityToDto(studentRepository.findById(id).orElse(new Student()));
     }
 
 }

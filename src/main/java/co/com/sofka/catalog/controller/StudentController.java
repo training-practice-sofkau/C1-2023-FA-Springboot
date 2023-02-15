@@ -52,4 +52,19 @@ public class StudentController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PutMapping("{id}")
+    private ResponseEntity<StudentDTO> updateArtist(@PathVariable("id") String idStudent, @RequestBody StudentDTO studentDetails ){
+        StudentDTO studentUp = studentService.findStudentById(idStudent);
+
+        studentUp.setName(studentDetails.getName());
+        studentUp.setAge(studentDetails.getAge());
+        studentUp.setIdNum(studentDetails.getIdNum());
+        studentUp.setMail(studentDetails.getMail());
+
+        studentService.createStudent(studentUp);
+
+        return ResponseEntity.ok(studentUp);
+
+    }
 }
