@@ -7,12 +7,13 @@ import co.com.sofka.catalog.repository.StudentRepository;
 import co.com.sofka.catalog.service.IStudentService;
 import co.com.sofka.catalog.utils.CustomMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-
+@Service
 public class StudentServiceImpl implements IStudentService {
 
     @Autowired
@@ -36,23 +37,25 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public StudentDTO getByIdentificationNumber(String idNum) {
-        return entityToDto(studentRepository.findById(idNum).orElseThrow(() -> new ItemNotFoundException(idNum)));
+    public List<StudentDTO> getByIdentificationNumber(String idNum) {
+        return studentRepository.findByIdNum(idNum)
+                .stream()
+                .map(this::entityToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<StudentDTO> getByName(String s) {
-        return studentRepository.findAll()
+    public List<StudentDTO> getByName (String name) {
+        return studentRepository.findByNameContaining(name)
                 .stream()
-                .filter(student -> Objects.equals(student.getName(), s))
                 .map(this::entityToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public StudentDTO saveStudent(StudentDTO studentDTO) {
+        studentDTO.setNumCourses(0);
         return entityToDto(studentRepository.save(dtoToEntity(studentDTO)));
-
     }
 
     @Override
@@ -60,10 +63,8 @@ public class StudentServiceImpl implements IStudentService {
         var studentBody = studentRepository.findById(idNum)
                 .map(student -> {
                     student.setName(studentDTO.getName());
-                    student.setIdNum(studentDTO.getIdNum());
                     student.setAge(studentDTO.getAge());
                     student.setMail(studentDTO.getMail());
-                    student.setNumCourses(studentDTO.getNumCourses());
                     return studentRepository.save(student);
                 }).orElseThrow(() -> new ItemNotFoundException(idNum));
         return entityToDto(studentBody);
