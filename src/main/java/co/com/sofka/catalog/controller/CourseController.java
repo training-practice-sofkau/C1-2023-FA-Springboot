@@ -37,4 +37,20 @@ public class CourseController {
         CourseDTO courseDTO1 = courseService.editCourse(courseDTO);
         return courseDTO1 == null ? ResponseEntity.badRequest().body("Wrong params sent") : ResponseEntity.ok().body(courseDTO1);
     }
+
+    @GetMapping(value = "/nonpunctualn")
+    public ResponseEntity getCoursesByName(@RequestParam String name){
+        return ResponseEntity.ok(courseService.getByName(name));
+    }
+
+    @GetMapping(value = "/nonpunctualc")
+    public ResponseEntity getCoursesByCoach(@RequestParam String name){
+        return ResponseEntity.ok(courseService.getByCoach(name));
+    }
+
+    @GetMapping(value = "/punctuall")
+    public ResponseEntity getCoursesByLevel(@RequestParam int level){
+        return ResponseEntity.ok(courseService.getByLevel(level));
+    }
+
 }
