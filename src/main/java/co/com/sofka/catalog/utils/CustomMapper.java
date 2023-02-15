@@ -28,7 +28,7 @@ public class CustomMapper{
 
     public static Student student(StudentDTO studentDTO){
         Student s = new Student();
-        s.setStudentId(studentDTO.getId());
+        s.setStudentId(studentDTO.getStudentId());
         s.setName(studentDTO.getName());
         s.setIdNum(studentDTO.getIdNum());
         s.setAge(studentDTO.getAge());
@@ -67,7 +67,7 @@ public class CustomMapper{
 
     public static StudentDTO studentDTO(Student student){
         StudentDTO s = new StudentDTO();
-        s.setId(student.getStudentId());
+        s.setStudentId(student.getStudentId());
         s.setName(student.getName());
         s.setIdNum(student.getIdNum());
         s.setAge(student.getAge());
@@ -84,7 +84,7 @@ public class CustomMapper{
 
     private static StudentDTO nestedStudent(Student student){
         StudentDTO s = new StudentDTO();
-        s.setId(student.getStudentId());
+        s.setStudentId(student.getStudentId());
         s.setName(student.getName());
         s.setIdNum(student.getIdNum());
         s.setAge(student.getAge());
