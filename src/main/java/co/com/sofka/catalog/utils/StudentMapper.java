@@ -17,7 +17,7 @@ public class StudentMapper {
                 student.getIdNum(),
                 student.getAge(),
                 student.getMail(),
-                CourseMapper.toDtoFromStudent(student.getCourse())
+                CourseMapper.toDtoNoStudent(student.getCourse())
         );
     }
 
@@ -28,11 +28,11 @@ public class StudentMapper {
                 studentDTO.getIdNum(),
                 studentDTO.getAge(),
                 studentDTO.getMail(),
-                CourseMapper.toEntityFromStudent(studentDTO.getCourseDTO())
+                CourseMapper.toEntityNoStudent(studentDTO.getCourseDTO())
         );
     }
 
-    public static StudentDTO toDtoFromCourse(Student student){
+    public static StudentDTO toDtoNoCourse(Student student){
         return new StudentDTO(
                 student.getStudentId(),
                 student.getName(),
@@ -43,7 +43,7 @@ public class StudentMapper {
         );
     }
 
-    public static Student toEntityFromCourse(StudentDTO studentDTO){
+    public static Student toEntityNoCourse(StudentDTO studentDTO){
         return new Student(
                 studentDTO.getId(),
                 studentDTO.getName(),

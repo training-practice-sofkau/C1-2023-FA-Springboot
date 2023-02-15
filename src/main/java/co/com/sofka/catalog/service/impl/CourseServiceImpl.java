@@ -34,6 +34,11 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
+    public CourseDTO getById(String id) {
+        return CourseMapper.toDto(courseRepository.findById(id).orElse(new Course()));
+    }
+
+    @Override
     public List<CourseDTO> getByCoach(String coach) {
         return courseRepository.findAllByCoach(coach)
                 .stream()
@@ -42,7 +47,7 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public List<CourseDTO> getByLevel(String level) {
+    public List<CourseDTO> getByLevel(Integer level) {
         return courseRepository.findAllByLevel(level)
                 .stream()
                 .map(CourseMapper::toDto)
@@ -50,14 +55,21 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public CourseDTO editCourse(Course course) {
+    public CourseDTO createCourse(CourseDTO courseDTO) {
+        Course course = CourseMapper.toEntityNoStudent(courseDTO);
+        course.setLastUpdated(LocalDate.now());
+        return CourseMapper.toDtoNoStudent(courseRepository.save(course));
+    }
+
+    @Override
+    public CourseDTO editCourse(CourseDTO courseDTO) {
+        Course course = CourseMapper.toEntityNoStudent(courseDTO);
         Course edited = courseRepository.findById(course.getCourseId()).orElse(null);
         if(edited != null){
             edited.setName(course.getName());
             edited.setCoach(course.getCoach());
             edited.setLevel(course.getLevel());
             edited.setLastUpdated(LocalDate.now());
-            edited.setStudentList(course.getStudentList());
             return CourseMapper.toDto(courseRepository.save(edited));
         }
         return null;

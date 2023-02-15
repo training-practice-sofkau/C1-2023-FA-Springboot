@@ -8,9 +8,13 @@ import java.util.List;
 public interface ICourseService {
     List<CourseDTO> getAllCourses();
     CourseDTO getByName(String name);
+
+    CourseDTO getById(String id);
+
     List<CourseDTO> getByCoach(String coach);
-    List<CourseDTO> getByLevel(String level);
-    CourseDTO editCourse(Course course);
+    List<CourseDTO> getByLevel(Integer level);
+    CourseDTO createCourse(CourseDTO courseDTO);
+    CourseDTO editCourse(CourseDTO courseDTO);
     void deleteCourse(String id);
 
 }

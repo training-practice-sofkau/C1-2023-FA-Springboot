@@ -17,7 +17,7 @@ public class CourseMapper {
                 course.getCoach(),
                 course.getStudentList()
                         .stream()
-                        .map(StudentMapper::toDtoFromCourse)
+                        .map(StudentMapper::toDtoNoCourse)
                         .collect(Collectors.toList()),
                 course.getLevel(),
                 course.getLastUpdated()
@@ -33,12 +33,12 @@ public class CourseMapper {
                 courseDTO.getLastUpdated(),
                 courseDTO.getStudentListDTO()
                         .stream()
-                        .map(StudentMapper::toEntityFromCourse)
+                        .map(StudentMapper::toEntityNoCourse)
                         .collect(Collectors.toList())
                 );
     }
 
-    public static CourseDTO toDtoFromStudent(Course course){
+    public static CourseDTO toDtoNoStudent(Course course){
         return new CourseDTO(
                 course.getCourseId(),
                 course.getName(),
@@ -49,7 +49,7 @@ public class CourseMapper {
         );
     }
 
-    public static Course toEntityFromStudent(CourseDTO courseDTO){
+    public static Course toEntityNoStudent(CourseDTO courseDTO){
         return new Course(
                 courseDTO.getId(),
                 courseDTO.getName(),
