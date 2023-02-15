@@ -21,14 +21,13 @@ public class CourseServiceImpl implements ICourseService {
 
     private StudentRepository studentRepository;
     private CourseRepository courseRepository;
-    private StudentServiceImpl studentService;
+
 
     public CourseServiceImpl(StudentRepository studentRepository,
-                             CourseRepository courseRepository,
-                             StudentServiceImpl studentService){
+                             CourseRepository courseRepository
+                             ){
         this.studentRepository = studentRepository;
         this.courseRepository = courseRepository;
-        this.studentService = studentService;
     }
 
 
@@ -136,7 +135,7 @@ public class CourseServiceImpl implements ICourseService {
             courseUpdate.get().setLevel(courseDTO.getLevelDTO());
             courseUpdate.get().setLastUpdated(courseDTO.getLastUpdatedDTO());
             courseUpdate.get().setStudentList(courseDTO.getStudentListDTO().stream()
-                    .map(i->this.studentService.student(i))
+                    .map(i->CustomMapper.student(i))
                     .collect(Collectors.toList()));
         }
         return courseDTO(courseRepository.save(courseUpdate.get()));

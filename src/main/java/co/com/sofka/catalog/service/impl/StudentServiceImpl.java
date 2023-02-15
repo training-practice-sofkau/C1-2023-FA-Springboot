@@ -22,14 +22,11 @@ public class StudentServiceImpl implements IStudentService {
     private StudentRepository studentRepository;
     private CourseRepository courseRepository;
 
-    private ICourseService iCourseService;
-
     public StudentServiceImpl(StudentRepository studentRepository,
                              CourseRepository courseRepository,
                               ICourseService iCourseService){
         this.studentRepository = studentRepository;
         this.courseRepository = courseRepository;
-        this.iCourseService = iCourseService;
     }
 
     @Override
@@ -107,7 +104,7 @@ public class StudentServiceImpl implements IStudentService {
             studentUpdate.get().setIdNum(studentDTO.getIdNumDTO());
             studentUpdate.get().setAge(studentDTO.getAgeDTO());
             studentUpdate.get().setMail(studentDTO.getMailDTO());
-            studentUpdate.get().setCourse(iCourseService.course(studentDTO.getCourseDTO()));
+            studentUpdate.get().setCourse(CustomMapper.course(studentDTO.getCourseDTO()));
         }
         return studentDTO(studentRepository.save(studentUpdate.get()));
     }
