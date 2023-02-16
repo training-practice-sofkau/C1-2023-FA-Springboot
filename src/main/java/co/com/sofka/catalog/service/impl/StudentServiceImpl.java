@@ -47,11 +47,11 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public void deleteStudent(String id) {
+    public void deleteStudent(Long id) {
         studentRepository.deleteById(id);
     }
 
-    public StudentDTO findStudentById(String id){
+    public StudentDTO findStudentById(Long id){
         return entityToDto(studentRepository.findById(id).orElse(new Student()));
     }
 

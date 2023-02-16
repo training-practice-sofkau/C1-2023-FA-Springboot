@@ -51,7 +51,7 @@ public class CourseController {
     }
 
     @DeleteMapping("{id}")
-    private ResponseEntity<?> deleteCourse(@PathVariable("id") String idCourse){
+    private ResponseEntity<?> deleteCourse(@PathVariable("id") Long idCourse){
         try{
             courseService.deleteCourse(idCourse);
             return ResponseEntity.ok("Course deleted");
@@ -62,7 +62,7 @@ public class CourseController {
     }
 
     @PutMapping("{id}")
-    private ResponseEntity<Course> updateCourse(@PathVariable("id") String idCourse, @RequestBody CourseDTO courseDetails ){
+    private ResponseEntity<Course> updateCourse(@PathVariable("id") Long idCourse, @RequestBody CourseDTO courseDetails ){
         CourseDTO courseUp = courseService.findCourseById(idCourse);
 
         courseUp.setName(courseDetails.getName());
@@ -77,9 +77,17 @@ public class CourseController {
 
     @PutMapping("/{courseId}/students/{studentId}")
     Course enrolleStudentToCourse(
-            @PathVariable("courseId") String idCourse,
-            @PathVariable("studentId") String idStudent
+            @PathVariable("courseId") Long idCourse,
+            @PathVariable("studentId") Long idStudent
     ){
        return courseService.enrolledStudent(idCourse, idStudent);
+    }
+
+    @PutMapping("/{courseId}/students/remove/{studentId}")
+    Course removeStudentFromCourse(
+            @PathVariable("courseId") Long idCourse,
+            @PathVariable("studentId") Long idStudent
+    ){
+        return courseService.removeStudent(idCourse, idStudent);
     }
 }
