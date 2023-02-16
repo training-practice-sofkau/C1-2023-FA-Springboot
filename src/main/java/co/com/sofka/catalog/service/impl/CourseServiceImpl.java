@@ -59,18 +59,25 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public void deleteCourse(String id) {
+    public void deleteCourse(Long id) {
         courseRepository.deleteById(id);
     }
 
-    public CourseDTO findCourseById(String id){
+    public CourseDTO findCourseById(Long id){
         return entityToDto(courseRepository.findById(id).orElse(new Course()));
     }
 
-    public Course enrolledStudent(String idCourse, String idStudent){
+    public Course enrolledStudent(Long idCourse, Long idStudent){
         Course course = courseRepository.findById(idCourse).get();
         Student student = studentRepository.findById(idStudent).get();
         course.enrolledStudent(student);
+        return courseRepository.save(course);
+    }
+
+    public Course removeStudent(Long idCourse, Long idStudent){
+        Course course = courseRepository.findById(idCourse).get();
+        Student student = studentRepository.findById(idStudent).get();
+        course.removeStudent(student);
         return courseRepository.save(course);
     }
 }

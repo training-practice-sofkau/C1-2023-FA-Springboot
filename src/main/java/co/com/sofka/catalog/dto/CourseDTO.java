@@ -14,7 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CourseDTO {
-    private String id;
+    private Long id;
     private String name;
     private String coach;
     private Integer level;

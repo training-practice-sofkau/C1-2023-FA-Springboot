@@ -12,7 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentDTO {
-    private String id;
+    private Long id;
     private String name;
     private Integer age;
     private String idNum;

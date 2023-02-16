@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/students")
+@CrossOrigin(origins = "http://localhost:4200")
 public class StudentController {
     @Autowired
     StudentServiceImpl studentService;
@@ -44,7 +45,7 @@ public class StudentController {
     }
 
     @DeleteMapping("{id}")
-    private ResponseEntity<?> deleteStudent(@PathVariable("id") String idStudent){
+    private ResponseEntity<?> deleteStudent(@PathVariable("id") Long idStudent){
         try{
             studentService.deleteStudent(idStudent);
             return ResponseEntity.ok("Student deleted");
@@ -55,7 +56,7 @@ public class StudentController {
     }
 
     @PutMapping("{id}")
-    private ResponseEntity<StudentDTO> updateStudent(@PathVariable("id") String idStudent, @RequestBody StudentDTO studentDetails ){
+    private ResponseEntity<StudentDTO> updateStudent(@PathVariable("id") Long idStudent, @RequestBody StudentDTO studentDetails ){
         StudentDTO studentUp = studentService.findStudentById(idStudent);
 
         studentUp.setName(studentDetails.getName());
