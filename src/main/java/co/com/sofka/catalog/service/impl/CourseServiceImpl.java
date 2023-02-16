@@ -26,12 +26,16 @@ public class CourseServiceImpl implements ICourseService {
     private StudentRepository studentRepository;
     private CourseRepository courseRepository;
 
+    //private StudentServiceImpl studentService;
 
-    public CourseServiceImpl(StudentRepository studentRepository,
-                             CourseRepository courseRepository
+    public CourseServiceImpl(CourseRepository courseRepository,
+                             StudentRepository studentRepository
+                             //StudentServiceImpl studentService
+
                              ){
         this.studentRepository = studentRepository;
         this.courseRepository = courseRepository;
+        //this.studentService = studentService;
     }
 
     @Override
@@ -89,6 +93,19 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
+    public CourseDTO regisStudent(String courseId, String studentId) {
+        Optional<CourseDTO> targetCourseDTO = this.findById(courseId);
+        System.out.println(targetCourseDTO.get());
+        Optional<StudentDTO> beAddedStudentDTO = this.studentRepository.findById(studentId).map(CustomMapper::studentDTO);
+        System.out.println(beAddedStudentDTO.get());
+        if (targetCourseDTO == null | beAddedStudentDTO == null) return null;
+        targetCourseDTO.get().registerStudentDTO(beAddedStudentDTO.get());
+        System.out.println(targetCourseDTO.get());
+
+        return courseDTO(courseRepository.save(course(targetCourseDTO.get())));
+    }
+
+    @Override
     public Optional<CourseDTO> findById(String courseId) {
         return courseRepository.findById(courseId).map(CustomMapper::courseDTO);
     }
@@ -114,13 +131,18 @@ public class CourseServiceImpl implements ICourseService {
     public CourseDTO editCourse(CourseDTO courseDTO) {
         System.out.println("Curso al principio edit course" + courseDTO);
         Optional<CourseDTO> courseUpdate = courseRepository.findById(courseDTO.getIdDTO()).map(CustomMapper::courseDTO);
-        List<StudentDTO> studentDTOS = courseDTO.getStudentListDTO();
+        courseUpdate.get().setNameDTO(courseDTO.getNameDTO());
+        courseUpdate.get().setCoachDTO(courseDTO.getCoachDTO());
+        courseUpdate.get().setLevelDTO(courseDTO.getLevelDTO());
+        courseUpdate.get().setLastUpdatedDTO(LocalDate.now());
+        return courseDTO(this.courseRepository.save(CustomMapper.course(courseUpdate.get())));
+        /*List<StudentDTO> studentDTOS = courseDTO.getStudentListDTO();
         if (courseUpdate.isEmpty()) return null;
         if (!studentDTOS.isEmpty()){
             List<Integer> studentDTONotFound = new ArrayList<>();
             studentDTOS.stream().forEach(i->{
                 Optional<StudentDTO> studentDTO =
-                        studentRepository.findById(i.getIdDTO()).map(CustomMapper::studentDTO);
+                        studentService.findById(i.getIdDTO());
                 if (studentDTO.isEmpty()) studentDTONotFound.add(1);
             });
             if (!studentDTONotFound.isEmpty()) return null;
@@ -129,11 +151,11 @@ public class CourseServiceImpl implements ICourseService {
             courseUpdate.get().setNameDTO(courseDTO.getNameDTO());
             courseUpdate.get().setCoachDTO(courseDTO.getCoachDTO());
             courseUpdate.get().setLevelDTO(courseDTO.getLevelDTO());
-            courseUpdate.get().setLastUpdatedDTO(courseDTO.getLastUpdatedDTO());
-            courseUpdate.get().setStudentListDTO(courseDTO.getStudentListDTO());
+            courseUpdate.get().setLastUpdatedDTO(LocalDate.now());
+            //courseUpdate.get().setStudentListDTO(courseDTO.getStudentListDTO());
         }
         //System.out.println("Curso final saveStudentMethod " + courseUpdate);
-        return courseDTO(courseRepository.save(CustomMapper.course(courseUpdate.get())));
+        return courseDTO(this.courseRepository.save(CustomMapper.course(courseUpdate.get())));*/
     }
 
     @Override
@@ -142,7 +164,7 @@ public class CourseServiceImpl implements ICourseService {
         if (courseDTO.isEmpty()) return null;
         else {
             courseRepository.deleteById(courseId);
-            return "Artist with id: " + courseId + " was deleted successfully";
+            return "Course with id: " + courseId + " was deleted successfully";
         }
     }
 }

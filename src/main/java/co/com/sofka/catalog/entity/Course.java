@@ -1,5 +1,6 @@
 package co.com.sofka.catalog.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -42,6 +43,13 @@ public class Course {
     @JsonManagedReference
     private List<Student> studentList = new ArrayList<>();
 
+    public void registerStudent(Student student){
+        studentList.add(student);
+    }
+
+    public void deregisterStudent(Student student){
+        studentList.remove(student);
+    }
 
 
 }

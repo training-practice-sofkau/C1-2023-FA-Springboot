@@ -72,6 +72,15 @@ public class CourseController {
                 ResponseEntity.status(201).body(courseDTO1);
     }
 
+    @PutMapping("/{courseId}/student/{stuId}")
+    private ResponseEntity<CourseDTO> agregarEstudianteToCurso
+            (@PathVariable("courseId") String courseId, @PathVariable("stuId") String studentId){
+        System.out.println(courseId + studentId);
+        CourseDTO courseDTO1 = courseService.regisStudent(courseId,studentId);
+        return courseDTO1 == null?
+                ResponseEntity.status(400).body(null) :
+                ResponseEntity.status(201).body(courseDTO1);
+    }
 
     @DeleteMapping("/{id}")
     private ResponseEntity<String> borrarCurso (@PathVariable("id") String courseId){

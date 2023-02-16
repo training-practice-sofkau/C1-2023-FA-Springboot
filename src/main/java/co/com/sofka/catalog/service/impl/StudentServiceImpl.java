@@ -31,9 +31,9 @@ public class StudentServiceImpl implements IStudentService {
 
 
     public StudentServiceImpl(StudentRepository studentRepository,
-                             CourseRepository courseRepository,
-                              CourseServiceImpl courseService,
-                              CourseController courseController
+                             //CourseRepository courseRepository,
+                              CourseServiceImpl courseService
+                              //CourseController courseController
                               ){
         this.studentRepository = studentRepository;
         //this.courseRepository = courseRepository;
@@ -100,16 +100,16 @@ public class StudentServiceImpl implements IStudentService {
     public StudentDTO saveStudent(StudentDTO studentDTO) {
         StudentDTO saveStudentDTo = new StudentDTO();
         System.out.println("Curso saveStudentMethod " + studentDTO.getCourseDTO());
-        Optional<CourseDTO> courseDTO1 = this.courseService.findById(studentDTO.getCourseDTO().getIdDTO());
+        Optional<CourseDTO> courseDTO1 = courseService.findById(studentDTO.getCourseDTO().getIdDTO());
         System.out.println("Curso saveStudentMethod " + courseDTO1);
 
         if (studentDTO.getCourseDTO() == null || courseDTO1==null) return null;
         if (courseDTO1 != null) {
             studentDTO.setCourseDTO(courseDTO1.get());
             saveStudentDTo = studentDTO(studentRepository.save(student(studentDTO)));
-            courseDTO1.get().setStudentListDTO(this.getByCourseId(courseDTO1.get().getIdDTO()));
-            courseDTO1.get().setLastUpdatedDTO(LocalDate.now());
-            this.courseService.editCourse(courseDTO1.get());
+            //courseDTO1.get().setStudentListDTO(this.getByCourseId(courseDTO1.get().getIdDTO()));
+            //courseDTO1.get().setLastUpdatedDTO(LocalDate.now());
+            //this.courseService.editCourse(courseDTO1.get());
         }
         System.out.println("Curso al final saveStudentMethod" + courseDTO1.get());
         return saveStudentDTo;
@@ -133,12 +133,12 @@ public class StudentServiceImpl implements IStudentService {
     @Override
     public String deleteStudent(String studentId) {
         Optional<StudentDTO> studentDTO = this.findById(studentId);
-        Optional<CourseDTO> courseDTO = courseService.findById(this.findById(studentId).get().getCourseDTO().getIdDTO());
+        //Optional<CourseDTO> courseDTO = courseService.findById(this.findById(studentId).get().getCourseDTO().getIdDTO());
         if (studentDTO.isEmpty()) return null;
         else {
             studentRepository.deleteById(studentId);
-            courseDTO.get().setStudentListDTO(this.getByCourseId(courseDTO.get().getIdDTO()));
-            courseDTO.get().setLastUpdatedDTO(LocalDate.now());
+            //courseDTO.get().setStudentListDTO(this.getByCourseId(courseDTO.get().getIdDTO()));
+            //this.courseService.editCourse(courseDTO.get());
             return "Student with id: " + studentId + " was deleted successfully";
         }
     }

@@ -19,7 +19,7 @@ public class CustomMapper{
         c.setCoach(courseDTO.getCoachDTO());
         c.setLevel(courseDTO.getLevelDTO());
         c.setLastUpdated(courseDTO.getLastUpdatedDTO());
-        //c.setStudentList(courseDTO.getStudentListDTO().stream().map(CustomMapper::student).collect(Collectors.toList()));
+        c.setStudentList(courseDTO.getStudentListDTO().stream().map(CustomMapper::student).collect(Collectors.toList()));
 
         return c;
 
@@ -41,13 +41,12 @@ public class CustomMapper{
 
     public static CourseDTO courseDTO(Course course){
         CourseDTO c = new CourseDTO();
-        //List<StudentDTO> sDTO = course.getStudentList().stream().map(CustomMapper::studentDTO).collect(Collectors.toList());
         c.setIdDTO(course.getId());
         c.setNameDTO(course.getName());
         c.setCoachDTO(course.getCoach());
         c.setLevelDTO(course.getLevel());
         c.setLastUpdatedDTO(course.getLastUpdated());
-        //c.setStudentListDTO(course.getStudentList().stream().map(CustomMapper::studentDTO).collect(Collectors.toList()));
+        c.setStudentListDTO(course.getStudentList().stream().map(CustomMapper::studentDTO).collect(Collectors.toList()));
         return c;
 
     }
@@ -60,7 +59,7 @@ public class CustomMapper{
         s.setIdNumDTO(student.getIdNum());
         s.setAgeDTO(student.getAge());
         s.setMailDTO(student.getMail());
-        s.setCourseDTO(courseDTO(student.getCourse()));
+        //s.setCourseDTO(courseDTO(student.getCourse()));
 
         return s;
 

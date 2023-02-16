@@ -43,6 +43,15 @@ public class StudentController {
                 ResponseEntity.ok(result);
     }
 
+    @GetMapping("/byCourseId/{courseId}")
+    private ResponseEntity<List<StudentDTO>> obtenerPorCursoId
+            (@PathVariable("courseId") String cursoId){
+        var result = studentService.getByCourseId(cursoId);
+        return result.isEmpty() ?
+                ResponseEntity.status(404).build() :
+                ResponseEntity.ok(result);
+    }
+
     @PostMapping("")
     private ResponseEntity<StudentDTO> crearEstudiante(@RequestBody StudentDTO studentDTO){
         StudentDTO studentDTO1 = studentService.saveStudent(studentDTO);

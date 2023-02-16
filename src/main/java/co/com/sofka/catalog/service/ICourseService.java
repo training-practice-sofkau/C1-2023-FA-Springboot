@@ -14,6 +14,7 @@ public interface ICourseService {
     List<CourseDTO> getByCoach(String c);
     List<CourseDTO> getByLevel(Integer level);
 
+    CourseDTO regisStudent(String courseId, String studentId);
     Optional<CourseDTO> findById(String courseId);
 
     CourseDTO saveCourse(CourseDTO courseDTO);
