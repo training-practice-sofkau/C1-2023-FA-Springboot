@@ -7,10 +7,13 @@ import java.util.List;
 
 public interface ICourseService {
     List<CourseDTO> getAllCourses();
-    CourseDTO getByName(String name);
+    List<CourseDTO> getByName(String name);
     List<CourseDTO> getByCoach(String c);
     List<CourseDTO> getByLevel(String level);
+
+    CourseDTO saveCourse(CourseDTO courseDTO);
+
     CourseDTO editCourse(CourseDTO courseDTO);
-    String deleteCourse(CourseDTO courseDTO);
+    String deleteCourse(String id);
 
 }

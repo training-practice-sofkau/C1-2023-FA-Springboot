@@ -5,6 +5,8 @@ import co.com.sofka.catalog.dto.StudentDTO;
 import co.com.sofka.catalog.entity.Course;
 import co.com.sofka.catalog.entity.Student;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -19,6 +21,7 @@ public class CustomMapper{
         c.setLastUpdated(courseDTO.getLastUpdated());
         c.setStudentList(courseDTO.getStudentListDTO().stream().map(CustomMapper::student).collect(Collectors.toList()));
 
+
         return c;
 
     }
@@ -28,10 +31,11 @@ public class CustomMapper{
         Student s = new Student();
         s.setId(studentDTO.getId());
         s.setName(studentDTO.getName());
-        s.setIdentificationNum(studentDTO.getIdentificationNum());
+        s.setIdNum(studentDTO.getIdNum());
         s.setAge(studentDTO.getAge());
         s.setMail(studentDTO.getMail());
-        s.setNumCourses(studentDTO.getNumCourses());
+        s.setCourse(course(studentDTO.getCourse()));
+        //s.setNumCourses(studentDTO.getNumCourses());
 
         return s;
 
@@ -45,9 +49,26 @@ public class CustomMapper{
         c.setCoach(course.getCoach());
         c.setLevel(course.getLevel());
         c.setLastUpdated(course.getLastUpdated());
-        c.setStudentListDTO(course.getStudentList().stream().map(CustomMapper::studentDTO).collect(Collectors.toList()));
+        List<StudentDTO> studentListDTO = new ArrayList<>();
+        for(Student student : course.getStudentList()){
+            studentListDTO.add(nestStudent(student));
+        }
+        c.setStudentListDTO(studentListDTO);
+        //c.setStudentListDTO(course.getStudentList().stream().map(CustomMapper::studentDTO).collect(Collectors.toList()));
 
         return c;
+
+    }
+
+    private static CourseDTO nestCourse(Course course){
+        CourseDTO cs = new CourseDTO();
+        cs.setId(course.getId());
+        cs.setName(course.getName());
+        cs.setCoach(course.getCoach());
+        cs.setLevel(course.getLevel());
+        cs.setLastUpdated(course.getLastUpdated());
+        //cs.setStudentListDTO(course.getStudentList());
+        return cs;
 
     }
 
@@ -56,12 +77,32 @@ public class CustomMapper{
         StudentDTO s = new StudentDTO();
         s.setId(student.getId());
         s.setName(student.getName());
-        s.setIdentificationNum(student.getIdentificationNum());
+        s.setIdNum(student.getIdNum());
         s.setAge(student.getAge());
         s.setMail(student.getMail());
-        s.setNumCourses(student.getNumCourses());
+        CourseDTO courseDTO = new CourseDTO();
+        courseDTO = nestCourse(student.getCourse());
+        s.setCourse(courseDTO);
+        //s.setCourse(courseDTO(student.getCourse()));
+
+        //s.setNumCourses(student.getNumCourses());
 
         return s;
 
     }
+
+    private static StudentDTO nestStudent(Student student) {
+        StudentDTO s = new StudentDTO();
+        s.setId(student.getId());
+        s.setName(student.getName());
+        s.setIdNum(student.getIdNum());
+        s.setAge(student.getAge());
+        s.setMail(student.getMail());
+
+        return s;
+
+
+    }
+
+
 }

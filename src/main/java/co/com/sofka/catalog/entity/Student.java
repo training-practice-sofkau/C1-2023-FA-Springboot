@@ -1,16 +1,15 @@
 package co.com.sofka.catalog.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
-@Data
+//@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Entity
 public class Student {
     @GenericGenerator(name="UUID",
@@ -27,9 +26,12 @@ public class Student {
 
     private String mail;
 
-    private Integer numCourses;
+    //private Boolean subscribed = false;
 
     //ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Course.class)
+    @JoinColumn(name = "course_id", foreignKey = @ForeignKey(name = "FK_course_id"))
+    @JsonBackReference
     private Course course;
 
 }
