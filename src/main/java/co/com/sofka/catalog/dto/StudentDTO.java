@@ -1,14 +1,15 @@
 package co.com.sofka.catalog.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@AllArgsConstructor
+import java.util.ArrayList;
+import java.util.List;
+
+@Getter
+@Setter
 @NoArgsConstructor
 public class StudentDTO {
-    private String id;
+    private String studentId;
 
     private String name;
 
@@ -19,4 +20,6 @@ public class StudentDTO {
     private String mail;
 
     private Integer numCourses;
+
+    private List<CourseDTO> courseListDTO = new ArrayList<>();
 }
