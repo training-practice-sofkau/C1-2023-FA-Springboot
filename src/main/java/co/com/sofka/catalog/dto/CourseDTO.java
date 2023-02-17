@@ -1,16 +1,16 @@
 package co.com.sofka.catalog.dto;
 
 import co.com.sofka.catalog.entity.Student;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-@Data
+//@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class CourseDTO {
     private String id;
 
