@@ -24,14 +24,21 @@ public class StudentServiceImpl implements IStudentService {
                .toList();
     }
 
+    public StudentDTO getStudentById(String id) {
+        return CustomMapper.studentDTO(studentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Student not found")));
+    }
+
     @Override
     public StudentDTO getByIdentificationNumber(String idNum) {
         return CustomMapper.studentDTO(studentRepository.findByIdNum(idNum));
     }
 
     @Override
-    public StudentDTO getByName(String name) {
-        return CustomMapper.studentDTO(studentRepository.findByName(name));
+    public List<StudentDTO> getByName(String name) {
+        return studentRepository.findByNameContainingIgnoreCase(name).stream()
+                .map(CustomMapper::studentDTO)
+                .toList();
     }
 
     @Override
@@ -47,7 +54,7 @@ public class StudentServiceImpl implements IStudentService {
         student.setAge(studentDTO.getAge());
         student.setIdNum(studentDTO.getIdNum());
         student.setMail(studentDTO.getMail());
-        student.setCourse(studentDTO.getCourse());
+        student.setCourse(CustomMapper.course(studentDTO.getCourse()));
 
         return CustomMapper.studentDTO(studentRepository.save(student));
     }

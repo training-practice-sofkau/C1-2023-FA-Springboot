@@ -26,14 +26,21 @@ public class CourseServiceImpl implements ICourseService {
                 .toList();
     }
 
+    public CourseDTO getCoursesById(String id) {
+        return CustomMapper.courseDTO(courseRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Course not found")));
+    }
+
     @Override
-    public CourseDTO getByName(String name) {
-        return CustomMapper.courseDTO(courseRepository.findByName(name));
+    public List<CourseDTO> getByName(String name) {
+        return courseRepository.findByNameContainingIgnoreCase(name).stream()
+                .map(CustomMapper::courseDTO)
+                .toList();
     }
 
     @Override
     public List<CourseDTO> getByCoach(String coach) {
-        return courseRepository.findByCoach(coach).stream()
+        return courseRepository.findByCoachContainingIgnoreCase(coach).stream()
                 .map(CustomMapper::courseDTO)
                 .toList();
     }

@@ -16,5 +16,5 @@ public class StudentDTO {
     private Integer age;
     private String mail;
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Course course;
+    private CourseDTO course;
 }

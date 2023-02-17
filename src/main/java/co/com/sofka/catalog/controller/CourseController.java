@@ -35,6 +35,21 @@ public class CourseController {
         return new ResponseEntity<>(response, httpStatus);
     }
 
+    @GetMapping("/{id}")
+    private ResponseEntity<Response> getById(
+            @PathVariable(value = "id") String id
+    ){
+        response.restart();
+        try {
+            response.data = courseService.getCoursesById(id);
+            response.message = "Course found successfully.";
+            httpStatus = HttpStatus.OK;
+        }catch (Exception e){
+            getErrorMessage(e);
+        }
+        return new ResponseEntity<>(response, httpStatus);
+    }
+
     @GetMapping("/name/{name}")
     private ResponseEntity<Response> getCourseByIdName(
             @PathVariable(value = "name") String name
