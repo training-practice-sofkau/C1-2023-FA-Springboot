@@ -42,6 +42,7 @@ public class StudentServiceImpl implements IStudentService {
         return studentRepository.findAll()
                 .stream()
                 .map(this::entityToDTO)
+                .sorted((student1, student2)-> student2.getName().compareTo(student1.getName()))
                 .toList();
     }
 
@@ -52,6 +53,7 @@ public class StudentServiceImpl implements IStudentService {
                 .stream()
                 .map(this::entityToDTO)
                 .filter(x -> x.getCourse() == null)
+                .sorted((student1, student2)-> student2.getName().compareTo(student1.getName()))
                 .toList();
     }
 
@@ -69,16 +71,13 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public StudentDTO getByName(String name) {
-        Optional<Student> response = studentRepository
-                .findAll()
+    public List<StudentDTO> getByName(String name) {
+        return studentRepository.findAll()
                 .stream()
+                .map(this::entityToDTO)
                 .filter(x -> x.getName().toLowerCase().startsWith(name.toLowerCase()))
-                .findFirst();
-        if(response.isEmpty()){
-            throw new ToDoExceptions("Student not found", HttpStatus.NOT_FOUND);
-        }
-        return entityToDTO(response.get());
+                .sorted((student1, student2)-> student2.getName().compareTo(student1.getName()))
+                .toList();
     }
 
     @Override
