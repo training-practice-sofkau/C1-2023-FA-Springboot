@@ -6,10 +6,10 @@ import co.com.sofka.catalog.entity.Course;
 import java.util.List;
 
 public interface ICourseService {
-    List<Course> getAllCourses();
-    List<Course> getByName(String name);
-    List<Course> getByCoach(String c);
-    List<Course> getByLevel(String level);
+    List<CourseDTO> getAllCourses();
+    List<CourseDTO> getByName(String name);
+    List<CourseDTO> getByCoach(String c);
+    List<CourseDTO> getByLevel(String level);
 
     CourseDTO saveCourse(CourseDTO courseDTO);
 

@@ -21,24 +21,25 @@ public class CourseServiceImpl implements ICourseService {
 
 
     @Override
-    public List<Course> getAllCourses() {
-        return courseRepository.findAll();
+    public List<CourseDTO> getAllCourses() {
+        return courseRepository.findAll().stream().map(CustomMapper::courseDTO).toList();
     }
 
     @Override
-    public List<Course> getByName(String name) {
-        return (courseRepository.findByNameContaining(name));
+    public List<CourseDTO> getByName(String name) {
+        return courseRepository.findByNameContaining(name).stream().map(CustomMapper::courseDTO).toList();
     }
 
     @Override
-    public List<Course> getByCoach(String c) {
-        return courseRepository.findByCoachContaining(c);
+    public List<CourseDTO> getByCoach(String c) {
+
+        return courseRepository.findByCoachContaining(c).stream().map(CustomMapper::courseDTO).toList();
     }
 
     @Override
-    public List<Course> getByLevel(String level) {
+    public List<CourseDTO> getByLevel(String level) {
 
-        return courseRepository.findByLevel(level);
+        return courseRepository.findByLevel(level).stream().map(CustomMapper::courseDTO).toList();
     }
     @Override
     public CourseDTO saveCourse(CourseDTO courseDTO) {
