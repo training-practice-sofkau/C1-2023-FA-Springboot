@@ -14,6 +14,7 @@ public interface IStudentService {
 
     //Basic operations
     List<StudentDTO> getAllStudents();
+    List<StudentDTO> getAllUnsubscribedStudents();
     StudentDTO getByIdentificationNumber(String idNumber);
     StudentDTO getByName(String name);
     StudentDTO saveStudent(StudentDTO studentDTO);
