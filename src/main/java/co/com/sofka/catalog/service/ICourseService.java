@@ -13,7 +13,7 @@ public interface ICourseService {
 
     //Basic operations
     List<CourseDTO> getAllCourses();
-    CourseDTO getByName(String name);
+    List<CourseDTO> getByName(String name);
     List<CourseDTO> getByCoach(String coach);
     List<CourseDTO> getByLevel(String level);
     CourseDTO saveCourse(CourseDTO courseDTO);

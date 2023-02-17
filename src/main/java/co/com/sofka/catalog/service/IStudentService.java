@@ -16,7 +16,7 @@ public interface IStudentService {
     List<StudentDTO> getAllStudents();
     List<StudentDTO> getAllUnsubscribedStudents();
     StudentDTO getByIdentificationNumber(String idNumber);
-    StudentDTO getByName(String name);
+    List<StudentDTO> getByName(String name);
     StudentDTO saveStudent(StudentDTO studentDTO);
     StudentDTO editStudent(StudentDTO studentDTO);
     String deleteStudent(String studentId);
