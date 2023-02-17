@@ -46,6 +46,16 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
+    public List<StudentDTO> getAllUnsubscribedStudents() {
+        return studentRepository
+                .findAll()
+                .stream()
+                .map(this::entityToDTO)
+                .filter(x -> x.getCourse() == null)
+                .toList();
+    }
+
+    @Override
     public StudentDTO getByIdentificationNumber(String idNumber) {
         Optional<Student> response = studentRepository
                 .findAll()

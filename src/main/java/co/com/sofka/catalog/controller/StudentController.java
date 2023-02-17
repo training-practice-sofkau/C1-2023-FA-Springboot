@@ -24,6 +24,11 @@ public class StudentController {
         return new ResponseEntity<>(studentServiceImpl.getAllStudents(), HttpStatus.OK);
     }
 
+    @GetMapping("/unsubscribed")
+    public ResponseEntity<List<StudentDTO>> getAllUnsubscribedStudents(){
+        return new ResponseEntity<>(studentServiceImpl.getAllUnsubscribedStudents(), HttpStatus.OK);
+    }
+
     @GetMapping("/idNumber/{idNumber}")
     public ResponseEntity<StudentDTO> getByIdentificationNumber(@PathVariable("idNumber") String idNumber){
         return new ResponseEntity<>(studentServiceImpl.getByIdentificationNumber(idNumber), HttpStatus.OK);
