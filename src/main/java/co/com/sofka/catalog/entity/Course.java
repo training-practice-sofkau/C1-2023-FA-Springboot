@@ -43,13 +43,5 @@ public class Course {
     @JsonManagedReference
     private List<Student> studentList = new ArrayList<>();
 
-    public void registerStudent(Student student){
-        studentList.add(student);
-    }
-
-    public void deregisterStudent(Student student){
-        studentList.remove(student);
-    }
-
 
 }

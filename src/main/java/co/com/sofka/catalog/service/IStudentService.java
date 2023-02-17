@@ -16,7 +16,8 @@ public interface IStudentService {
 
     List<StudentDTO> getByName(String s);
 
-    List<StudentDTO> getByCourseId(String courseId);
+    //No sirve porque all nino da que tiene curso null asi tenga uno asignado.
+    //List<StudentDTO> getByCourseId(String courseId);
     StudentDTO saveStudent(StudentDTO studentDTO);
     StudentDTO editStudent(StudentDTO studentDTO);
     String deleteStudent(String studentId);

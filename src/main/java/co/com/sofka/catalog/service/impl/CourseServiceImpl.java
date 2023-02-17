@@ -13,12 +13,12 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static co.com.sofka.catalog.utils.CustomMapper.course;
-import static co.com.sofka.catalog.utils.CustomMapper.courseDTO;
+import static co.com.sofka.catalog.utils.CustomMapper.*;
 
 @Service
 public class CourseServiceImpl implements ICourseService {
@@ -45,6 +45,8 @@ public class CourseServiceImpl implements ICourseService {
                 .findAll()
                 .stream()
                 .map(CustomMapper::courseDTO)
+                .collect(Collectors.toList())
+                .stream().sorted(Comparator.comparing(CourseDTO::getLastUpdatedDTO))
                 .collect(Collectors.toList());
     }
 
@@ -60,7 +62,8 @@ public class CourseServiceImpl implements ICourseService {
                     if (i.getNameDTO().toLowerCase().startsWith(name.toLowerCase())
                             | i.getNameDTO().toLowerCase().contains(name.toLowerCase())) courseDTO.add(i);
                 });
-        return courseDTO;
+        return courseDTO.stream().sorted(Comparator.comparing(CourseDTO::getLastUpdatedDTO))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -75,7 +78,8 @@ public class CourseServiceImpl implements ICourseService {
                     if (i.getCoachDTO().toLowerCase().startsWith(c.toLowerCase())
                             | i.getCoachDTO().toLowerCase().contains(c.toLowerCase())) courseDTO.add(i);
                 });
-        return courseDTO;
+        return courseDTO.stream().sorted(Comparator.comparing(CourseDTO::getLastUpdatedDTO))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -89,20 +93,79 @@ public class CourseServiceImpl implements ICourseService {
                 .stream().forEach(i->{
                     if (i.getLevelDTO().equals(level)) courseDTO.add(i);
                 });
-        return courseDTO;
+        return courseDTO.stream().sorted(Comparator.comparing(CourseDTO::getLastUpdatedDTO))
+                .collect(Collectors.toList());
     }
 
+    // the way changing just the list without associate the student to the curso. It works, but no change a shit in DB
+    /*@Override
+    public CourseDTO regisStudent(String courseId, String studentId) {
+        if(this.findById(courseId) == null || this.studentRepository.findById(studentId) == null) return null;
+        CourseDTO targetCourseDTO = this.findById(courseId).get();
+        System.out.println(targetCourseDTO);
+        StudentDTO beAddedStudentDTO = this.studentRepository.findById(studentId).map(CustomMapper::studentDTO).get();
+        System.out.println(beAddedStudentDTO);
+        //if (targetCourseDTO == null | beAddedStudentDTO == null) return null;
+        List<StudentDTO> toUpdateListStudent = targetCourseDTO.getStudentListDTO();
+        if ( beAddedStudentDTO.getCourseDTO() != null ||
+                toUpdateListStudent.contains(beAddedStudentDTO)){
+            return null;
+        }
+        else {
+            toUpdateListStudent.add(beAddedStudentDTO);
+            course(targetCourseDTO).setStudentList(
+                    toUpdateListStudent.stream().map(CustomMapper::student).collect(Collectors.toList()));
+            //this.saveCourse(targetCourseDTO);
+            //student(beAddedStudentDTO).setCourse((course(targetCourseDTO)));
+            //studentRepository.save(student(beAddedStudentDTO));
+        }
+
+        //if (toUpdateListStudent.contains(beAddedStudentDTO)) return null;
+        //else toUpdateListStudent.add(beAddedStudentDTO.get());
+        //targetCourseDTO.get().setStudentListDTO(toUpdateListStudent);
+        System.out.println(this.findById(courseId).get());
+
+        return this.saveCourse(targetCourseDTO);
+    }*/
+
+    // other just associated the person in orden to update the list, but it doesn't work
     @Override
     public CourseDTO regisStudent(String courseId, String studentId) {
-        Optional<CourseDTO> targetCourseDTO = this.findById(courseId);
-        System.out.println(targetCourseDTO.get());
-        Optional<StudentDTO> beAddedStudentDTO = this.studentRepository.findById(studentId).map(CustomMapper::studentDTO);
-        System.out.println(beAddedStudentDTO.get());
-        if (targetCourseDTO == null | beAddedStudentDTO == null) return null;
-        targetCourseDTO.get().registerStudentDTO(beAddedStudentDTO.get());
-        System.out.println(targetCourseDTO.get());
+        StudentDTO saveStudentDTo = new StudentDTO();
+        if(this.findById(courseId) == null || this.studentRepository.findById(studentId) == null) return null;
+        CourseDTO targetCourseDTO = this.findById(courseId).get();
+        System.out.println(targetCourseDTO);
+        StudentDTO beAddedStudentDTO = this.studentRepository.findById(studentId).map(CustomMapper::studentDTO).get();
+        System.out.println(beAddedStudentDTO);
+        //if (targetCourseDTO == null | beAddedStudentDTO == null) return null;
+        List<StudentDTO> toUpdateListStudent = targetCourseDTO.getStudentListDTO();
+        if ( beAddedStudentDTO.getCourseDTO() != null ||
+                toUpdateListStudent.contains(beAddedStudentDTO)){
+            return null;
+        }
+        /*else {
+            //toUpdateListStudent.add(beAddedStudentDTO);
+            //targetCourseDTO.setStudentListDTO(toUpdateListStudent);
+            //this.saveCourse(targetCourseDTO);
+            student(beAddedStudentDTO).setCourse((course(targetCourseDTO)));
+            saveStudentDTo = studentDTO(studentRepository.save(student(beAddedStudentDTO)));
+            //studentRepository.save(student(beAddedStudentDTO));
+            System.out.println("beAdded was change " + saveStudentDTo );
+        }*/
 
-        return courseDTO(courseRepository.save(course(targetCourseDTO.get())));
+        student(beAddedStudentDTO).setCourse((course(targetCourseDTO)));
+        saveStudentDTo = studentDTO(studentRepository.save(student(beAddedStudentDTO)));
+        System.out.println("beAdded was change " + saveStudentDTo );
+
+        //if (toUpdateListStudent.contains(beAddedStudentDTO)) return null;
+        //else toUpdateListStudent.add(beAddedStudentDTO.get());
+        //targetCourseDTO.get().setStudentListDTO(toUpdateListStudent);
+
+        //beAddedStudentDTO = studentDTO(studentRepository.save(student(beAddedStudentDTO)));
+        //System.out.println(this.findById(courseId).get());
+        //System.out.println(beAddedStudentDTO);
+
+        return saveStudentDTo.getCourseDTO();
     }
 
     @Override

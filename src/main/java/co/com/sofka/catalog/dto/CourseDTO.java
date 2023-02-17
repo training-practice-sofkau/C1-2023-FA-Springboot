@@ -27,12 +27,4 @@ public class CourseDTO {
     private List<StudentDTO> studentListDTO=new ArrayList<>();
 
 
-
-    public void registerStudentDTO(StudentDTO studentDTO){
-        studentListDTO.add(studentDTO);
-    }
-
-    public void deregisterStudentDTO(StudentDTO studentDTO){
-        studentListDTO.remove(studentDTO);
-    }
 }

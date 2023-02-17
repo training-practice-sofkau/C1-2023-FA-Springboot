@@ -15,6 +15,7 @@ import co.com.sofka.catalog.service.impl.CourseServiceImpl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,17 +29,19 @@ public class StudentServiceImpl implements IStudentService {
     //private CourseRepository courseRepository;
 
     private CourseServiceImpl courseService;
+    private final CourseRepository courseRepository;
 
 
     public StudentServiceImpl(StudentRepository studentRepository,
                              //CourseRepository courseRepository,
-                              CourseServiceImpl courseService
+                              CourseServiceImpl courseService,
                               //CourseController courseController
-                              ){
+                              CourseRepository courseRepository){
         this.studentRepository = studentRepository;
         //this.courseRepository = courseRepository;
         this.courseService = courseService;
 
+        this.courseRepository = courseRepository;
     }
 
 
@@ -49,6 +52,8 @@ public class StudentServiceImpl implements IStudentService {
                 .findAll()
                 .stream()
                 .map(CustomMapper::studentDTO)
+                .collect(Collectors.toList())
+                .stream().sorted(Comparator.comparing(StudentDTO::getNameDTO))
                 .collect(Collectors.toList());
     }
 
@@ -84,19 +89,24 @@ public class StudentServiceImpl implements IStudentService {
                     if (i.getNameDTO().toLowerCase().startsWith(s.toLowerCase())
                             | i.getNameDTO().toLowerCase().contains(s.toLowerCase())) studentDTOS.add(i);
                 });
-        return studentDTOS;
+        return studentDTOS.stream().sorted(Comparator.comparing(StudentDTO::getNameDTO))
+                .collect(Collectors.toList());
     }
 
-    @Override
+    //No sirve porque all nino da que tiene curso null asi tenga uno asignado.
+    /*@Override
     public List<StudentDTO> getByCourseId(String courseId) {
         List<StudentDTO> studentDTOS = new ArrayList<>();
+        if (courseRepository.findById(courseId).get() == null) return null;
         studentRepository.findAll().stream().map(CustomMapper::studentDTO).collect(Collectors.toList()).stream().forEach(i->{
-            if(i.getCourseDTO().getIdDTO().equals(courseId)) studentDTOS.add(i);
+            if(i.getCourseDTO() != null && i.getCourseDTO().getIdDTO().equals(courseId)) studentDTOS.add(i);
         });
-        return studentDTOS;
-    }
+        System.out.println(studentDTOS);
+        return studentDTOS.stream().sorted(Comparator.comparing(StudentDTO::getNameDTO))
+                .collect(Collectors.toList());
+    }*/
 
-    @Override
+   /* @Override
     public StudentDTO saveStudent(StudentDTO studentDTO) {
         StudentDTO saveStudentDTo = new StudentDTO();
         System.out.println("Curso saveStudentMethod " + studentDTO.getCourseDTO());
@@ -113,19 +123,46 @@ public class StudentServiceImpl implements IStudentService {
         }
         System.out.println("Curso al final saveStudentMethod" + courseDTO1.get());
         return saveStudentDTo;
+    }*/
+
+    public StudentDTO saveStudent(StudentDTO studentDTO) {
+        StudentDTO saveStudentDTo = new StudentDTO();
+
+        //Optional<CourseDTO> courseDTO1 = courseService.findById(studentDTO.getCourseDTO().getIdDTO());
+        //System.out.println("Curso saveStudentMethod " + courseDTO1);
+        System.out.println("Begining of saveStudentMethod " + studentDTO);
+        //if (studentDTO.getCourseDTO() == null || courseDTO1==null) return null;
+        /*if (studentDTO.getCourseDTO() != null) {
+            Optional<CourseDTO> courseDTO1 = courseService.findById(studentDTO.getCourseDTO().getIdDTO());
+            System.out.println("Curso not null" + courseDTO1);
+            // this is what I need to do in the method related student with course.
+            student(studentDTO).setCourse((course(courseDTO1.get())));
+            saveStudentDTo = studentDTO(studentRepository.save(student(studentDTO)));
+            //courseDTO1.get().setStudentListDTO(this.getByCourseId(courseDTO1.get().getIdDTO()));
+            //courseDTO1.get().setLastUpdatedDTO(LocalDate.now());
+            //this.courseService.editCourse(courseDTO1.get());
+        }else {
+            saveStudentDTo = studentDTO(studentRepository.save(student(studentDTO)));
+            //System.out.println("Curso al final saveStudentMethod" + courseDTO1.get());
+            System.out.println(saveStudentDTo);
+        }*/
+        saveStudentDTo = studentDTO(studentRepository.save(student(studentDTO)));
+        System.out.println(saveStudentDTo);
+        return saveStudentDTo;
     }
 
     @Override
     public StudentDTO editStudent(StudentDTO studentDTO) {
         Optional<Student> studentUpdate = studentRepository.findById(studentDTO.getIdDTO());
-        Optional<CourseDTO> couseUpdate= courseService.findById(studentDTO.getCourseDTO().getIdDTO());
-        if (studentUpdate.isEmpty()||couseUpdate.isEmpty()) return null;
+        //Optional<CourseDTO> couseUpdate= courseService.findById(studentDTO.getCourseDTO().getIdDTO());
+        //if (studentUpdate.isEmpty()||couseUpdate.isEmpty()) return null;
+        if (studentUpdate.isEmpty()) return null;
         else {
             studentUpdate.get().setName(studentDTO.getNameDTO());
             studentUpdate.get().setIdNum(studentDTO.getIdNumDTO());
             studentUpdate.get().setAge(studentDTO.getAgeDTO());
             studentUpdate.get().setMail(studentDTO.getMailDTO());
-            studentUpdate.get().setCourse(CustomMapper.course(studentDTO.getCourseDTO()));
+            //studentUpdate.get().setCourse(CustomMapper.course(studentDTO.getCourseDTO()));
         }
         return studentDTO(studentRepository.save(studentUpdate.get()));
     }
