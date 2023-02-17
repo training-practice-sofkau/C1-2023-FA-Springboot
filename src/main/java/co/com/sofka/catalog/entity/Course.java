@@ -35,7 +35,8 @@ public class Course {
     private LocalDate lastUpdated;
 
     @OneToMany(mappedBy = "course",
-            targetEntity = CourseStudent.class)
+            targetEntity = CourseStudent.class,
+            cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonIgnoreProperties("studentList")
     @ToString.Exclude
     private List<CourseStudent> studentList = new ArrayList<>();

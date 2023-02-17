@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class CourseStudent {
     @GenericGenerator(name = "UUID",

@@ -34,7 +34,8 @@ public class Student {
     private String mail;
 
     @OneToMany(mappedBy = "student",
-            targetEntity = CourseStudent.class)
+            targetEntity = CourseStudent.class,
+            cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonIgnoreProperties("courseList")
     @ToString.Exclude
     private List<CourseStudent> courseList = new ArrayList<>();
