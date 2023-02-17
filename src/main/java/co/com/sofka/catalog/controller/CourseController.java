@@ -23,27 +23,27 @@ public class CourseController {
     private CourseRepository courseRepository;
 
     @GetMapping("/courses")
-    private ResponseEntity<List<Course>> obtenerCursos(){
+    private ResponseEntity<List<CourseDTO>> obtenerCursos(){
         return courseService.getAllCourses().isEmpty() ? ResponseEntity.status(204).body(Collections.emptyList()) :
                 ResponseEntity.ok(courseService.getAllCourses());
     }
 
     @GetMapping("/courses/name/{name}")
-    private ResponseEntity<List<Course>> obtenerCursosPorNombre(@PathVariable("name") String courseName){
+    private ResponseEntity<List<CourseDTO>> obtenerCursosPorNombre(@PathVariable("name") String courseName){
         var r = courseService.getByName(courseName);
         return r == null? ResponseEntity.status(404).build():
                 ResponseEntity.ok(r);
     }
 
     @GetMapping("/courses/coach/{coach}")
-    private ResponseEntity<List<Course>> obtenerCursoPorCoach(@PathVariable("coach") String coach){
+    private ResponseEntity<List<CourseDTO>> obtenerCursoPorCoach(@PathVariable("coach") String coach){
         var r = courseService.getByCoach(coach);
         return r == null? ResponseEntity.status(404).build():
                 ResponseEntity.ok(r);
     }
 
     @GetMapping("/courses/level/{level}")
-    private ResponseEntity<List<Course>> obtenerCursoPorNivel(@PathVariable("level") String level){
+    private ResponseEntity<List<CourseDTO>> obtenerCursoPorNivel(@PathVariable("level") String level){
         var r = courseService.getByLevel(level);
         return r == null? ResponseEntity.status(404).build():
                 ResponseEntity.ok(r);
