@@ -31,7 +31,7 @@ public class Student {
         return courses;
     }
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
