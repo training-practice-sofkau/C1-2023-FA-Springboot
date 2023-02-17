@@ -12,7 +12,9 @@ public interface IStudentService {
     StudentDTO entityToDTO(Student student);
     List<StudentDTO> getAllStudents();
     StudentDTO getByIdentificationNumber(String idNum);
-    StudentDTO getByName(String s);
+    List <StudentDTO> getByName(String name, String strategy);
+    List <StudentDTO> getByMail(String mail, String strategy);
+    List <StudentDTO> getByAge(Integer age);
     StudentDTO saveStudent(StudentDTO studentDTO);
     StudentDTO editStudent(StudentDTO studentDTO, String studentID);
     String deleteStudent(String studentID);

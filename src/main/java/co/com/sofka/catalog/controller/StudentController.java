@@ -37,11 +37,11 @@ public class StudentController {
         return new ResponseEntity<>(response, httpStatus);
     }
 
-    @GetMapping("/students/name/{name}")
-    public ResponseEntity<Response> getStudentsByName(@PathVariable String name){
+    @GetMapping("/students/name/{strategy}/{name}")
+    public ResponseEntity<Response> getStudentsByName(@PathVariable String name, @PathVariable String strategy){
         response.restart();
         try {
-            response.data = service.getByName(name);
+            response.data = service.getByName(name, strategy);
             httpStatus = HttpStatus.OK;
         } catch (DataAccessException exception) {
             getErrorMessageForResponse(exception);
@@ -51,6 +51,19 @@ public class StudentController {
         return new ResponseEntity<>(response, httpStatus);
     }
 
+    @GetMapping("/students/mail/{strategy}/{mail}")
+    public ResponseEntity<Response> getStudentsByMail(@PathVariable String mail, @PathVariable String strategy){
+        response.restart();
+        try {
+            response.data = service.getByMail(mail, strategy);
+            httpStatus = HttpStatus.OK;
+        } catch (DataAccessException exception) {
+            getErrorMessageForResponse(exception);
+        } catch (Exception exception) {
+            getErrorMessageInternal(exception);
+        }
+        return new ResponseEntity<>(response, httpStatus);
+    }
     @GetMapping("/students/idNum/{idNum}")
     public ResponseEntity<Response> getStudentByIDNumber(@PathVariable String idNum){
         response.restart();
@@ -64,8 +77,22 @@ public class StudentController {
         }
         return new ResponseEntity<>(response, httpStatus);
     }
+
+    @GetMapping("/students/age/{age}")
+    public ResponseEntity<Response> getStudentByAge(@PathVariable Integer age){
+        response.restart();
+        try {
+            response.data = service.getByAge(age);
+            httpStatus = HttpStatus.OK;
+        } catch (DataAccessException exception) {
+            getErrorMessageForResponse(exception);
+        } catch (Exception exception) {
+            getErrorMessageInternal(exception);
+        }
+        return new ResponseEntity<>(response, httpStatus);
+    }
     @PostMapping("/students")
-    public ResponseEntity<Response> createCourse(@RequestBody StudentDTO studentDTO){
+    public ResponseEntity<Response> createStudent(@RequestBody StudentDTO studentDTO){
         response.restart();
         try {
             response.data = service.saveStudent(studentDTO);
@@ -79,7 +106,7 @@ public class StudentController {
     }
 
     @PutMapping("/students/{studentID}")
-    public ResponseEntity<Response> updateArtist(@RequestBody StudentDTO studentDTO, @PathVariable String studentID){
+    public ResponseEntity<Response> updateStudent(@RequestBody StudentDTO studentDTO, @PathVariable String studentID){
         response.restart();
         try {
             response.data = service.editStudent(studentDTO, studentID);
@@ -93,7 +120,7 @@ public class StudentController {
     }
 
     @DeleteMapping("/students/{studentID}")
-    public ResponseEntity<Response> deleteCourse(@PathVariable String studentID){
+    public ResponseEntity<Response> deleteStudent(@PathVariable String studentID){
         response.restart();
         try {
             response.data = service.deleteStudent(studentID);

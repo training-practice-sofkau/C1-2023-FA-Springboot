@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -47,6 +48,7 @@ public class StudentServiceImpl implements IStudentService {
         return studentRepository.findAll()
                 .stream()
                 .map(this::entityToDTO)
+                .sorted(Comparator.comparing(StudentDTO::getName))
                 .collect(Collectors.toList());
     }
 
@@ -55,20 +57,105 @@ public class StudentServiceImpl implements IStudentService {
         return studentRepository.findAll()
                 .stream()
                 .map(this::entityToDTO)
-                .filter(studentDTO -> studentDTO.getName().equalsIgnoreCase(idNum))
+                .filter(studentDTO -> studentDTO.getIdNum().equalsIgnoreCase(idNum))
                 .findFirst()
                 .orElseThrow();
     }
 
     @Override
-    public StudentDTO getByName(String name) {
+    public List<StudentDTO> getByName(String name, String strategy) {
+        String loweCaseName = name.toLowerCase();
+
+        switch (strategy){
+            case "exactmatch":{
+                return studentRepository.findAll()
+                        .stream()
+                        .map(this::entityToDTO)
+                        .filter(studentDTO -> studentDTO.getName().equalsIgnoreCase(loweCaseName))
+                        .sorted(Comparator.comparing(StudentDTO::getName))
+                        .collect(Collectors.toList());
+
+            }
+            case "startswith":{
+                return studentRepository.findAll()
+                        .stream()
+                        .map(this::entityToDTO)
+                        .filter(studentDTO -> studentDTO.getName().toLowerCase().startsWith(loweCaseName))
+                        .sorted(Comparator.comparing(StudentDTO::getName))
+                        .collect(Collectors.toList());
+
+            }
+            case "contains":{
+                return studentRepository.findAll()
+                        .stream()
+                        .map(this::entityToDTO)
+                        .filter(studentDTO -> studentDTO.getName().toLowerCase().contains(loweCaseName))
+                        .sorted(Comparator.comparing(StudentDTO::getName))
+                        .collect(Collectors.toList());
+
+            }
+            default:{
+                return studentRepository.findAll()
+                        .stream()
+                        .map(this::entityToDTO)
+                        .filter(studentDTO -> studentDTO.getName().toLowerCase().contains(loweCaseName))
+                        .sorted(Comparator.comparing(StudentDTO::getName))
+                        .collect(Collectors.toList());
+            }
+        }
+    }
+
+    @Override
+    public List<StudentDTO> getByMail(String mail, String strategy) {
+        String loweCaseMail = mail.toLowerCase();
+
+        switch (strategy){
+            case "exactmatch":{
+                return studentRepository.findAll()
+                        .stream()
+                        .map(this::entityToDTO)
+                        .filter(studentDTO -> studentDTO.getMail().equalsIgnoreCase(loweCaseMail))
+                        .sorted(Comparator.comparing(StudentDTO::getMail))
+                        .collect(Collectors.toList());
+
+            }
+            case "startswith":{
+                return studentRepository.findAll()
+                        .stream()
+                        .map(this::entityToDTO)
+                        .filter(studentDTO -> studentDTO.getMail().toLowerCase().startsWith(loweCaseMail))
+                        .sorted(Comparator.comparing(StudentDTO::getMail))
+                        .collect(Collectors.toList());
+
+            }
+            case "contains":{
+                return studentRepository.findAll()
+                        .stream()
+                        .map(this::entityToDTO)
+                        .filter(studentDTO -> studentDTO.getMail().toLowerCase().contains(loweCaseMail))
+                        .sorted(Comparator.comparing(StudentDTO::getMail))
+                        .collect(Collectors.toList());
+            }
+            default:{
+                return studentRepository.findAll()
+                        .stream()
+                        .map(this::entityToDTO)
+                        .filter(studentDTO -> studentDTO.getMail().toLowerCase().contains(loweCaseMail))
+                        .sorted(Comparator.comparing(StudentDTO::getMail))
+                        .collect(Collectors.toList());
+            }
+        }
+    }
+    @Override
+    public List<StudentDTO> getByAge(Integer age) {
         return studentRepository.findAll()
                 .stream()
                 .map(this::entityToDTO)
-                .filter(studentDTO -> studentDTO.getName().equalsIgnoreCase(name))
-                .findFirst()
-                .orElseThrow();
+                .filter(studentDTO -> studentDTO.getAge()==age)
+                .sorted(Comparator.comparing(StudentDTO::getName))
+                .collect(Collectors.toList());
     }
+
 
     @Override
     public StudentDTO saveStudent(StudentDTO studentDTO) {
@@ -88,7 +175,6 @@ public class StudentServiceImpl implements IStudentService {
                 throw new ExceptionsHandler("Course not found", HttpStatus.NOT_FOUND);
             }
         }
-
         StudentDTO oldStudentDTO = entityToDTO(response.get());
         oldStudentDTO.setName(studentDTO.getName());
         oldStudentDTO.setAge(studentDTO.getAge());

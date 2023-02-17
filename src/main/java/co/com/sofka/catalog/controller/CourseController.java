@@ -37,11 +37,11 @@ public class CourseController {
         return new ResponseEntity<>(response, httpStatus);
     }
 
-    @GetMapping("/courses/name/{name}")
-    public ResponseEntity<Response> getCourseByName(@PathVariable String name){
+    @GetMapping("/courses/name/{strategy}/{name}")
+    public ResponseEntity<Response> getCourseByName(@PathVariable String name, @PathVariable String strategy){
         response.restart();
         try {
-            response.data = service.getByName(name);
+            response.data = service.getByCourseName(name, strategy);
             httpStatus = HttpStatus.OK;
         } catch (DataAccessException exception) {
             getErrorMessageForResponse(exception);
@@ -51,11 +51,11 @@ public class CourseController {
         return new ResponseEntity<>(response, httpStatus);
     }
 
-    @GetMapping("/courses/coach/{coach}")
-    public ResponseEntity<Response> getCourseByCoach(@PathVariable String coach){
+    @GetMapping("/courses/coach/{strategy}/{coach}")
+    public ResponseEntity<Response> getCourseByCoach(@PathVariable String coach, @PathVariable String strategy){
         response.restart();
         try {
-            response.data = service.getByCoach(coach);
+            response.data = service.getByCoach(coach, strategy);
             httpStatus = HttpStatus.OK;
         } catch (DataAccessException exception) {
             getErrorMessageForResponse(exception);
