@@ -40,20 +40,18 @@ public class CourseServiceImpl implements ICourseService {
         return courseRepository.findAll()
                 .stream()
                 .map(this::entityToDTO)
+                .sorted((course1, course2)-> course2.getLastUpdated().compareTo(course1.getLastUpdated()))
                 .toList();
     }
 
     @Override
-    public CourseDTO getByName(String name) {
-        Optional<Course> response = courseRepository
-                .findAll()
+    public List<CourseDTO> getByName(String name) {
+        return courseRepository.findAll()
                 .stream()
+                .map(this::entityToDTO)
                 .filter(x -> x.getName().toLowerCase().startsWith(name.toLowerCase()))
-                .findFirst();
-        if(response.isEmpty()){
-            throw new ToDoExceptions("Course not found", HttpStatus.NOT_FOUND);
-        }
-        return entityToDTO(response.get());
+                .sorted((course1, course2)-> course2.getLastUpdated().compareTo(course1.getLastUpdated()))
+                .toList();
     }
 
     @Override
@@ -62,6 +60,7 @@ public class CourseServiceImpl implements ICourseService {
                 .stream()
                 .map(this::entityToDTO)
                 .filter(x -> x.getCoach().toLowerCase().startsWith(coach.toLowerCase()))
+                .sorted((course1, course2)-> course2.getLastUpdated().compareTo(course1.getLastUpdated()))
                 .toList();
     }
 
@@ -71,6 +70,7 @@ public class CourseServiceImpl implements ICourseService {
                 .stream()
                 .map(this::entityToDTO)
                 .filter(x -> x.getLevel().equals(Integer.parseInt(level)))
+                .sorted((course1, course2)-> course2.getLastUpdated().compareTo(course1.getLastUpdated()))
                 .toList();
     }
 
