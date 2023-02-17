@@ -1,26 +1,27 @@
 package co.com.sofka.catalog.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-@Data
+//@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "courses")
 public class Course {
-    @GenericGenerator(name="UUID",
-            strategy = "co.com.sofka.catalog.utils.UUIDGeneratorTruncated")
-    @GeneratedValue(generator = "UUID")
+//    @GenericGenerator(name="UUID",
+//            strategy = "co.com.sofka.catalog.utils.UUIDGeneratorTruncated")
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
 
     private String name;
 
@@ -30,9 +31,24 @@ public class Course {
 
     private LocalDate lastUpdated;
 
-    //OneToMany
-    private List<Student> studentList;
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(
+            name = "student_enrolled",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
+    @JsonManagedReference
+    private Set<Student> enrolledStudents = new HashSet<>();
 
+    public void enrolledStudent(Student student) {
+        this.enrolledStudents.add(student);
+    }
 
-
+    public void removeStudent(Student student){
+        this.enrolledStudents.remove(student);
+    }
 }

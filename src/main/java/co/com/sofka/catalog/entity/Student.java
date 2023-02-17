@@ -1,35 +1,41 @@
 package co.com.sofka.catalog.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
-@Data
+import java.util.HashSet;
+import java.util.Set;
+
+//@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "students")
 public class Student {
-    @GenericGenerator(name="UUID",
-            strategy = "co.com.sofka.catalog.utils.UUIDGeneratorTruncated")
-    @GeneratedValue(generator = "UUID")
+//    @GenericGenerator(name="UUID",
+//            strategy = "co.com.sofka.catalog.utils.UUIDGeneratorTruncated")
     @Id
-    private String id;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
     private String name;
-
-    private String idNum;
-
     private Integer age;
-
+    private String idNum;
     private String mail;
 
-    private Integer numCourses;
+    public Set<Course> getCourses() {
+        return courses;
+    }
 
-    //ManyToOne
-    private Course course;
-
+    @JsonBackReference
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },mappedBy = "enrolledStudents")
+    private Set<Course> courses = new HashSet<>();
 }

@@ -6,20 +6,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class CourseDTO {
-    private String id;
-
+    private Long id;
     private String name;
-
     private String coach;
-
-    private List<StudentDTO> studentListDTO;
-
     private Integer level;
-
-    private LocalDate lastUpdated;
+    private Set<Student> enrolledStudents = new HashSet<>();
 }
