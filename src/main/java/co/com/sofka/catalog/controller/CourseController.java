@@ -25,7 +25,7 @@ public class CourseController {
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<CourseDTO> getByName(@PathVariable("name") String name) {
+    public ResponseEntity<List<CourseDTO>> getByName(@PathVariable("name") String name) {
         return new ResponseEntity<>(courseServiceImpl.getByName(name), HttpStatus.OK);
     }
 
