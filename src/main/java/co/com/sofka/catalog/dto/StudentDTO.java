@@ -1,22 +1,25 @@
 package co.com.sofka.catalog.dto;
 
+import co.com.sofka.catalog.entity.Course;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentDTO {
-    private String id;
+    private String idDTO;
 
-    private String name;
+    private String nameDTO;
 
-    private String idNum;
+    private String idNumDTO;
 
-    private Integer age;
+    private Integer ageDTO;
 
-    private String mail;
+    private String mailDTO;
 
-    private Integer numCourses;
+    private CourseDTO courseDTO;
 }
