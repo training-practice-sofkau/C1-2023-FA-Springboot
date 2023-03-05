@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 
 public class CustomMapper{
-
+/*
     public static Course course(CourseDTO courseDTO){
         Course c = new Course();
         c.setId(courseDTO.getId());
@@ -18,11 +18,10 @@ public class CustomMapper{
         c.setLevel(courseDTO.getLevel());
         c.setLastUpdated(courseDTO.getLastUpdated());
         c.setStudentList(courseDTO.getStudentListDTO().stream().map(CustomMapper::student).collect(Collectors.toList()));
-
         return c;
 
-    }
-
+    }*/
+/*
 
     public static Student student(StudentDTO studentDTO){
         Student s = new Student();
@@ -32,7 +31,6 @@ public class CustomMapper{
         s.setAge(studentDTO.getAge());
         s.setMail(studentDTO.getMail());
         s.setNumCourses(studentDTO.getNumCourses());
-
         return s;
 
     }
@@ -46,11 +44,10 @@ public class CustomMapper{
         c.setLevel(course.getLevel());
         c.setLastUpdated(course.getLastUpdated());
         c.setStudentListDTO(course.getStudentList().stream().map(CustomMapper::studentDTO).collect(Collectors.toList()));
-
         return c;
 
-    }
-
+    }*/
+/*
 
     public static StudentDTO studentDTO(Student student){
         StudentDTO s = new StudentDTO();
@@ -60,8 +57,7 @@ public class CustomMapper{
         s.setAge(student.getAge());
         s.setMail(student.getMail());
         s.setNumCourses(student.getNumCourses());
-
         return s;
 
-    }
+    }*/
 }
