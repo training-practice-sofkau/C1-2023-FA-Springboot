@@ -1,38 +1,46 @@
 package co.com.sofka.catalog.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.time.LocalDate;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "course")
 public class Course {
+
     @GenericGenerator(name="UUID",
             strategy = "co.com.sofka.catalog.utils.UUIDGeneratorTruncated")
     @GeneratedValue(generator = "UUID")
     @Id
     private String id;
 
+    @Column
     private String name;
 
+    @Column
     private String coach;
 
+    @Column
     private Integer level;
 
-    private LocalDate lastUpdated;
+    @Column
+    private Instant lastUpdated = Instant.now();
 
-    //OneToMany
-    private List<Student> studentList;
-
-
-
+    @OneToMany(
+            mappedBy = "course",
+            cascade = CascadeType.MERGE,
+            targetEntity = Student.class
+    )
+    @JsonManagedReference
+    private List<Student> studentList = new ArrayList<>();
 }
